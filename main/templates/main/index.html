@@ -1,9 +1,8 @@
 {% extends 'main/base.html' %}
 {% block content %}
     <h1>Main</h1>
-    <form method="post">
-        {% csrf_token %}
-        <input name="search" placeholder="Search Product">
+    <form action="product">
+        <input name="productSearch" placeholder="Enter Product Slug">
         <button type="submit">Search</button>
     </form>
 {% endblock %}
