@@ -70,13 +70,16 @@ def productHome(request, productSlug):
         'Authorization': 'Bearer ' + MY_API_TOKEN,
         'Host': 'api.producthunt.com'
     }
-    #Gets information in form of JSONN
+    #Gets information in form of JSON
     posts = requests.post(API_URL,
                           headers=headers,
                           data=json.dumps(query))
 
     #Saves Json information to variable
     jsonInfo = posts.json()
+    if (jsonInfo['data']['post'] == None):
+        print("None found")
+        return render(request, 'main/productNotFound.html')
     results = {}
     topics =[]
     global Names
