@@ -1,0 +1,17 @@
+.center-block {
+    width:50%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 5px;
+    background-color: rgba(79, 136, 210, 0.4);
+    padding: 5px 30px 30px 30px;
+    margin-top: 30px;
+}
+.form-control{
+    width: 80%;
+    margin: auto;
+}
+.btn-light{
+    margin-top: 20px;
+}

@@ -1,8 +1,14 @@
 {% extends 'main/base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/index_style.css' %}">
+{% endblock %}
 {% block content %}
-    <h1>Main</h1>
-    <form action="product">
-        <input name="productSearch" placeholder="Enter Product Slug">
-        <button type="submit">Search</button>
-    </form>
+    <div class="center-block">
+        <h1>Main</h1>
+        <form action="product">
+            <input class="form-control" name="productSearch" placeholder="Enter Product Slug">
+            <button class="btn btn-light" type="submit">Search</button>
+        </form>
+    </div>
 {% endblock %}
