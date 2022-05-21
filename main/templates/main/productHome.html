@@ -3,11 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.js"></script>
 </head>
 <body>
 <p>{{product}}</p>
 <p>{{topics}}</p>
-<p>{{twitterHandles}}</p>
+<ul>
+    {% for handle in twitterHandles %}
+        <canvas id="twitter-box-{{handle}}" style="display: none;">
+            <h1>{{handle}}</h1>
+        </canvas>
+        <li><button onclick="drawGraph('{{handle}}')">{{handle}}</button></li>
+    {% endfor %}
+</ul>
 <p>{{results}}</p>
 </body>
+<script>
+    function drawGraph(handle) {
+        console.log(handle);
+        graphArea = document.getElementById('twitter-box-'+handle)
+        graphArea.style.display = 'block';
+        var ctx = graphArea.getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [1,2,3,4],
+                datasets: [{
+                    label: "Hello",
+                    data: [10,20,30,40],
+                    backgroundColor:'#999999',
+                    borderColor:'#555555',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+</script>
 </html>
