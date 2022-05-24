@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 import requests
 import json
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -134,3 +136,10 @@ def productHome(request, productSlug):
         'product_name':product_name
     }
     return render(request, 'main/productHome.html', context)
+
+class ChartData(APIView):
+
+    def get(self, request, format = None):
+        data = ["sent data"]
+
+        return Response(data)

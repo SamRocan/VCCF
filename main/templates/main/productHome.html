@@ -22,6 +22,19 @@
 <p>{{results}}</p>
 </body>
 <script>
+    var endpoint = '/graphs/'
+    $.ajax({
+        method: "GET",
+        url: endpoint,
+        data: {'test':"Test Data"},
+        success: function(data) {
+
+        },
+        error: function(error_data) {
+
+            console.log(error_data);
+        }
+    })
     function drawGraph(handle) {
         console.log(handle);
         graphArea = document.getElementById('twitter-box-'+handle)
