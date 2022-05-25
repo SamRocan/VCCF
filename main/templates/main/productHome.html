@@ -23,12 +23,17 @@
 </body>
 <script>
     var endpoint = '/graphs/'
+    let results = []
     $.ajax({
         method: "GET",
         url: endpoint,
         data: {'test':"Test Data"},
         success: function(data) {
-
+            results = [ data.extScore,
+                        data.neuScore,
+                        data.agrScore,
+                        data.conScore,
+                        data.opnScore]
         },
         error: function(error_data) {
 
@@ -36,17 +41,16 @@
         }
     })
     function drawGraph(handle) {
-        console.log(handle);
         graphArea = document.getElementById('twitter-box-'+handle)
         graphArea.style.display = 'block';
         var ctx = graphArea.getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [1,2,3,4],
+                labels: ['extraversion','neurotocism','agreableness','conscientiousness','openness'],
                 datasets: [{
                     label: "Hello",
-                    data: [10,20,30,40],
+                    data: results,
                     backgroundColor:'#999999',
                     borderColor:'#555555',
                     borderWidth: 1
