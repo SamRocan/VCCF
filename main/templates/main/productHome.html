@@ -16,7 +16,7 @@
         <canvas id="twitter-box-{{handle}}" style="display: none;">
             <h1>{{handle}}</h1>
         </canvas>
-        <li><button onclick="drawGraph('{{handle}}')">{{handle}}</button></li>
+        <li><button onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</button></li>
     {% endfor %}
 </ul>
 <p>{{results}}</p>
@@ -40,7 +40,8 @@
             console.log(error_data);
         }
     })
-    function drawGraph(handle) {
+    function drawGraph(handle, pos) {
+        var position = pos-1
         graphArea = document.getElementById('twitter-box-'+handle)
         graphArea.style.display = 'block';
         var ctx = graphArea.getContext('2d');
@@ -49,10 +50,28 @@
             data: {
                 labels: ['extraversion','neurotocism','agreableness','conscientiousness','openness'],
                 datasets: [{
-                    label: "Hello",
-                    data: results,
-                    backgroundColor:'#999999',
-                    borderColor:'#555555',
+                    label: handle,
+                    data: [results[0][position],results[1][position],results[2][position],results[3][position], results[4][position]],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
                     borderWidth: 1
                 }]
             },

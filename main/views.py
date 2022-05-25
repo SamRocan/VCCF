@@ -147,73 +147,80 @@ class ChartData(APIView):
 
     def get(self, request, format = None):
         data = ["sent data"]
-        userName = request.session["TwitterHandles"][0]
-        module_dir = os.path.dirname('resources/')
-        all_users = os.path.join(module_dir, 'combined_users.xlsx')
-        user_scores = os.path.join(module_dir, 'user_scores.xlsx')
-        liwc_dic = os.path.join(module_dir, 'LIWC2007_Ammended.dic')
-        start_time = time.time()
+        extScore = []
+        neuScore = []
+        agrScore = []
+        conScore = []
+        opnScore = []
+        TwitterHandles = request.session["TwitterHandles"]
+        for handle in TwitterHandles:
+            userName = handle
+            module_dir = os.path.dirname('resources/')
+            all_users = os.path.join(module_dir, 'combined_users.xlsx')
+            user_scores = os.path.join(module_dir, 'user_scores.xlsx')
+            liwc_dic = os.path.join(module_dir, 'LIWC2007_Ammended.dic')
+            start_time = time.time()
 
-        data = getExcel(all_users)
-        score_data = getExcel(user_scores)
-        print(userName)
-        print("Getting Tweets for " + str(userName))
-        try:
-            twitterContent = getTweets(userName)
-        except:
-            message = "No Twitter account found for that username, please try another account or check your spelling."
-            return render(request, 'Main/noTwitter.html', {'message':message})
-        print("Getting Tweets took ", time.time() - start_time, " to run")
-
-
-        print("Tokenizing Tweets")
-        tokenizedTweets = tokenize(twitterContent)
-        print(tokenizedTweets)
-        print("Tokenizing Tweets took ", time.time() - start_time, " to run")
-
-        print("turning to dictionary")
-        dictionary = dic_to_dict(liwc_dic)
-
-        print("turning into trie")
-        trie = makeTrie(dictionary)
-
-        print("Trie took ", time.time() - start_time, " to run")
+            data = getExcel(all_users)
+            score_data = getExcel(user_scores)
+            print(userName)
+            print("Getting Tweets for " + str(userName))
+            try:
+                twitterContent = getTweets(userName)
+            except:
+                message = "No Twitter account found for that username, please try another account or check your spelling."
+                return render(request, 'Main/noTwitter.html', {'message':message})
+            print("Getting Tweets took ", time.time() - start_time, " to run")
 
 
-        print("Categorizing tokens")
-        values = []
-        for i in tokenizedTweets[0]:
-            value = trie.lookup(i)
-            for i in value:
-                if(isinstance(i, int)):
-                    values.append(i)
-        print("Categorizing tokens took ", time.time() - start_time, " to run")
+            print("Tokenizing Tweets")
+            tokenizedTweets = tokenize(twitterContent)
+            print(tokenizedTweets)
+            print("Tokenizing Tweets took ", time.time() - start_time, " to run")
 
-        print("Getting Best Match")
-        try:
-            match = bestMatch(data, values)
-        except:
-            message = "Analysis cannot be preformed on this account. This is usually due to the account " \
-                      "primarily being in a language other than English, or the Twitter API rate limit being reached." \
-                      "Please try another account, or wait and try again later. "
-            return render(request, 'Main/noTwitter.html', {'message':message})
-        print("Best Match took ", time.time() - start_time, " to run")
+            print("turning to dictionary")
+            dictionary = dic_to_dict(liwc_dic)
 
-        profile = list(match.keys())[0]
-        print("Getting Scores")
-        scores = getScore(score_data, profile)
-        print("Scores took ", time.time() - start_time, " to run")
+            print("turning into trie")
+            trie = makeTrie(dictionary)
 
-        scoresVar = scores[0]
-        catVar = scores[1]
-        fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
+            print("Trie took ", time.time() - start_time, " to run")
 
-        print("My program took ", time.time() - start_time, " to run")
-        extScore = scoresVar[0]
-        neuScore = scoresVar[1]
-        agrScore = scoresVar[2]
-        conScore = scoresVar[3]
-        opnScore = scoresVar[4]
+
+            print("Categorizing tokens")
+            values = []
+            for i in tokenizedTweets[0]:
+                value = trie.lookup(i)
+                for i in value:
+                    if(isinstance(i, int)):
+                        values.append(i)
+            print("Categorizing tokens took ", time.time() - start_time, " to run")
+
+            print("Getting Best Match")
+            try:
+                match = bestMatch(data, values)
+            except:
+                message = "Analysis cannot be preformed on this account. This is usually due to the account " \
+                          "primarily being in a language other than English, or the Twitter API rate limit being reached." \
+                          "Please try another account, or wait and try again later. "
+                return render(request, 'Main/noTwitter.html', {'message':message})
+            print("Best Match took ", time.time() - start_time, " to run")
+
+            profile = list(match.keys())[0]
+            print("Getting Scores")
+            scores = getScore(score_data, profile)
+            print("Scores took ", time.time() - start_time, " to run")
+
+            scoresVar = scores[0]
+            catVar = scores[1]
+            fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
+
+            print("My program took ", time.time() - start_time, " to run")
+            extScore.append(scoresVar[0])
+            neuScore.append(scoresVar[1])
+            agrScore.append(scoresVar[2])
+            conScore.append(scoresVar[3])
+            opnScore.append(scoresVar[4])
         ext = "Extraversion (" + str(catVar[0]) + ")"
         neu = "Neuroticism (" + str(catVar[1]) + ")"
         agr = "Agreableness (" + str(catVar[2]) + ")"
@@ -230,6 +237,12 @@ class ChartData(APIView):
         userImage = url.replace("_normal", "")
         print(userImage)
         print("My program took ", time.time() - start_time, " to run")
+        print('extScore' + str(extScore))
+        print('neuScore' + str(neuScore))
+        print('agrScore' + str(agrScore))
+        print('conScore' + str(conScore))
+        print('opnScore' + str(opnScore))
+
 
         data = {
             'extScore':extScore,
