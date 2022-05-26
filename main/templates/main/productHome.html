@@ -11,8 +11,10 @@
 <body>
 <p>{{product}}</p>
 <p>{{topics}}</p>
+
 <ul>
-    {% for handle in twitterHandles %}
+    {% for handle, image in twitterZip %}
+        <img src="{{image}}" width="100px" style="border-radius: 50%">
         <canvas id="twitter-box-{{handle}}" style="display: none;">
             <h1>{{handle}}</h1>
         </canvas>

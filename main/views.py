@@ -131,6 +131,20 @@ def productHome(request, productSlug):
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
     product_name = slug.capitalize()
+
+    #Get Twitter Image
+    userImages = []
+    for handle in TwitterHandles:
+        auth = tw.OAuthHandler(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
+        auth.set_access_token(settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
+        api = tw.API(auth, wait_on_rate_limit=True)
+
+        user = api.get_user(screen_name=handle)
+        url = str(user.profile_image_url)
+        userImage = url.replace("_normal", "")
+        userImages.append(userImage)
+        print(userImage)
+    twitterZip = zip(TwitterHandles, userImages)
     context = {
         'results':results,
         'topics':topics,
@@ -139,7 +153,9 @@ def productHome(request, productSlug):
         'socialMediaZip':socialMediaZip,
         'twitterHandles':TwitterHandles,
         'product':productSlug,
-        'product_name':product_name
+        'product_name':product_name,
+        'userImages':userImages,
+        'twitterZip':twitterZip
     }
     return render(request, 'main/productHome.html', context)
 
@@ -221,27 +237,13 @@ class ChartData(APIView):
             agrScore.append(scoresVar[2])
             conScore.append(scoresVar[3])
             opnScore.append(scoresVar[4])
-        ext = "Extraversion (" + str(catVar[0]) + ")"
+        ext = "Extroversion (" + str(catVar[0]) + ")"
         neu = "Neuroticism (" + str(catVar[1]) + ")"
-        agr = "Agreableness (" + str(catVar[2]) + ")"
-        con = "Concientiousness (" + str(catVar[3]) + ")"
+        agr = "Agreeableness (" + str(catVar[2]) + ")"
+        con = "Conscientiousness (" + str(catVar[3]) + ")"
         opn = "Openness (" + str(catVar[4]) + ")"
 
-        #Get Twitter Image
-        auth = tw.OAuthHandler(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
-        auth.set_access_token(settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
-        api = tw.API(auth, wait_on_rate_limit=True)
-
-        user = api.get_user(screen_name=userName)
-        url = str(user.profile_image_url)
-        userImage = url.replace("_normal", "")
-        print(userImage)
         print("My program took ", time.time() - start_time, " to run")
-        print('extScore' + str(extScore))
-        print('neuScore' + str(neuScore))
-        print('agrScore' + str(agrScore))
-        print('conScore' + str(conScore))
-        print('opnScore' + str(opnScore))
 
 
         data = {
@@ -256,7 +258,6 @@ class ChartData(APIView):
             'con':con,
             'opn':opn,
             'founderName':userName,
-            'userImage':userImage
         }
 
         return Response(data)
