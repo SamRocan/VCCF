@@ -39,70 +39,7 @@
                         <div class="row-lg no-gutters" style="margin: 10px">
                             <div id="1">
                                 <div class="container information-found">
-
-
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Key Information</h5>
-                                    <br>
-                                    <p style="text-align: center">{{context.results.description}}</p>
-                                    <ul style="text-align: center;">
-                                        {% for detail in context.combiData.overview %}
-                                        <li>{{detail}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    <ul style="text-align: center;">
-                                        {% for i in context.topics %}
-                                        <li>{{i}}</li>
-                                        {% endfor %}
-                                    </ul>
-
-
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Features</h5>
-                                    <ul>
-                                        {% for feature in context.saasData.features %}
-                                        <li>{{feature}}</li>
-                                        {% endfor %}
-                                    </ul>
-
-
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Pricing Options</h5>
-                                    <ul>
-                                        {% for x,y in context.saasData.pricing.items %}
-                                        <!-- style=" display:inline; padding: 20px; font-weight: bold"-->
-                                        <li>{{x}} : {{y}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Social Media information</h5>
-                                    <ul>
-                                        {% for x,y in context.saasData.social_media.items %}
-                                        <li>{{x}} : {{y}}</li>
-                                        {% endfor %}
-                                    </ul>
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">More Info</h5>
-                                    <ul class="wrapper">
-                                        <li>{{context.saasData.tech_details.3.1}}</li>
-                                        <li>{{context.saasData.tech_details.4.1}}</li>
-                                    </ul>
-
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Competitor Analysis</h5>
-                                    <!-- Last thing to do before commit context.captData. -->
-                                    <hr>
-                                    <h5 style="font-weight: bold; text-align: center">Positions Available</h5>
-                                    {% for info in context.combiData.jobs %}
-                                    <div style="text-align: center">
-                                        <hr>
-                                        <h6 style="font-weight: bold; text-align: center">{{info.position}}</h6>
-                                        <p>Location: {{info.location}}</p>
-                                        <p>Experience Required: {{info.experience}}</p>
-                                        <p>Salary Offered: {{info.salary}}</p>
-                                        <p>Equity Offered: {{info.equity}}</p>
-                                    </div>
-                                    {% endfor %}
+                                    <p>{{results}}</p>
                                 </div>
                             </div>
                             <div id="2" style="display:none;">
@@ -121,13 +58,7 @@
                             </div>
                             <div id="3" style="display:none;">
                                 <div class="container information-found">
-                                    <h3 class="content-header">Market</h3>
-                                    <div>
-                                        <canvas id="myChartBar"></canvas>
-                                    </div>
-                                    <div >
-                                        <canvas id="myChartLine"></canvas>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
