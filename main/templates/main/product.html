@@ -1,0 +1,252 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/product_style.css' %}">
+{% endblock %}
+{% block content %}
+<div class="modal">
+    <!-- modal content -->
+    <div class="modal-content">
+        <div class="container-fluid" id="outer">
+            <div class="row no-gutters">
+                <div class="order-2 col-md-3 order-md-1" id="left-col">
+                    <div class="container-fluid p-0" id="left">
+                        <img src="{{context.logo}}" class="logo">
+                        <div id="news-collum">
+                            <h5 style="font-weight: bold;text-align: center">Industry News</h5>
+                            <hr>
+                            <ul>
+                                {% for link,article in context.newsZip %}
+                                <li>
+                                    <a href="{{link}}" class="news_link" style="color: black; font-weight: 550; text-decoration: none;">{{article}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 col-md-9 order-md-2">
+                    <span onclick="window.location.href='{{request.META.HTTP_REFERER|escape}}';" class="close">&times;</span>
+                    <img src="{{context.logo}}" class="logo-sm">
+                    <h1 style="text-align: center; padding-top: 10px">{{context.results.name}}</h1>
+                    <p style="text-align: center">{{ context.results.tagline}}</p>
+                    <div class="container-fluid" id="right">
+                        <div class="row no-gutters">
+                            <div class="col-lg-4"><button id="b1">Product Information</button></div>
+                            <div class="col-lg-4"><button id="b2">Founder Information</button></div>
+                            <div class="col-lg-4"><button id="b3">Market Information</button></div>
+                        </div>
+                        <div class="row-lg no-gutters" style="margin: 10px">
+                            <div id="1">
+                                <div class="container information-found">
+
+
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Key Information</h5>
+                                    <br>
+                                    <p style="text-align: center">{{context.results.description}}</p>
+                                    <ul style="text-align: center;">
+                                        {% for detail in context.combiData.overview %}
+                                        <li>{{detail}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <ul style="text-align: center;">
+                                        {% for i in context.topics %}
+                                        <li>{{i}}</li>
+                                        {% endfor %}
+                                    </ul>
+
+
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Features</h5>
+                                    <ul>
+                                        {% for feature in context.saasData.features %}
+                                        <li>{{feature}}</li>
+                                        {% endfor %}
+                                    </ul>
+
+
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Pricing Options</h5>
+                                    <ul>
+                                        {% for x,y in context.saasData.pricing.items %}
+                                        <!-- style=" display:inline; padding: 20px; font-weight: bold"-->
+                                        <li>{{x}} : {{y}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Social Media information</h5>
+                                    <ul>
+                                        {% for x,y in context.saasData.social_media.items %}
+                                        <li>{{x}} : {{y}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">More Info</h5>
+                                    <ul class="wrapper">
+                                        <li>{{context.saasData.tech_details.3.1}}</li>
+                                        <li>{{context.saasData.tech_details.4.1}}</li>
+                                    </ul>
+
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Competitor Analysis</h5>
+                                    <!-- Last thing to do before commit context.captData. -->
+                                    <hr>
+                                    <h5 style="font-weight: bold; text-align: center">Positions Available</h5>
+                                    {% for info in context.combiData.jobs %}
+                                    <div style="text-align: center">
+                                        <hr>
+                                        <h6 style="font-weight: bold; text-align: center">{{info.position}}</h6>
+                                        <p>Location: {{info.location}}</p>
+                                        <p>Experience Required: {{info.experience}}</p>
+                                        <p>Salary Offered: {{info.salary}}</p>
+                                        <p>Equity Offered: {{info.equity}}</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div id="2" style="display:none;">
+                                <div class="container information-found">
+                                    <h3 class="content-header">Founders</h3>
+                                    <ul>
+                                        {% for handle, image in twitterZip %}
+                                        <img src="{{image}}" width="100px" style="border-radius: 50%">
+                                        <canvas id="twitter-box-{{handle}}" style="display: none;">
+                                            <h1>{{handle}}</h1>
+                                        </canvas>
+                                        <li><button onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</button></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div id="3" style="display:none;">
+                                <div class="container information-found">
+                                    <h3 class="content-header">Market</h3>
+                                    <div>
+                                        <canvas id="myChartBar"></canvas>
+                                    </div>
+                                    <div >
+                                        <canvas id="myChartLine"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script>
+    var endpoint = '/graphs/'
+    let results = []
+    $.ajax({
+        method: "GET",
+        url: endpoint,
+        data: {'test':"Test Data"},
+        success: function(data) {
+            results = [ data.extScore,
+                data.neuScore,
+                data.agrScore,
+                data.conScore,
+                data.opnScore]
+        },
+        error: function(error_data) {
+
+            console.log(error_data);
+        }
+    })
+    function drawGraph(handle, pos) {
+        var position = pos-1
+        graphArea = document.getElementById('twitter-box-'+handle)
+        graphArea.style.display = 'block';
+        var ctx = graphArea.getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['extroversion','neuroticism','agreeableness','conscientiousness','openness'],
+                datasets: [{
+                    label: handle,
+                    data: [results[0][position],results[1][position],results[2][position],results[3][position], results[4][position]],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+</script>
+<script>
+
+    /*Change tabs*/
+    $('#b1').on('click',function(){
+        //If 1 is showing, show 2, hide all other divs
+        $('#1').show().siblings('div').hide();
+        $('#b1').css("background-color", "#becce0")
+        $('#b1').css("color", "black")
+        $('#b2').css("background-color", "#4f3535")
+        $('#b2').css("color", "white")
+        $('#b3').css("background-color", "#384f35")
+        $('#b3').css("color", "white")
+        $('#right').css("background-color", "#becce0")
+
+    });
+    $('#b2').on('click',function()  {
+        //If 1 is showing, show 2, hide all other divs
+        $('#2').show().siblings('div').hide();
+        $('#b1').css("background-color", "#42474e")
+        $('#b1').css("color", "white")
+        $('#b2').css("background-color", "#e0bebe")
+        $('#b2').css("color", "black")
+        $('#b3').css("background-color", "#384f35")
+        $('#b3').css("color", "white")
+        $('#right').css("background-color", "#e0bebe")
+    });
+    $('#b3').on('click',function(){
+        //If 1 is showing, show 2, hide all other divs
+        $('#3').show().siblings('div').hide();
+        $('#b1').css("background-color", "#42474e")
+        $('#b1').css("color", "white")
+        $('#b2').css("background-color", "#4f3535")
+        $('#b2').css("color", "white")
+        $('#b3').css("background-color", "#c0dbb9")
+        $('#b3').css("color", "black")
+        $('#right').css("background-color", "#c0dbb9")
+
+    });
+
+
+
+
+</script>
+{% endblock extra_js %}

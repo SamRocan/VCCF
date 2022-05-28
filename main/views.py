@@ -157,7 +157,7 @@ def productHome(request, productSlug):
         'userImages':userImages,
         'twitterZip':twitterZip
     }
-    return render(request, 'main/productHome.html', context)
+    return render(request, 'main/product.html', context)
 
 class ChartData(APIView):
 
