@@ -32,9 +32,9 @@
                     <p style="text-align: center">{{ context.results.tagline}}</p>
                     <div class="container-fluid" id="right">
                         <div class="row no-gutters">
-                            <div class="col-lg-4"><button id="b1">Product Information</button></div>
-                            <div class="col-lg-4"><button id="b2">Founder Information</button></div>
-                            <div class="col-lg-4"><button id="b3">Market Information</button></div>
+                            <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
+                            <div class="col-lg-4 p-0"><button id="b2">Founder Information</button></div>
+                            <div class="col-lg-4 p-0"><button id="b3">Market Information</button></div>
                         </div>
                         <div class="row-lg no-gutters" style="margin: 10px">
                             <div id="1">
@@ -93,7 +93,12 @@
     function drawGraph(handle, pos) {
         var position = pos-1
         graphArea = document.getElementById('twitter-box-'+handle)
-        graphArea.style.display = 'block';
+        console.log(graphArea.style.display)
+        if (graphArea.style.display === "none") {
+            graphArea.style.display = "block";
+        } else{
+            graphArea.style.display = "none";
+        }
         var ctx = graphArea.getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
