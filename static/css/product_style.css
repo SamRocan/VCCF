@@ -82,6 +82,8 @@ button{
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 50%;
+    border: 3px solid #080a0d;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 12px 15px 4px;
 }
 .logo-sm{
     align-content: center;
@@ -93,6 +95,8 @@ button{
     margin-top: 20px;
     margin-bottom: 10px;
     border-radius: 50%;
+    border: 3px solid #080a0d;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 12px 15px 4px;
 }
 
 #news-collum{
@@ -194,6 +198,12 @@ ul li{
     color: black;
     font-weight: bold;
     text-decoration: none; /* no underline */
+}
+.twitter-pp {
+    border-radius: 50%; margin: auto;
+    display: block;
+    border: 3px solid #080a0d;
+    box-shadow: rgba(0, 0, 0, 0.30) 0px 12px 15px 4px;
 }
 
 @media only screen and (max-width: 768px){

@@ -26,10 +26,10 @@
                     </div>
                 </div>
                 <div class="order-1 col-md-9 order-md-2">
-                    <span onclick="window.location.href='{{request.META.HTTP_REFERER|escape}}';" class="close">&times;</span>
+                    <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
                     <img src="{{logo}}" class="logo-sm">
-                    <h1 style="text-align: center; padding-top: 10px">{{context.results.name}}</h1>
-                    <p style="text-align: center">{{ context.results.tagline}}</p>
+                    <h1 style="text-align: center; padding-top: 10px">{{results.name}}</h1>
+                    <p style="text-align: center">{{results.tagline}}</p>
                     <div class="container-fluid" id="right">
                         <div class="row no-gutters">
                             <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
@@ -47,7 +47,7 @@
                                     <h3 class="content-header">Founders</h3>
                                     <ul>
                                         {% for handle, image in twitterZip %}
-                                        <img src="{{image}}" width="100px" style="border-radius: 50%">
+                                        <img src="{{image}}" width="100px" class="twitter-pp">
                                         <canvas id="twitter-box-{{handle}}" style="display: none;">
                                             <h1>{{handle}}</h1>
                                         </canvas>
