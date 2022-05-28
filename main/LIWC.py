@@ -356,7 +356,6 @@ def tokenize(tweets):
     words = []
     prices = []
     for i in splitwords:
-        print(i)
         if(len(i)>0):
             if(i[0]=='@'):
                 mentions.append(i)

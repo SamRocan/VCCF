@@ -11,7 +11,7 @@
             <div class="row no-gutters">
                 <div class="order-2 col-md-3 order-md-1" id="left-col">
                     <div class="container-fluid p-0" id="left">
-                        <img src="{{context.logo}}" class="logo">
+                        <img src="{{logo}}" class="logo">
                         <div id="news-collum">
                             <h5 style="font-weight: bold;text-align: center">Industry News</h5>
                             <hr>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="order-1 col-md-9 order-md-2">
                     <span onclick="window.location.href='{{request.META.HTTP_REFERER|escape}}';" class="close">&times;</span>
-                    <img src="{{context.logo}}" class="logo-sm">
+                    <img src="{{logo}}" class="logo-sm">
                     <h1 style="text-align: center; padding-top: 10px">{{context.results.name}}</h1>
                     <p style="text-align: center">{{ context.results.tagline}}</p>
                     <div class="container-fluid" id="right">

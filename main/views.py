@@ -105,25 +105,20 @@ def productHome(request, productSlug):
                 Names.append(y['name'])
                 phUrls.append(y['username'])
                 profilePics.append(y['profileImage'])
-                print(y['twitterUsername'])
-                print(str(y['twitterUsername']) + ": " + str(y['name']))
         if(i=='media'):
-            print("Media")
             for y in jsonInfo['data']['post']['media']:
-                print(y['url'])
+                #print(y['url'])
+                pass
         if(i=='productLinks'):
-            print("Product Links")
             for y in jsonInfo['data']['post']['productLinks']:
-                print(y['url'])
+                #print(y['url'])
+                pass
         if(i=='thumbnail'):
-            print("Thumbnail")
             logo = str(jsonInfo['data']['post'][i]['url'])
         if(i=='topics'):
-            print("Topics")
             for y in jsonInfo['data']['post']['topics']['edges']:
                 topics.append(y['node']['name'])
         results[i] = str(jsonInfo['data']['post'][i])
-    print(results.get('tagline'))
 
     """Parsing Other Websites"""
     companyName = str(results.get('name'))
@@ -143,8 +138,9 @@ def productHome(request, productSlug):
         url = str(user.profile_image_url)
         userImage = url.replace("_normal", "")
         userImages.append(userImage)
-        print(userImage)
+        #print(userImage)
     twitterZip = zip(TwitterHandles, userImages)
+    print("logo: " + str(logo))
     context = {
         'results':results,
         'topics':topics,
@@ -179,40 +175,25 @@ class ChartData(APIView):
 
             data = getExcel(all_users)
             score_data = getExcel(user_scores)
-            print(userName)
-            print("Getting Tweets for " + str(userName))
             try:
                 twitterContent = getTweets(userName)
             except:
                 message = "No Twitter account found for that username, please try another account or check your spelling."
                 return render(request, 'Main/noTwitter.html', {'message':message})
-            print("Getting Tweets took ", time.time() - start_time, " to run")
 
 
-            print("Tokenizing Tweets")
             tokenizedTweets = tokenize(twitterContent)
-            print(tokenizedTweets)
-            print("Tokenizing Tweets took ", time.time() - start_time, " to run")
 
-            print("turning to dictionary")
             dictionary = dic_to_dict(liwc_dic)
 
-            print("turning into trie")
             trie = makeTrie(dictionary)
 
-            print("Trie took ", time.time() - start_time, " to run")
-
-
-            print("Categorizing tokens")
             values = []
             for i in tokenizedTweets[0]:
                 value = trie.lookup(i)
                 for i in value:
                     if(isinstance(i, int)):
                         values.append(i)
-            print("Categorizing tokens took ", time.time() - start_time, " to run")
-
-            print("Getting Best Match")
             try:
                 match = bestMatch(data, values)
             except:
@@ -220,18 +201,14 @@ class ChartData(APIView):
                           "primarily being in a language other than English, or the Twitter API rate limit being reached." \
                           "Please try another account, or wait and try again later. "
                 return render(request, 'Main/noTwitter.html', {'message':message})
-            print("Best Match took ", time.time() - start_time, " to run")
 
             profile = list(match.keys())[0]
-            print("Getting Scores")
             scores = getScore(score_data, profile)
-            print("Scores took ", time.time() - start_time, " to run")
 
             scoresVar = scores[0]
             catVar = scores[1]
             fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
 
-            print("My program took ", time.time() - start_time, " to run")
             extScore.append(scoresVar[0])
             neuScore.append(scoresVar[1])
             agrScore.append(scoresVar[2])
@@ -242,8 +219,6 @@ class ChartData(APIView):
         agr = "Agreeableness (" + str(catVar[2]) + ")"
         con = "Conscientiousness (" + str(catVar[3]) + ")"
         opn = "Openness (" + str(catVar[4]) + ")"
-
-        print("My program took ", time.time() - start_time, " to run")
 
 
         data = {
