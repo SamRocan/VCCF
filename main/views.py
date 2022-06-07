@@ -7,6 +7,7 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
+from .scraper import searchResults
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -122,6 +123,11 @@ def productHome(request, productSlug):
 
     """Parsing Other Websites"""
     companyName = str(results.get('name'))
+    print(companyName)
+    searchResults(companyName + " Crunchbase")
+    searchResults(companyName + " SaasWorthy")
+    searchResults(companyName + " LinkedIn")
+    searchResults(companyName + " YCombinator")
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -133,12 +139,15 @@ def productHome(request, productSlug):
         auth = tw.OAuthHandler(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
         auth.set_access_token(settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
         api = tw.API(auth, wait_on_rate_limit=True)
-
-        user = api.get_user(screen_name=handle)
-        url = str(user.profile_image_url)
-        userImage = url.replace("_normal", "")
+        try:
+            user = api.get_user(screen_name=handle)
+            url = str(user.profile_image_url)
+            userImage = url.replace("_normal", "")
+        except:
+            userImage = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
         userImages.append(userImage)
         #print(userImage)
+
     twitterZip = zip(TwitterHandles, userImages)
     print("logo: " + str(logo))
     context = {
@@ -146,6 +155,7 @@ def productHome(request, productSlug):
         'topics':topics,
         'logo':logo,
         'names':Names,
+        'topics':topics,
         'socialMediaZip':socialMediaZip,
         'twitterHandles':TwitterHandles,
         'product':productSlug,
