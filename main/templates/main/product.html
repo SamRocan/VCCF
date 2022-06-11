@@ -13,12 +13,12 @@
                     <div class="container-fluid p-0" id="left">
                         <img src="{{logo}}" class="logo">
                         <div id="news-collum">
-                            <h5 style="font-weight: bold;text-align: center">Industry News</h5>
+                            <h5>Industry News</h5>
                             <hr>
                             <ul>
                                 {% for link,article in context.newsZip %}
                                 <li>
-                                    <a href="{{link}}" class="news_link" style="color: black; font-weight: 550; text-decoration: none;">{{article}}</a>
+                                    <a href="{{link}}" class="news_link">{{article}}</a>
                                 </li>
                                 {% endfor %}
                             </ul>
@@ -28,8 +28,8 @@
                 <div class="order-1 col-md-9 order-md-2">
                     <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
                     <img src="{{logo}}" class="logo-sm">
-                    <h1 style="text-align: center; padding-top: 10px">{{results.name}}</h1>
-                    <p style="text-align: center">{{results.tagline}}</p>
+                    <h1 id="main-heading">{{results.name}}</h1>
+                    <p id="main-sub-heading">{{results.tagline}}</p>
                     <div class="container-fluid" id="right">
                         <div class="row no-gutters">
                             <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
@@ -48,7 +48,7 @@
                                     <ul>
                                     {% for name, handle, ph_url, image in socialMediaZip %}
                                         {% if handle != None %}
-                                        <div class="row" style="display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-align: center;-webkit-align-items: center;-webkit-box-align: center;align-items: center;">
+                                        <div class="row social-row">
                                             <div class="col" style="display: inline-block">
                                                 <div class="container-fluid">
                                                     <div class="row">
@@ -73,9 +73,9 @@
                                         </div>
                                         <canvas id="twitter-box-{{handle}}" style="display: none;">
                                         </canvas>
-                                        <li><a style="background-color: rgba(0, 161, 111, 0.8);margin:0 auto;display:block; width: 50%; text-align: center; padding: 5px; border-radius: 5px; color: white;" onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</a></li>
+                                        <li><a class="search-button" onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</a></li>
                                         {% else %}
-                                        <div class="row" style="display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-align: center;-webkit-align-items: center;-webkit-box-align: center;align-items: center;">
+                                        <div class="row social-row">
                                             <div class="col" style="display: inline-block">
                                                 <div class="container-fluid">
                                                     <div class="row">

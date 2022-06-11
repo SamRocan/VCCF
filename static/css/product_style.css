@@ -104,6 +104,15 @@ button{
     padding-top: 10px;
     background-color: #becce0;
 }
+#news-collum h5{
+    font-weight: bold;
+    text-align: center
+}
+#news_link{
+    color: black;
+    font-weight: 550;
+    text-decoration: none;
+}
 hr{
     width: 90%;
 }
@@ -208,6 +217,38 @@ ul li{
 .logo-pp {
     border-radius: 50%; margin: auto;
     display: block;
+}
+#main-heading{
+    text-align: center;
+    padding-top: 10px
+}
+#main-sub-heading{
+    text-align: center
+}
+.social-row {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.search-button {
+    background-color: rgba(0, 161, 111, 0.8);
+    margin:0 auto 25px auto;
+    display:block;
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+
+}
+.search-button:hover{
+    color: white;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 768px){
