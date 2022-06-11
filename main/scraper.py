@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 
-
+#/akaunting-3-0 --> Good for testing
 def searchResults(searchTerm):
     URL = 'https://www.ask.com/web?q='+searchTerm
     page = requests.get(URL)

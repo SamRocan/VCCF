@@ -47,11 +47,13 @@
                                     <h3 class="content-header">Founders</h3>
                                     <ul>
                                         {% for handle, image in twitterZip %}
+                                        {% if handle != None %}
                                         <img src="{{image}}" width="100px" class="twitter-pp">
                                         <canvas id="twitter-box-{{handle}}" style="display: none;">
                                             <h1>{{handle}}</h1>
                                         </canvas>
                                         <li><button onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</button></li>
+                                        {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </div>

@@ -187,43 +187,46 @@ class ChartData(APIView):
             score_data = getExcel(user_scores)
             try:
                 twitterContent = getTweets(userName)
+
+
+                tokenizedTweets = tokenize(twitterContent)
+
+                dictionary = dic_to_dict(liwc_dic)
+
+                trie = makeTrie(dictionary)
+
+                values = []
+                for i in tokenizedTweets[0]:
+                    value = trie.lookup(i)
+                    for i in value:
+                        if(isinstance(i, int)):
+                            values.append(i)
+                try:
+                    match = bestMatch(data, values)
+                except:
+                    message = "Analysis cannot be preformed on this account. This is usually due to the account " \
+                              "primarily being in a language other than English, or the Twitter API rate limit being reached." \
+                              "Please try another account, or wait and try again later. "
+                    return render(request, 'main/noTwitter.html', {'message':message})
+
+                profile = list(match.keys())[0]
+                scores = getScore(score_data, profile)
+
+                scoresVar = scores[0]
+                catVar = scores[1]
+                fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
+
+                extScore.append(scoresVar[0])
+                neuScore.append(scoresVar[1])
+                agrScore.append(scoresVar[2])
+                conScore.append(scoresVar[3])
+                opnScore.append(scoresVar[4])
             except:
-                message = "No Twitter account found for that username, please try another account or check your spelling."
-                return render(request, 'Main/noTwitter.html', {'message':message})
-
-
-            tokenizedTweets = tokenize(twitterContent)
-
-            dictionary = dic_to_dict(liwc_dic)
-
-            trie = makeTrie(dictionary)
-
-            values = []
-            for i in tokenizedTweets[0]:
-                value = trie.lookup(i)
-                for i in value:
-                    if(isinstance(i, int)):
-                        values.append(i)
-            try:
-                match = bestMatch(data, values)
-            except:
-                message = "Analysis cannot be preformed on this account. This is usually due to the account " \
-                          "primarily being in a language other than English, or the Twitter API rate limit being reached." \
-                          "Please try another account, or wait and try again later. "
-                return render(request, 'Main/noTwitter.html', {'message':message})
-
-            profile = list(match.keys())[0]
-            scores = getScore(score_data, profile)
-
-            scoresVar = scores[0]
-            catVar = scores[1]
-            fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
-
-            extScore.append(scoresVar[0])
-            neuScore.append(scoresVar[1])
-            agrScore.append(scoresVar[2])
-            conScore.append(scoresVar[3])
-            opnScore.append(scoresVar[4])
+                extScore.append(0)
+                neuScore.append(0)
+                agrScore.append(0)
+                conScore.append(0)
+                opnScore.append(0)
         ext = "Extroversion (" + str(catVar[0]) + ")"
         neu = "Neuroticism (" + str(catVar[1]) + ")"
         agr = "Agreeableness (" + str(catVar[2]) + ")"
