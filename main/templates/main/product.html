@@ -63,7 +63,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </div>
                                             <div class="col">
                                                 <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
@@ -74,7 +73,7 @@
                                         </div>
                                         <canvas id="twitter-box-{{handle}}" style="display: none;">
                                         </canvas>
-                                        <li><button onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</button></li>
+                                        <li><a style="background-color: rgba(0, 161, 111, 0.8);margin:0 auto;display:block; width: 50%; text-align: center; padding: 5px; border-radius: 5px; color: white;" onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</a></li>
                                         {% else %}
                                         <div class="row" style="display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-align: center;-webkit-align-items: center;-webkit-box-align: center;align-items: center;">
                                             <div class="col" style="display: inline-block">
@@ -99,7 +98,9 @@
                                                 <h3>{{name}}</h3>
                                             </div>
                                         </div>
-                                        <li><a href="https://www.producthunt.com/@{{ph_url}}" target="_blank" rel="noopener noreferrer"><button>{{name}}</button></a></li>
+                                        <br>
+                                        <p style="text-align: center">Analysis not available</p>
+                                        <br>
                                         {% endif %}
                                         {% endfor %}
                                     </ul>
