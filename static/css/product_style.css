@@ -205,6 +205,10 @@ ul li{
     border: 3px solid #080a0d;
     box-shadow: rgba(0, 0, 0, 0.30) 0px 12px 15px 4px;
 }
+.logo-pp {
+    border-radius: 50%; margin: auto;
+    display: block;
+}
 
 @media only screen and (max-width: 768px){
     #left-col{

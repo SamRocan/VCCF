@@ -46,13 +46,60 @@
                                 <div class="container information-found">
                                     <h3 class="content-header">Founders</h3>
                                     <ul>
-                                        {% for handle, image in twitterZip %}
+                                    {% for name, handle, ph_url, image in socialMediaZip %}
                                         {% if handle != None %}
-                                        <img src="{{image}}" width="100px" class="twitter-pp">
+                                        <div class="row" style="display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-align: center;-webkit-align-items: center;-webkit-box-align: center;align-items: center;">
+                                            <div class="col" style="display: inline-block">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn.freebiesupply.com/logos/large/2x/product-hunt-logo-png-transparent.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn.icon-icons.com/icons2/2429/PNG/512/linkedin_logo_icon_147268.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col">
+                                                <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+                                            </div>
+                                            <div class="col">
+                                                <h3>{{name}}</h3>
+                                            </div>
+                                        </div>
                                         <canvas id="twitter-box-{{handle}}" style="display: none;">
-                                            <h1>{{handle}}</h1>
                                         </canvas>
                                         <li><button onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</button></li>
+                                        {% else %}
+                                        <div class="row" style="display: -ms-flexbox; display: -webkit-flex; display: flex; -ms-flex-align: center;-webkit-align-items: center;-webkit-box-align: center;align-items: center;">
+                                            <div class="col" style="display: inline-block">
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn.freebiesupply.com/logos/large/2x/product-hunt-logo-png-transparent.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                        <div class="col p-0">
+                                                            <img src="https://cdn.icon-icons.com/icons2/2429/PNG/512/linkedin_logo_icon_147268.png" width="65px" height="65px" class="logo-pp">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+                                            </div>
+                                            <div class="col">
+                                                <h3>{{name}}</h3>
+                                            </div>
+                                        </div>
+                                        <li><a href="https://www.producthunt.com/@{{ph_url}}" target="_blank" rel="noopener noreferrer"><button>{{name}}</button></a></li>
                                         {% endif %}
                                         {% endfor %}
                                     </ul>
