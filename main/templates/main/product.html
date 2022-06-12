@@ -64,7 +64,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col">
+                                            <div class="col twitter-col">
                                                 <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
                                             </div>
                                             <div class="col">
@@ -143,6 +143,7 @@
     function drawGraph(handle, pos) {
         var position = pos-1
         graphArea = document.getElementById('twitter-box-'+handle)
+        graphArea.style.backgroundColor = '#dfe4ea';
         console.log(graphArea.style.display)
         if (graphArea.style.display === "none") {
             graphArea.style.display = "block";
@@ -158,24 +159,19 @@
                     label: handle,
                     data: [results[0][position],results[1][position],results[2][position],results[3][position], results[4][position]],
                     backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)'
+                        '#60a0f2',
+                        '#85e1ae',
+                        '#f1bc5d',
+                        '#eb6d7a',
+                        '#9486d3',
                     ],
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)'
+                        '#60a0f2',
+                        '#85e1ae',
+                        '#f1bc5d',
+                        '#eb6d7a',
+                        '#9486d3',
+
                     ],
                     borderWidth: 1
                 }]
