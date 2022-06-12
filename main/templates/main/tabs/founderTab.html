@@ -1,0 +1,62 @@
+<div class="container information-found">
+    <h3 class="content-header">Founders</h3>
+    <ul>
+        {% for name, handle, ph_url, image in socialMediaZip %}
+        {% if handle != None %}
+        <div class="row social-row">
+            <div class="col" style="display: inline-block">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col p-0">
+                            <img src="https://cdn.freebiesupply.com/logos/large/2x/product-hunt-logo-png-transparent.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                        <div class="col p-0">
+                            <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                        <div class="col p-0">
+                            <img src="https://cdn.icon-icons.com/icons2/2429/PNG/512/linkedin_logo_icon_147268.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col twitter-col">
+                <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+            </div>
+            <div class="col">
+                <h3>{{name}}</h3>
+            </div>
+        </div>
+        <canvas id="twitter-box-{{handle}}" style="display: none;">
+        </canvas>
+        <li><a class="search-button" onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</a></li>
+        {% else %}
+        <div class="row social-row">
+            <div class="col" style="display: inline-block">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col p-0">
+                            <img src="https://cdn.freebiesupply.com/logos/large/2x/product-hunt-logo-png-transparent.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                        <div class="col p-0">
+                            <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                        <div class="col p-0">
+                            <img src="https://cdn.icon-icons.com/icons2/2429/PNG/512/linkedin_logo_icon_147268.png" width="65px" height="65px" class="logo-pp">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+            </div>
+            <div class="col">
+                <h3>{{name}}</h3>
+            </div>
+        </div>
+        <br>
+        <p style="text-align: center">Analysis not available</p>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</div>
