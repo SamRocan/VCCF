@@ -125,8 +125,11 @@ def productHome(request, productSlug):
     companyName = str(results.get('name'))
     print(companyName)
     searchResults(companyName + " Crunchbase")
+    print("-------")
     searchResults(companyName + " SaasWorthy")
+    print("-------")
     searchResults(companyName + " LinkedIn")
+    print("-------")
     searchResults(companyName + " YCombinator")
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
