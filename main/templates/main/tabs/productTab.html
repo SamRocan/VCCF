@@ -1,3 +1,13 @@
 <div class="container information-found">
-    <p>{{results}}</p>
+    <!--<p>{{results}}</p>-->
+    <h3>{{results.name}}</h3>
+    <img src="{{logo}}" width="120px">
+    <ul>
+    {% for topic in topics %}
+        <li style="text-align: center"><h4>{{topic}}</h4></li>
+    {% endfor %}
+    </ul>
+    <div class="container-fluid" style="background-color: #dfe4ea; padding-bottom: 300px; border-radius: 5px;">
+        <h3>Information Found</h3>
+    </div>
 </div>
