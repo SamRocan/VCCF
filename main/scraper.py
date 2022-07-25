@@ -26,12 +26,22 @@ def githubResults(companyName):
         val = [results[0][0], results[1][0]]
     else:
         val = str(companyName) + ": " + str(results[0][0]).lower()
-
+    print(val)
     return val
 
 def crunchBaseResults(companyName):
-    searchTerm = companyName + ' ' + 'crunchbase'
-    searchResults(searchTerm)
+    query = companyName.replace(' ', '-')
+    searchTerm = query + ' ' + 'crunchbase'
+    companyName = companyName.lower()
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName in str(results[0][0]).lower() and 'Crunchbase Company Profile & Funding' in str(results[0][0])):
+        val = [results[0][0], results[1][0]]
+    else:
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+    print(val)
+    return val
 
 def saasWorthyResults(companyName):
     searchTerm = companyName + ' ' + 'Saasworthy'

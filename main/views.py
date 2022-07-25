@@ -132,6 +132,8 @@ def productHome(request, productSlug):
     print("-------")
     searchResults(companyName + " YCombinator")"""
     githubInfo = githubResults(companyName)
+    crunchBaseInfo = crunchBaseResults(companyName)
+
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -165,7 +167,8 @@ def productHome(request, productSlug):
         'product_name':product_name,
         'userImages':userImages,
         'twitterZip':twitterZip,
-        'githubInfo':githubInfo
+        'githubInfo':githubInfo,
+        'crunchBaseInfo':crunchBaseInfo
     }
     return render(request, 'main/product.html', context)
 
