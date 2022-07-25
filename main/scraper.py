@@ -8,11 +8,26 @@ def searchResults(searchTerm):
     soup = BeautifulSoup(page.content, 'html.parser')
     results = [[],[]]
     for a in soup.find_all("a", {"class": "PartialSearchResults-item-title-link"}):
-        if('searchResult' in a['data-analytics']):
-            print(a.text)
-            print(a['href'])
-            print('')
+        results[0].append(a.text)
+        #print(a.text)
+        #print(a['href'])
+        results[1].append(a['href'])
+        print('')
+    return results
 
+def githubResults(companyName):
+    print("GitHub Results")
+    searchTerm = companyName + ' ' + 'github'
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName.lower() in str(results[0][0]).lower() and '- github' in str(results[0][0]).lower() ):
+        print("Yes")
+        val = [results[0][0], results[1][0]]
+    else:
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+    return val
 
 def crunchBaseResults(companyName):
     searchTerm = companyName + ' ' + 'crunchbase'

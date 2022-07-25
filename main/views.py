@@ -7,7 +7,7 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
-from .scraper import searchResults
+from .scraper import *
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -121,8 +121,8 @@ def productHome(request, productSlug):
                 topics.append(y['node']['name'])
         results[i] = str(jsonInfo['data']['post'][i])
 
-    """Parsing Other Websites"""
     companyName = str(results.get('name'))
+    """Parsing Other Websites
     print(companyName)
     searchResults(companyName + " Crunchbase")
     print("-------")
@@ -130,7 +130,8 @@ def productHome(request, productSlug):
     print("-------")
     searchResults(companyName + " LinkedIn")
     print("-------")
-    searchResults(companyName + " YCombinator")
+    searchResults(companyName + " YCombinator")"""
+    githubInfo = githubResults(companyName)
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -158,13 +159,13 @@ def productHome(request, productSlug):
         'topics':topics,
         'logo':logo,
         'names':Names,
-        'topics':topics,
         'socialMediaZip':socialMediaZip,
         'twitterHandles':TwitterHandles,
         'product':productSlug,
         'product_name':product_name,
         'userImages':userImages,
-        'twitterZip':twitterZip
+        'twitterZip':twitterZip,
+        'githubInfo':githubInfo
     }
     return render(request, 'main/product.html', context)
 
