@@ -133,6 +133,7 @@ def productHome(request, productSlug):
     searchResults(companyName + " YCombinator")"""
     githubInfo = githubResults(companyName)
     crunchBaseInfo = crunchBaseResults(companyName)
+    saasWorthyInfo = saasWorthyResults(companyName)
 
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
@@ -168,7 +169,8 @@ def productHome(request, productSlug):
         'userImages':userImages,
         'twitterZip':twitterZip,
         'githubInfo':githubInfo,
-        'crunchBaseInfo':crunchBaseInfo
+        'crunchBaseInfo':crunchBaseInfo,
+        'saasWorthyInfo':saasWorthyInfo,
     }
     return render(request, 'main/product.html', context)
 
