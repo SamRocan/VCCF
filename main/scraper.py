@@ -84,8 +84,16 @@ def linkedInResults(companyName):
     return val
 
 def yCombinatorResults(companyName):
-    searchTerm = companyName + ' ' + 'yCombinator'
-    searchResults(searchTerm)
+    URL = 'https://www.ycombinator.com/companies/'+companyName.lower()
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
+    title = soup.find('title')
+    print(title)
+    if('File Not Found' in str(title)):
+        print("No Company found")
+    else:
+        print("company found")
+    return ['yCombinator - ' + companyName,URL]
 
 def apolloIOResults(companyName):
     searchTerm = companyName + ' ' + 'Apollo.io'

@@ -135,7 +135,7 @@ def productHome(request, productSlug):
     crunchBaseInfo = crunchBaseResults(companyName)
     saasWorthyInfo = saasWorthyResults(companyName)
     linkedInInfo = linkedInResults(companyName)
-
+    yCombinatorInfo = yCombinatorResults(companyName)
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -173,6 +173,7 @@ def productHome(request, productSlug):
         'crunchBaseInfo':crunchBaseInfo,
         'saasWorthyInfo':saasWorthyInfo,
         'linkedInInfo':linkedInInfo,
+        'yCombinatorInfo':yCombinatorInfo,
     }
     return render(request, 'main/product.html', context)
 
