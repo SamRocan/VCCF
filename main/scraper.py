@@ -138,5 +138,19 @@ def saasHubResults(companyName):
 
 def capterraResults(companyName):
     searchTerm = companyName + ' ' + 'Capterra'
-    searchResults(searchTerm)
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName in str(results[0][0]) and 'pricing, cost & reviews - capterra' in str(results[0][0]).lower() ):
+        print("Yes")
+        val = str(companyName) + ": " + str(results[0][0]).lower() + str(" YES!")
+        print(val)
+    elif(companyName in str(results[0][0]) and 'pricing, alternatives & more 2022 - capterra' in str(results[0][0]).lower()):
+        print("Yes")
+        val = str(companyName) + ": " + str(results[0][0]).lower() + str(" YES!")
+        print(val)
+    else:
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+    return val
 
