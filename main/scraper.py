@@ -97,7 +97,20 @@ def yCombinatorResults(companyName):
 
 def apolloIOResults(companyName):
     searchTerm = companyName + ' ' + 'Apollo.io'
-    searchResults(searchTerm)
+
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName in str(results[0][0]) and '- Apollo.io' in str(results[0][0]) ):
+        print("Yes")
+        val = val = [results[0][0], results[1][0]]
+        print(val)
+    elif(companyName not in str(results[0][0]) and '- Apollo.io' not in str(results[0][0])):
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+    else:
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+    return val
 
 def SaasHubResults(companyName):
     searchTerm = companyName + ' ' + 'SaasHub'
