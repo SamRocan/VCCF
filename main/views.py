@@ -137,6 +137,7 @@ def productHome(request, productSlug):
     linkedInInfo = linkedInResults(companyName)
     yCombinatorInfo = yCombinatorResults(companyName)
     apolloIOInfo = apolloIOResults(companyName)
+    saasHubInfo = saasHubResults(companyName)
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -176,6 +177,7 @@ def productHome(request, productSlug):
         'linkedInInfo':linkedInInfo,
         'yCombinatorInfo':yCombinatorInfo,
         'apolloIOInfo':apolloIOInfo,
+        'saasHubInfo':saasHubInfo,
     }
     return render(request, 'main/product.html', context)
 

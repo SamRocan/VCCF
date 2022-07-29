@@ -103,7 +103,7 @@ def apolloIOResults(companyName):
     val = "0"
     if (companyName in str(results[0][0]) and '- Apollo.io' in str(results[0][0]) ):
         print("Yes")
-        val = val = [results[0][0], results[1][0]]
+        val = [results[0][0], results[1][0]]
         print(val)
     elif(companyName not in str(results[0][0]) and '- Apollo.io' not in str(results[0][0])):
         val = str(companyName) + ": " + str(results[0][0]).lower()
@@ -112,9 +112,29 @@ def apolloIOResults(companyName):
 
     return val
 
-def SaasHubResults(companyName):
+def saasHubResults(companyName):
     searchTerm = companyName + ' ' + 'SaasHub'
-    searchResults(searchTerm)
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName.lower() in str(results[0][0]).lower() and '- SaaSHub' in str(results[0][0]) ):
+        print("Yes")
+        val = [results[0][0], results[1][0]]
+        print(val)
+    elif (companyName.lower() in str(results[0][0]).lower() and 'compare differences & reviews' in str(results[0][0]) ):
+        print("Yes")
+        val = [results[0][0], results[1][0]]
+        print(val)
+    elif (companyName.lower() in str(results[0][0]).lower() and 'community voted on SaaSHub' in str(results[0][0]) ):
+        print("Yes")
+        val = [results[0][0], results[1][0]]
+        print(val)
+    elif(companyName not in str(results[0][0]) and 'Reviews - SaaSHub' not in str(results[0][0])):
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+    else:
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+    return val
 
 def capterraResults(companyName):
     searchTerm = companyName + ' ' + 'Capterra'
