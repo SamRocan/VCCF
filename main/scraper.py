@@ -66,6 +66,22 @@ def saasWorthyResults(companyName):
 def linkedInResults(companyName):
     searchTerm = companyName + ' ' + 'LinkedIn'
     searchResults(searchTerm)
+    companyName = companyName.lower()
+    results = searchResults(searchTerm)
+    print(results[0][0])
+    val = "0"
+    if (companyName in str(results[0][0]).lower() and '- linkedin' in str(results[0][0]).lower()):
+        print("Yes")
+        val = [results[0][0], results[1][0]]
+        print(val)
+    elif(companyName not in str(results[0][0]).lower() and '- linkedin' not in str(results[0][0]).lower()):
+        print("No")
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+    else:
+        print("No")
+        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+    return val
 
 def yCombinatorResults(companyName):
     searchTerm = companyName + ' ' + 'yCombinator'

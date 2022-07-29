@@ -134,6 +134,7 @@ def productHome(request, productSlug):
     githubInfo = githubResults(companyName)
     crunchBaseInfo = crunchBaseResults(companyName)
     saasWorthyInfo = saasWorthyResults(companyName)
+    linkedInInfo = linkedInResults(companyName)
 
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
@@ -171,6 +172,7 @@ def productHome(request, productSlug):
         'githubInfo':githubInfo,
         'crunchBaseInfo':crunchBaseInfo,
         'saasWorthyInfo':saasWorthyInfo,
+        'linkedInInfo':linkedInInfo,
     }
     return render(request, 'main/product.html', context)
 
