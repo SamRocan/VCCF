@@ -7,7 +7,8 @@ import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
-from .scraper import *
+from scraper.scraper import *
+from scraper import GitHub
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1

@@ -29,6 +29,7 @@ def githubResults(companyName):
         val = str(companyName) + ": " + str(results[0][0]).lower()
     print(val)
     return val
+
 #test - akaunting
 def crunchBaseResults(companyName):
     query = companyName.replace(' ', '-')
