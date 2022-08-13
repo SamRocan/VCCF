@@ -8,103 +8,83 @@ class GitHub:
         page = requests.get(self.url)
         self.soup = BeautifulSoup(page.content, 'html.parser')
 
+    def getSubHeading(self):
+        subhead = self.soup.find(class_='h-sub-head').text
+        print(subhead)
 
-    #Github used https://github.com/akaunting/akaunting#readme
-    def getCommits(self):
-        commits = self.soup.find_all("div", {"class": "js-details-container"})[0].find("strong")
-        return commits.text
+    def getScore(self):
+        score = self.soup.find(class_='pop_score_d').text
+        retval = ''
+        for i in score:
+            if(i != '%'):
+                retval +=i
+            else:
+                print(retval.strip())
+                return 0
 
-    def getLastUpdate(self):
-        last_update = self.soup.findAll("relative-time", {"class": "no-wrap"})
-        print(last_update)
-        return last_update[0].text
+    def getDescription(self):
+        desc = self.soup.find(class_='sass-desc').findChildren("p", recursive=False)[1].text.strip()
+        return desc
 
-    def getBranches(self):
-        git_file_info = self.soup.findAll("a", {"data-pjax":"#repo-content-pjax-container"})
-        arr = []
-        for line in git_file_info:
-            if('branches' in str(line)):
-                arr.append(line.text.strip())
-        branches = int(arr[1][:1])
-        return branches
-
-    def getLanguages(self):
-        languages = self.soup.findAll("a", {"data-ga-click":"Repository, language stats search click, location:repo overview"})
+    def getSocialMediaCount(self):
+        socials = self.soup.findAll(class_='flwrs-row')
         retVal = []
-        for i in languages:
-            val = i.text.strip()
-            word = ""
-            for z in val:
-                #split where ord = 10 aka a Line Feed
-                if(ord(z)!=10):
-                    word+=z
+        print(socials)
+        for i in range(len(socials)):
+            if(i>0):
+                if(socials[i].text.strip() !=''):
+                    retVal.append(int(socials[i].text.strip().replace(',','')))
                 else:
-                    retVal.append(word)
-                    word=""
+                    retVal.append(0)
+        return retVal
 
-                if(z=='%'):
-                    retVal.append(word)
-                    word=""
-        finalVals = []
-        language = []
-        for i in range(0, len(retVal)):
-            language.append(retVal[i])
-            if(len(language)==2):
-                finalVals.append(language)
-                language=[]
-        return finalVals
+    def getFeatures(self):
+        features = []
+        for i in self.soup.find("div", {"id": "features"}).findAll("li"):
+            features.append(i.text)
+        return features
 
-    def stringToNum(self, str):
-        retNum = ''
-        multiplier = 1
-        for i in str:
-            if(i.isnumeric() or i == '.'):
-                retNum +=i
-            if(i == 'k'):
-                multiplier = 1000
-        retNum = float(retNum) * multiplier
-        return retNum
+    def getTableInfo(self):
+        tableDict = {}
+        cells = self.soup.find("table", {"class": "tech-det-table"}).findAll("td")
+        currentCell = None
+        for i in cells:
+            if('tech-title' in str(i)):
+                if(currentCell!=None):
+                    tableDict[currentCell][0].split("\n")
+                tableDict[i.text] = []
+                currentCell = i.text
+            else:
+                if('fa fa-check-circle-o' in str(i)):
+                    tableDict[currentCell].append('YES')
+                elif(currentCell == 'API'):
+                    tableDict[currentCell].append('NO')
+                else:
+                    tableDict[currentCell].append(i.text.strip())
+        for i in tableDict:
+            tableDict[i] = tableDict[i][0].split("\n")
+        return tableDict
 
-    def getStats(self):
-        about = self.soup.find('div', {'class':'BorderGrid-cell'})
-        retVal = []
-        for i in about:
-            if('<strong>' in str(i)):
-                word = i.text.strip()
-                for z in word:
-                    if(ord(z)==32 or ord(z)!=10):
-                        retVal.append(word)
-                        word=""
-                    else:
-                        word+=z
-        finList1 = []
-        for i in retVal:
-            if(i!='' and str(i)!='\n'):
-                finList1.append(i)
+    def getPricingPlans(self):
+        #Split on:
+        #$num after free
+        #custom after $num
+        plans = self.soup.findAll("div", {"class":"plans-div"})
+        plansDict = {}
+        for plan in plans:
+            #print("-----")
+            planName = plan.find("span", {"class":"plan-title"}).text.strip()
+            planVals  = plan.find("div", {"class":"pricing"}).text.strip().split("\n")
+            planDesc = plan.find("div", {"class":"pln-desc"})
+            featList = planDesc.findAll("li")
+            featListFinal = []
+            for i in featList:
+                featListFinal.append(i.text.strip())
+            if len(planVals) >= 4:
+                plansDict[planName] = [[planVals[0], planVals[2]], [planVals[1], planVals[3]], featListFinal]
+            else:
+                plansDict[planName] = [planVals, featListFinal]
+            print("---")
 
-        finList2 = []
-        for i in finList1:
-            z = i.replace('\n   ', '')
-            finList2.append(z)
-        finListFin = []
-        for i in finList2:
-            z = i.split()
-            finListFin.append(z[0])
-        print(finList2)
-        print(finListFin)
-        numList = []
-        for i in finListFin:
-            numList.append(self.stringToNum(i))
-        return numList
+        return plansDict
 
-    def getTags(self):
-        tags = self.soup.findAll('a', {'data-ga-click':'Topic, repository page'})
-        print(len(tags))
-        retList = []
-        for i in tags:
-            retList.append(i.text.strip())
-        return retList
-
-    def getReadMe(self):
-        readMe = self.soup.find('div', {'data-target':'readme-toc.content'})
-        return readMe #add .text to only get text and not html
