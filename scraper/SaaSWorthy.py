@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-class GitHub:
+class SaaSWorthy:
     def __init__(self, url):
         self.url = url
         page = requests.get(self.url)
@@ -10,7 +10,7 @@ class GitHub:
 
     def getSubHeading(self):
         subhead = self.soup.find(class_='h-sub-head').text
-        print(subhead)
+        return subhead
 
     def getScore(self):
         score = self.soup.find(class_='pop_score_d').text
@@ -19,8 +19,7 @@ class GitHub:
             if(i != '%'):
                 retval +=i
             else:
-                print(retval.strip())
-                return 0
+                return retval.strip()
 
     def getDescription(self):
         desc = self.soup.find(class_='sass-desc').findChildren("p", recursive=False)[1].text.strip()

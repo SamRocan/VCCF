@@ -10,6 +10,7 @@ from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatc
 from scraper.scraper import *
 from scraper.GitHub import *
 from scraper.GitHub import GitHub
+from scraper.SaaSWorthy import SaaSWorthy
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -161,8 +162,9 @@ def productHome(request, productSlug):
         #print(userImage)
 
     twitterZip = zip(TwitterHandles, userImages)
-    print("logo: " + str(logo))
     git = GitHub(githubInfo[1])
+    print("INFO: " + str(saasWorthyInfo))
+    saasWorthy = SaaSWorthy(saasWorthyInfo[1])
     context = {
         'results':results,
         'topics':topics,
@@ -176,6 +178,7 @@ def productHome(request, productSlug):
         'twitterZip':twitterZip,
         'githubInfo':githubInfo,
         'git':git,
+        'saasWorthy':saasWorthy,
         'crunchBaseInfo':crunchBaseInfo,
         'saasWorthyInfo':saasWorthyInfo,
         'linkedInInfo':linkedInInfo,
