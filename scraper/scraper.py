@@ -27,7 +27,6 @@ def githubResults(companyName):
         val = [results[0][0], results[1][0]]
     else:
         val = str(companyName) + ": " + str(results[0][0]).lower()
-    print(val)
     return val
 
 #test - akaunting

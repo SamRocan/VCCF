@@ -7,14 +7,89 @@
         <li style="text-align: center"><h4>{{topic}}</h4></li>
     {% endfor %}
     </ul>
-    <div class="container-fluid" style="background-color: #dfe4ea; padding-bottom: 300px; border-radius: 5px;">
+    <div class="container-fluid" style="background-color: #dfe4ea; padding-bottom: 30px; border-radius: 5px; text-align: center">
         <h3>Information Found</h3>
-        <a href="{{githubInfo.1}}">{{githubInfo.0}}</a><br>
-        <a href="{{crunchBaseInfo.1}}">{{crunchBaseInfo.0}}</a><br>
-        <a href="{{saasWorthyInfo.1}}">{{saasWorthyInfo.0}}</a><br>
-        <a href="{{linkedInInfo.1}}">{{linkedInInfo.0}}</a><br>
-        <a href="{{yCombinatorInfo.1}}">{{yCombinatorInfo.0}}</a><br>
-        <a href="{{apolloIOInfo.1}}">{{apolloIOInfo.0}}</a><br>
-        <a href="{{saasHubInfo.1}}">{{saasHubInfo.0}}</a><br>
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Github
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{githubInfo.1}}">{{githubInfo.0}}</a></div>
+                    <p style="text-align: center">{{git.getCommits}}</p>
+                    <p style="text-align: center">{{git.getLastUpdate}}</p>
+                    <p style="text-align: center">{{git.getBranches}}</p>
+                    <p style="text-align: center">{{git.getLanguages}}</p>
+                    <p style="text-align: center">{{git.getStats}}</p>
+                    <p style="text-align: center">{{git.getTags}}</p>
+                    <hr style="margin: auto">
+                    {% autoescape off %}
+                    <p style="text-align: center">{{git.getReadMe}}</p>
+                    {% endautoescape %}
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        Crunchbase
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{crunchBaseInfo.1}}">{{crunchBaseInfo.0}}</a></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        SaaSworthy
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{saasWorthyInfo.1}}">{{saasWorthyInfo.0}}</a></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+                        LinkedIn
+                    </button>
+                </h2>
+                <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{linkedInInfo.1}}">{{linkedInInfo.0}}</a></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading5">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+                        Y Combinator
+                    </button>
+                </h2>
+                <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{yCombinatorInfo.1}}">{{yCombinatorInfo.0}}</a></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading6">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse6" aria-expanded="false" aria-controls="flush-collapse6">
+                        Apollo.io
+                    </button>
+                </h2>
+                <div id="flush-collapse6" class="accordion-collapse collapse" aria-labelledby="flush-heading6" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{apolloIOInfo.1}}">{{apolloIOInfo.0}}</a></div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading7">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse7" aria-expanded="false" aria-controls="flush-collapse7">
+                        SaaShub
+                    </button>
+                </h2>
+                <div id="flush-collapse7" class="accordion-collapse collapse" aria-labelledby="flush-heading7" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><a href="{{saasHubInfo.1}}">{{saasHubInfo.0}}</a></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

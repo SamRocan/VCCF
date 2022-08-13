@@ -8,7 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
 from scraper.scraper import *
-from scraper import GitHub
+from scraper.GitHub import *
+from scraper.GitHub import GitHub
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -161,6 +162,7 @@ def productHome(request, productSlug):
 
     twitterZip = zip(TwitterHandles, userImages)
     print("logo: " + str(logo))
+    git = GitHub(githubInfo[1])
     context = {
         'results':results,
         'topics':topics,
@@ -173,6 +175,7 @@ def productHome(request, productSlug):
         'userImages':userImages,
         'twitterZip':twitterZip,
         'githubInfo':githubInfo,
+        'git':git,
         'crunchBaseInfo':crunchBaseInfo,
         'saasWorthyInfo':saasWorthyInfo,
         'linkedInInfo':linkedInInfo,
