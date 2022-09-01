@@ -27,7 +27,11 @@ def product(request):
     return redirect('productHome', productSlug=request.GET["productSearch"])
 
 def productHome(request, productSlug):
+
     API_URL = "https://api.producthunt.com/v2/api/graphql"
+
+    '''API Code'''
+
 
     MY_API_TOKEN = "PbEz8mWhaMzYy1J8WwS-X2-YXi92xhRffQS3YDi3xl4"
     slug = productSlug
@@ -124,23 +128,7 @@ def productHome(request, productSlug):
                 topics.append(y['node']['name'])
         results[i] = str(jsonInfo['data']['post'][i])
 
-    companyName = str(results.get('name'))
-    """Parsing Other Websites
-    print(companyName)
-    searchResults(companyName + " Crunchbase")
-    print("-------")
-    searchResults(companyName + " SaasWorthy")
-    print("-------")
-    searchResults(companyName + " LinkedIn")
-    print("-------")
-    searchResults(companyName + " YCombinator")"""
-    githubInfo = githubResults(companyName)
-    crunchBaseInfo = crunchBaseResults(companyName)
-    saasWorthyInfo = saasWorthyResults(companyName)
-    linkedInInfo = linkedInResults(companyName)
-    yCombinatorInfo = yCombinatorResults(companyName)
-    apolloIOInfo = apolloIOResults(companyName)
-    saasHubInfo = saasHubResults(companyName)
+    '''Twitter Code'''
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
     request.session["TwitterHandles"] = TwitterHandles
@@ -162,9 +150,27 @@ def productHome(request, productSlug):
         #print(userImage)
 
     twitterZip = zip(TwitterHandles, userImages)
-    git = GitHub(githubInfo[1])
+
+    companyName = str(results.get('name'))
+
+    '''Scraping Other Websites'''
+
+    githubInfo = githubResults(companyName)
+    crunchBaseInfo = crunchBaseResults(companyName)
+    saasWorthyInfo = saasWorthyResults(companyName)
+    linkedInInfo = linkedInResults(companyName)
+    yCombinatorInfo = yCombinatorResults(companyName)
+    apolloIOInfo = apolloIOResults(companyName)
+    saasHubInfo = saasHubResults(companyName)
+    if(len(githubInfo) != 2):
+        print("No Github Found")
+        git = None
+        print(githubInfo)
+    else:
+        git = GitHub(githubInfo[1])
     print("INFO: " + str(saasWorthyInfo))
     saasWorthy = SaaSWorthy(saasWorthyInfo[1])
+
     context = {
         'results':results,
         'topics':topics,

@@ -17,6 +17,7 @@
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    {% if git != None %}
                     <div class="accordion-body"><a href="{{githubInfo.1}}">{{githubInfo.0}}</a></div>
                     <p style="text-align: center">{{git.getCommits}}</p>
                     <p style="text-align: center">{{git.getLastUpdate}}</p>
@@ -28,6 +29,9 @@
                     {% autoescape off %}
                     <p style="text-align: center">{{git.getReadMe}}</p>
                     {% endautoescape %}
+                    {% else %}
+                        <p>Nothing Found</p>
+                    {% endif %}
                 </div>
             </div>
             <div class="accordion-item">
