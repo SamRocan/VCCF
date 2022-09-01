@@ -71,10 +71,21 @@
                 </div>
             </div>
             <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-heading5">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+                <h2 class="accordion-header" id="flush-headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive" aria-expanded="false" aria-controls="flush-collapseFive">
                         Y Combinator
                     </button>
+                </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body"><a href="{{ycombinator.1}}">{{ycombinator.0}}</a>
+                            <p style="text-align: center">{{ycombinator.getOverview}}</p>
+                            <p style="text-align: center">{{ycombinator.getBadges}}</p>
+                            <p style="text-align: center">{{ycombinator.getFounders}}</p>
+                            <p style="text-align: center">{{ycombinator.getJobsHiring}}</p>
+                            <p style="text-align: center">{{ycombinator.getKeyInfo}}</p>
+                            <p style="text-align: center">{{ycombinator.getNews}}</p>
+                        </div>
+                    </div>
                 </h2>
                 <div id="flush-collapse5" class="accordion-collapse collapse" aria-labelledby="flush-heading5" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body"><a href="{{yCombinatorInfo.1}}">{{yCombinatorInfo.0}}</a></div>

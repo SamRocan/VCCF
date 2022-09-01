@@ -59,9 +59,12 @@ class YCombinator:
     def getNews(self):
         newsInfo = [[],[]]
         news = self.soup.find("div", {"id": "news"})
-        articles = news.findAll("a")
-        for article in articles:
-            print("------")
-            newsInfo[0].append(article.text)
-            newsInfo[1].append(article['href'])
+        try:
+            articles = news.findAll("a")
+            for article in articles:
+                print("------")
+                newsInfo[0].append(article.text)
+                newsInfo[1].append(article['href'])
+        except:
+            print('Nothing')
         return newsInfo

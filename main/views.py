@@ -11,6 +11,7 @@ from scraper.scraper import *
 from scraper.GitHub import *
 from scraper.GitHub import GitHub
 from scraper.SaaSWorthy import SaaSWorthy
+from scraper.YCombinator import YCombinator
 import tweepy as tw
 # Create your views here.
 #To view logs: docker logs vccf_web_1
@@ -168,6 +169,13 @@ def productHome(request, productSlug):
         print(githubInfo)
     else:
         git = GitHub(githubInfo[1])
+
+    if(len(yCombinatorInfo) != 2):
+        print("No YCombinator Found")
+        ycombinator = None
+        print(yCombinatorInfo)
+    else:
+        ycombinator = YCombinator(yCombinatorInfo[1])
     print("INFO: " + str(saasWorthyInfo))
     saasWorthy = SaaSWorthy(saasWorthyInfo[1])
 
@@ -185,6 +193,7 @@ def productHome(request, productSlug):
         'githubInfo':githubInfo,
         'git':git,
         'saasWorthy':saasWorthy,
+        'ycombinator':ycombinator,
         'crunchBaseInfo':crunchBaseInfo,
         'saasWorthyInfo':saasWorthyInfo,
         'linkedInInfo':linkedInInfo,
