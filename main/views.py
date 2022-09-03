@@ -175,6 +175,14 @@ def productHome(request, productSlug):
         except:
             git = None
 
+    if(len(crunchBaseInfo)!= 2):
+        print("No Crunchbase Found")
+        crunchBaseInfo = None
+
+    if(len(linkedInInfo)!=2):
+        print("No LinkedIn Found")
+        linkedInInfo = None
+
     print(yCombinatorInfo)
     if(len(yCombinatorInfo) != 2):
         print("No YCombinator Found")
@@ -187,6 +195,9 @@ def productHome(request, productSlug):
         except:
             ycombinator = None
 
+    if(len(apolloIOInfo)!=2):
+        print("No Apollo.IO Found")
+        apolloIOInfo = None
 
     if(len(saasHubInfo) !=2):
         print("No SaasHubInfo")

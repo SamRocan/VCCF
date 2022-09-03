@@ -17,8 +17,9 @@
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
                     {% if git != None %}
-                    <div class="accordion-body"><a href="{{githubInfo.1}}">{{githubInfo.0}}</a></div>
+                    <a href="{{githubInfo.1}}">{{githubInfo.0}}</a>
                     <p style="text-align: center">{{git.getCommits}}</p>
                     <p style="text-align: center">{{git.getLastUpdate}}</p>
                     <p style="text-align: center">{{git.getBranches}}</p>
@@ -30,8 +31,9 @@
                     <p style="text-align: center">{{git.getReadMe}}</p>
                     {% endautoescape %}
                     {% else %}
-                        <p>Nothing Found</p>
+                        <p>No Github Found</p>
                     {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -41,27 +43,36 @@
                     </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body"><a href="{{crunchBaseInfo.1}}">{{crunchBaseInfo.0}}</a></div>
+                    <div class="accordion-body">
+                        {% if crunchBaseInfo != None %}
+                        <a href="{{crunchBaseInfo.1}}">{{crunchBaseInfo.0}}</a>
+                        {% else %}
+                        <p>No Crunchbase Found</p>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-                        SaaSWorthy
+                        SaasWorthy
                     </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                    {% if saasWorthy != None %}
-                        <div class="accordion-body"><a href="{{saasWorthyInfo.1}}">{{saasWorthyInfo.0}}</a></div>
+                    <div class="accordion-body">
+                        {% if saasWorthy != None %}
+                        <a href="{{saasWorthyInfo.1}}">{{saasWorthyInfo.0}}</a>
                         <p style="text-align: center">{{saasWorthy.getSubHeading}}</p>
                         <p style="text-align: center">{{saasWorthy.getScore}}</p>
                         <p style="text-align: center">{{saasWorthy.getSocialMediaCount}}</p>
                         <p style="text-align: center">{{saasWorthy.getFeatures}}</p>
                         <p style="text-align: center">{{saasWorthy.getTableInfo}}</p>
                         <p style="text-align: center">{{saasWorthy.getPricingPlans}}</p>
-                    {% else %}
-                        <p>Nothing Found</p>
-                    {% endif %}
+                        {% else %}
+                        <p>No SaasWorthy Found</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -71,7 +82,13 @@
                     </button>
                 </h2>
                 <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body"><a href="{{linkedInInfo.1}}">{{linkedInInfo.0}}</a></div>
+                    <div class="accordion-body">
+                    {% if linkedInInfo != None %}
+                    <a href="{{linkedInInfo.1}}">{{linkedInInfo.0}}</a>
+                    {% else %}
+                    <p>No LinkedIn Found</p>
+                    {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -106,7 +123,13 @@
                     </button>
                 </h2>
                 <div id="flush-collapse6" class="accordion-collapse collapse" aria-labelledby="flush-heading6" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body"><a href="{{apolloIOInfo.1}}">{{apolloIOInfo.0}}</a></div>
+                    <div class="accordion-body">
+                        {% if apolloIOInfo != None %}
+                        <div class="accordion-body"><a href="{{apolloIOInfo.1}}">{{apolloIOInfo.0}}</a></div>
+                        {% else %}
+                        <p>No Apollo.IO Found</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="accordion-item">
@@ -121,7 +144,7 @@
                         <p>{{saasHub.getMentions}}</p>
                         <p>{{saasHub.getSources}}</p>
                         {% else %}
-                        <p>Nothing Found</p>
+                        <p>No SaaSHub Found</p>
                         {% endif %}
                     </div>
                 </div>
