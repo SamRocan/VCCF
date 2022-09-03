@@ -27,6 +27,7 @@ def githubResults(companyName):
         val = [results[0][0], results[1][0]]
     else:
         val = str(companyName) + ": " + str(results[0][0]).lower()
+    print(val)
     return val
 
 #test - akaunting
@@ -117,25 +118,28 @@ def saasHubResults(companyName):
     results = searchResults(searchTerm)
     print(results[0][0])
     val = "0"
-    if (companyName.lower() in str(results[0][0]).lower() and '- SaaSHub' in str(results[0][0]) ):
+    if (companyName.lower() in str(results[0][0]).lower() and 'Reviews- SaaSHub' in str(results[0][0]) ):
         print("Yes")
         val = [results[0][0], results[1][0]]
         print(val)
-    elif (companyName.lower() in str(results[0][0]).lower() and 'compare differences & reviews' in str(results[0][0]) ):
-        print("Yes")
-        val = [results[0][0], results[1][0]]
-        print(val)
-    elif (companyName.lower() in str(results[0][0]).lower() and 'community voted on SaaSHub' in str(results[0][0]) ):
-        print("Yes")
-        val = [results[0][0], results[1][0]]
-        print(val)
-    elif(companyName not in str(results[0][0]) and 'Reviews - SaaSHub' not in str(results[0][0])):
-        val = str(companyName) + ": " + str(results[0][0]).lower()
+
+        '''elif (companyName.lower() in str(results[0][0]).lower() and 'compare differences & reviews' in str(results[0][0]) ):
+            print("Yes")
+            val = [results[0][0], results[1][0]]
+            print(val)
+        elif (companyName.lower() in str(results[0][0]).lower() and 'community voted on SaaSHub' in str(results[0][0]) ):
+            print("Yes")
+            val = [results[0][0], results[1][0]]
+            print(val)
+        elif(companyName not in str(results[0][0]) and 'Reviews - SaaSHub' not in str(results[0][0])):
+            val = str(companyName) + ": " + str(results[0][0]).lower()'''
     else:
         val = str(companyName) + ": " + str(results[0][0]).lower()
 
     return val
 
+'''
+Not Implemented --> Not enough results returned
 def capterraResults(companyName):
     searchTerm = companyName + ' ' + 'Capterra'
     results = searchResults(searchTerm)
@@ -154,3 +158,4 @@ def capterraResults(companyName):
 
     return val
 
+'''
