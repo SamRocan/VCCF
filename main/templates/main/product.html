@@ -70,56 +70,108 @@
                 data.conScore,
                 data.opnScore
             ]
-            testResults = [
-                data.testLabels,
-                data.testValues
-            ]
+            retData = data.retData
+
         },
         error: function(error_data) {
 
             console.log(error_data);
         }
+
     })
+    function changeGraph(){
+        let isStacked = statChart.config.options.scales.xAxes[0]['stacked'];
+        console.log(statChart);
+        statChart.config.options.scales.xAxes[0]['stacked'] = !isStacked;
+        statChart.config.options.scales.yAxes[0]['stacked'] = !isStacked;
+        statChart.update();
+    }
     function testGraph() {
-        const myTestGraphArea = document.getElementById("test-box");
-        myTestGraphArea.style.display = "block";
-        myTestGraphArea.style.backgroundColor = '#dfe4ea';
-        var ctx2 = myTestGraphArea.getContext('2d')
-        var myTestChart = new Chart(ctx2, {
-            type: 'bar',
+        var canvas = document.getElementById("statGraph")
+        canvas.style.backgroundColor = '#dfe4ea'
+        canvas.style.display = 'block'
+        canvas.style.padding = "50px"
+        var graphType = retData[retData.length-1]
+        var isStacked = true;
+        var reverseData;
+        var reverseLabels;
+        if(graphType == 'column'){
+            graphType = 'bar'
+        }
+        if(graphType == 'line'){
+            isStacked = false
+        }
+        if(retData[1].length > 100){
+            graphType = 'line'
+        }
+        var ctx = canvas.getContext('2d');
+        statChart = new Chart(ctx, {
+            type: graphType,
             data: {
-                labels: testResults[0],
-                datasets: [{
-                    label: "test",
-                    data: testResults[1],
-                    backgroundColor: [
-                        '#60a0f2',
-                        '#85e1ae',
-                        '#f1bc5d',
-                        '#eb6d7a',
-                        '#9486d3',
-                    ],
-                    borderColor: [
-                        '#60a0f2',
-                        '#85e1ae',
-                        '#f1bc5d',
-                        '#eb6d7a',
-                        '#9486d3',
-                    ],
-                    borderWidth: 1
-                }]
+                labels:retData[1],
+                datasets: [],
             },
             options: {
                 scales: {
+                    xAxes: [{
+                        stacked: isStacked, // this should be set to make the bars stacked
+                    }],
                     yAxes: [{
+                        stacked: isStacked, // this also..
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
                         }
                     }]
                 }
             }
         });
+        for (let i = 1; i < retData.length-2; i++) {
+            var randColor = '#'
+            randColor += Math.floor(Math.random()*16777215).toString(16);
+            //Math.floor(Math.random() * 256) for number between 0 and 255
+            randColors = []
+            for(let i=0; i<retData[1].length; i++){
+                randColor = '#'
+                rgbaColor = 'rgba('
+                for(let i=0; i<3; i++) {
+                    rgbaColor += Math.floor(Math.random() * 256).toString() + ", "
+                }
+                rgbaColor += '0.2)'
+                randColor += Math.floor(Math.random()*16777215).toString(16);
+                randColors.push(rgbaColor)
+            }
+            if(graphType === 'pie') {
+                var newDataset = {
+                    label: retData[0][i],
+                    data: retData[i + 1],
+                    borderColor: 'rgba(0, 0, 0, 0.5)',
+                    backgroundColor: randColors
+                }
+            } else if (graphType === 'line' && retData[1].length < 100) {
 
+                var newDataset = {
+                    label: retData[0][i],
+                    data: retData[i + 1],
+                    borderColor: randColor,
+                    backgroundColor:'rgba(0, 0, 0, 0.0)'
+                }
+            } else if (graphType === 'line' && retData[1].length > 100) {
+                var newDataset = {
+                    label: retData[0][i],
+                    data: retData[i + 1],
+                    borderColor: 'rgba(63, 127, 191, 1.0)',
+                    backgroundColor:'rgba(63, 127, 191, 0.2)'
+                }
+            } else{
+                var newDataset = {
+                    label: retData[0][i],
+                    data: retData[i+1],
+                    backgroundColor: randColor
+                }
+            }
+            statChart.data.datasets.push(newDataset);
+            statChart.update();
+        }
     }
     function drawGraph(handle, pos) {
         var position = pos-1

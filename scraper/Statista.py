@@ -55,3 +55,65 @@ class StatistaGraph:
 
     def getGraphData(self):
         return self.chartData
+
+
+def searchStatista(query):
+    url = 'https://www.statista.com/search/?q='+query+'&Search=&qKat=search'
+    searchSoup = BeautifulSoup(requests.get(url).content, 'html.parser')
+    searchlinkList = searchSoup.find_all("li", {"class":"list__item--searchContentTypeTopic"})
+    return searchlinkList
+
+def soupToLink(resultSetList):
+    links = []
+    for i in resultSetList:
+        loc1 = str(i).find("href")
+        loc2 = str(i).find("title")
+        links .append(str(i)[loc1+6:loc2-2])
+    return links
+
+def getLinks(linkList):
+    premiumStatisticLinks = []
+    basicStatisticLinks = []
+    topicLinks = []
+
+    for i in range(len(linkList)):
+        if("searchContentTypeStatistic" in str(linkList[i])):
+            if("iconSprite--statisticPremium" in str(linkList[i])):
+                element = linkList[i].find_all('a', href=True)
+                premiumStatisticLinks.append(element)
+            if("iconSprite--statisticBasis" in str(linkList[i])):
+                element = linkList[i].find_all('a', href=True)
+                basicStatisticLinks.append(element)
+
+    basicStatPage = soupToLink(basicStatisticLinks)
+    premiumStatPage = soupToLink(premiumStatisticLinks)
+    topicPage = soupToLink(topicLinks)
+    print("Stats")
+    print(len(basicStatPage))
+    print("Topics")
+    print(topicPage)
+    print("------")
+    return(basicStatPage)
+
+
+def topicSearch(query):
+    links = searchStatista(query)
+    topics = []
+    #Gets all topics
+    for i in links:
+        if 'href="/topics/' in str(i):
+            print(i.find("a")["href"])
+            topics.append(i.find("a")["href"])
+    return topics
+
+def topicInfo(link):
+    topicInfoRes = {}
+    soup = BeautifulSoup(requests.get(link).content, 'html.parser')
+
+    #and key facts on the page
+    keyFactsTitles = soup.findAll("div", {"class":"fancyBox__title"})
+    keyFactsValues = soup.findAll("div", {"class":"fancyBox__content"})
+
+    for title, value in zip(keyFactsTitles, keyFactsValues):
+        topicInfoRes[title.text.strip()] = value.text.strip()
+    return topicInfoRes

@@ -8,12 +8,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
 from scraper.scraper import *
-from scraper.GitHub import *
 from scraper.GitHub import GitHub
 from scraper.SaaSWorthy import SaaSWorthy
 from scraper.YCombinator import YCombinator
 from scraper.SaasHub import SaasHub
+from scraper.Statista import *
 import tweepy as tw
+
 # Create your views here.
 #To view logs: docker logs vccf_web_1
 from django.urls import reverse
@@ -130,6 +131,7 @@ def productHome(request, productSlug):
                 topics.append(y['node']['name'])
         results[i] = str(jsonInfo['data']['post'][i])
 
+
     '''Twitter Code'''
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
@@ -154,6 +156,9 @@ def productHome(request, productSlug):
     twitterZip = zip(TwitterHandles, userImages)
 
     companyName = str(results.get('name'))
+
+    '''Topics sent for use with Statista graphs'''
+    request.session['topics'] = topics
 
     '''Scraping Other Websites'''
 
@@ -244,6 +249,8 @@ class ChartData(APIView):
 
     def get(self, request, format = None):
         data = ["sent data"]
+
+        '''Twitter 5 Factor'''
         extScore = []
         neuScore = []
         agrScore = []
@@ -308,6 +315,30 @@ class ChartData(APIView):
         con = "Conscientiousness (" + str(catVar[3]) + ")"
         opn = "Openness (" + str(catVar[4]) + ")"
 
+        '''Statista Scraping'''
+
+        topicLinkDic = {}
+        topics = topicSearch(request.session["topics"][0])
+        URL = 'https://www.statista.com' + str(topics[0])
+        soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
+        linkList = soup.find_all("a", {"class":"list__itemWrap dossierSummary__link text--linkReset"})
+        #Gets all non-premium statistics
+        for link in linkList:
+            if('iconSprite--statisticPremium' not in str(link)):
+                print(str(link.text) + " : " + str(link["href"]))
+                topicLinkDic[link.text] = link["href"]
+                print("------")
+        print(topicInfo(URL))
+
+        print(topicLinkDic)
+        URL = 'http://statista.com' + list(topicLinkDic.values())[0]
+        statistaGraph = StatistaGraph(URL)
+        print(statistaGraph.getGraphData())
+        statGraphData = statistaGraph.getGraphData()
+        retData = []
+        retData.append(statGraphData.keys())
+        for key in statGraphData.keys():
+            retData.append(statGraphData[key])
         testLabels = ["a","b","c","d","e"]
         testValues = [10,20,30,25,15]
         data = {
@@ -322,6 +353,7 @@ class ChartData(APIView):
             'con':con,
             'opn':opn,
             'founderName':userName,
+            'retData':retData,
             'testLabels':testLabels,
             'testValues':testValues,
         }
