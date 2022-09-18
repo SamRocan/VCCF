@@ -308,7 +308,8 @@ class ChartData(APIView):
         con = "Conscientiousness (" + str(catVar[3]) + ")"
         opn = "Openness (" + str(catVar[4]) + ")"
 
-
+        testLabels = ["a","b","c","d","e"]
+        testValues = [10,20,30,25,15]
         data = {
             'extScore':extScore,
             'neuScore':neuScore,
@@ -321,6 +322,8 @@ class ChartData(APIView):
             'con':con,
             'opn':opn,
             'founderName':userName,
+            'testLabels':testLabels,
+            'testValues':testValues,
         }
 
         return Response(data)

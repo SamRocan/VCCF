@@ -68,16 +68,62 @@
                 data.neuScore,
                 data.agrScore,
                 data.conScore,
-                data.opnScore]
+                data.opnScore
+            ]
+            testResults = [
+                data.testLabels,
+                data.testValues
+            ]
         },
         error: function(error_data) {
 
             console.log(error_data);
         }
     })
+    function testGraph() {
+        const myTestGraphArea = document.getElementById("test-box");
+        myTestGraphArea.style.display = "block";
+        myTestGraphArea.style.backgroundColor = '#dfe4ea';
+        var ctx2 = myTestGraphArea.getContext('2d')
+        var myTestChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: testResults[0],
+                datasets: [{
+                    label: "test",
+                    data: testResults[1],
+                    backgroundColor: [
+                        '#60a0f2',
+                        '#85e1ae',
+                        '#f1bc5d',
+                        '#eb6d7a',
+                        '#9486d3',
+                    ],
+                    borderColor: [
+                        '#60a0f2',
+                        '#85e1ae',
+                        '#f1bc5d',
+                        '#eb6d7a',
+                        '#9486d3',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+    }
     function drawGraph(handle, pos) {
         var position = pos-1
-        graphArea = document.getElementById('twitter-box-'+handle)
+        const graphArea = document.getElementById('twitter-box-' + handle);
         graphArea.style.backgroundColor = '#dfe4ea';
         console.log(graphArea.style.display)
         if (graphArea.style.display === "none") {
