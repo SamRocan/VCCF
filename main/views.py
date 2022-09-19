@@ -240,8 +240,9 @@ def productHome(request, productSlug):
             print(topicInfo(URL))
 
     print(topicLinkDic)
-    for statURL in topicLinkDic.values():
-        print('http://statista.com' + statURL)
+
+    graphNames = list(topicLinkDic.keys())
+    graphNames = enumerate(graphNames)
     allGraphs = []
     for graphLink in topicLinkDic.values():
         URL = 'http://statista.com' + graphLink
@@ -281,6 +282,7 @@ def productHome(request, productSlug):
         'apolloIOInfo':apolloIOInfo,
         'saasHubInfo':saasHubInfo,
         'noOfGraphs':range(noOfGraphs),
+        'graphNames':graphNames,
     }
     return render(request, 'main/product.html', context)
 

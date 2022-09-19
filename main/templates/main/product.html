@@ -141,13 +141,19 @@
                 randColor += Math.floor(Math.random()*16777215).toString(16);
                 randColors.push(rgbaColor)
             }
-            if(graphType === 'pie') {
+            if(allGraphs[num][0][i] === 'type') {
+                console.log("TYPE ERROR")
+            } else if(graphType === 'table'){
+                console.log("Empty graph --> This is a table")
+            } else if(graphType === 'pie') {
                 var newDataset = {
                     label: allGraphs[num][0][i],
                     data: allGraphs[num][i + 1],
                     borderColor: 'rgba(0, 0, 0, 0.5)',
                     backgroundColor: randColors
                 }
+                window['statChart' + num.toString()].data.datasets.push(newDataset);
+                window['statChart' + num.toString()].update();
             } else if (graphType === 'line' && allGraphs[num][1].length < 100) {
 
                 var newDataset = {
@@ -156,6 +162,8 @@
                     borderColor: randColor,
                     backgroundColor:'rgba(0, 0, 0, 0.0)'
                 }
+                window['statChart' + num.toString()].data.datasets.push(newDataset);
+                window['statChart' + num.toString()].update();
             } else if (graphType === 'line' && allGraphs[num][1].length > 100) {
                 var newDataset = {
                     label: allGraphs[num][0][i],
@@ -163,15 +171,17 @@
                     borderColor: 'rgba(63, 127, 191, 1.0)',
                     backgroundColor:'rgba(63, 127, 191, 0.2)'
                 }
+                window['statChart' + num.toString()].data.datasets.push(newDataset);
+                window['statChart' + num.toString()].update();
             } else{
                 var newDataset = {
                     label: allGraphs[num][0][i],
                     data: allGraphs[num][i+1],
                     backgroundColor: randColor
                 }
+                window['statChart' + num.toString()].data.datasets.push(newDataset);
+                window['statChart' + num.toString()].update();
             }
-            window['statChart' + num.toString()].data.datasets.push(newDataset);
-            window['statChart' + num.toString()].update();
         }
     }
     function drawGraph(handle, pos) {

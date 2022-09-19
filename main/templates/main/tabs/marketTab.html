@@ -1,7 +1,12 @@
 <div class="container information-found">
-    {% for num in noOfGraphs %}
+    <!--{% for num in  noOfGraphs %}
         <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
-        <a class="search-button" onclick="testGraph('{{num}}')">TEST</a>
+        <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
+        <button onclick="changeGraph('{{num}}')">Click Me</button>
+    {% endfor %}-->
+    {% for num, title in graphNames %}
+        <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
+        <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
         <button onclick="changeGraph('{{num}}')">Click Me</button>
     {% endfor %}
 </div>
