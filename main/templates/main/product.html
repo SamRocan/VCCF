@@ -70,7 +70,7 @@
                 data.conScore,
                 data.opnScore
             ]
-            retData = data.retData
+            allGraphs = data.allGraphs
 
         },
         error: function(error_data) {
@@ -79,19 +79,20 @@
         }
 
     })
-    function changeGraph(){
-        let isStacked = statChart.config.options.scales.xAxes[0]['stacked'];
-        console.log(statChart);
-        statChart.config.options.scales.xAxes[0]['stacked'] = !isStacked;
-        statChart.config.options.scales.yAxes[0]['stacked'] = !isStacked;
-        statChart.update();
+    function changeGraph(num){
+        let isStacked = window['statChart' + num.toString()].config.options.scales.xAxes[0]['stacked'];
+        console.log(window['statChart' + num.toString()]);
+        window['statChart' + num.toString()].config.options.scales.xAxes[0]['stacked'] = !isStacked;
+        window['statChart' + num.toString()].config.options.scales.yAxes[0]['stacked'] = !isStacked;
+        window['statChart' + num.toString()].update();
     }
-    function testGraph() {
-        var canvas = document.getElementById("statGraph")
+    function testGraph(num) {
+        var canvas = document.getElementById("statGraph-"+num)
         canvas.style.backgroundColor = '#dfe4ea'
         canvas.style.display = 'block'
         canvas.style.padding = "50px"
-        var graphType = retData[retData.length-1]
+        console.log(allGraphs[num])
+        var graphType = allGraphs[num][allGraphs[num].length-1]
         var isStacked = true;
         var reverseData;
         var reverseLabels;
@@ -101,14 +102,14 @@
         if(graphType == 'line'){
             isStacked = false
         }
-        if(retData[1].length > 100){
+        if(allGraphs[num][1].length > 100){
             graphType = 'line'
         }
         var ctx = canvas.getContext('2d');
-        statChart = new Chart(ctx, {
+        window['statChart' + num.toString()] = new Chart(ctx, {
             type: graphType,
             data: {
-                labels:retData[1],
+                labels:allGraphs[num][1],
                 datasets: [],
             },
             options: {
@@ -125,12 +126,12 @@
                 }
             }
         });
-        for (let i = 1; i < retData.length-2; i++) {
+        for (let i = 1; i < allGraphs[0].length-2; i++) {
             var randColor = '#'
             randColor += Math.floor(Math.random()*16777215).toString(16);
             //Math.floor(Math.random() * 256) for number between 0 and 255
             randColors = []
-            for(let i=0; i<retData[1].length; i++){
+            for(let i=0; i<allGraphs[0][1].length; i++){
                 randColor = '#'
                 rgbaColor = 'rgba('
                 for(let i=0; i<3; i++) {
@@ -142,35 +143,35 @@
             }
             if(graphType === 'pie') {
                 var newDataset = {
-                    label: retData[0][i],
-                    data: retData[i + 1],
+                    label: allGraphs[num][0][i],
+                    data: allGraphs[num][i + 1],
                     borderColor: 'rgba(0, 0, 0, 0.5)',
                     backgroundColor: randColors
                 }
-            } else if (graphType === 'line' && retData[1].length < 100) {
+            } else if (graphType === 'line' && allGraphs[num][1].length < 100) {
 
                 var newDataset = {
-                    label: retData[0][i],
-                    data: retData[i + 1],
+                    label: allGraphs[num][0][i],
+                    data: allGraphs[num][i + 1],
                     borderColor: randColor,
                     backgroundColor:'rgba(0, 0, 0, 0.0)'
                 }
-            } else if (graphType === 'line' && retData[1].length > 100) {
+            } else if (graphType === 'line' && allGraphs[num][1].length > 100) {
                 var newDataset = {
-                    label: retData[0][i],
-                    data: retData[i + 1],
+                    label: allGraphs[num][0][i],
+                    data: allGraphs[num][i + 1],
                     borderColor: 'rgba(63, 127, 191, 1.0)',
                     backgroundColor:'rgba(63, 127, 191, 0.2)'
                 }
             } else{
                 var newDataset = {
-                    label: retData[0][i],
-                    data: retData[i+1],
+                    label: allGraphs[num][0][i],
+                    data: allGraphs[num][i+1],
                     backgroundColor: randColor
                 }
             }
-            statChart.data.datasets.push(newDataset);
-            statChart.update();
+            window['statChart' + num.toString()].data.datasets.push(newDataset);
+            window['statChart' + num.toString()].update();
         }
     }
     function drawGraph(handle, pos) {

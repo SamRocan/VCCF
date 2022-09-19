@@ -1,5 +1,7 @@
 <div class="container information-found">
-    <canvas id="statGraph" style="display: none;"></canvas>
-    <a class="search-button" onclick="testGraph()">TEST</a>
-    <button onclick="changeGraph()">Click Me</button>
+    {% for num in noOfGraphs %}
+        <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
+        <a class="search-button" onclick="testGraph('{{num}}')">TEST</a>
+        <button onclick="changeGraph('{{num}}')">Click Me</button>
+    {% endfor %}
 </div>

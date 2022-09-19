@@ -158,7 +158,6 @@ def productHome(request, productSlug):
     companyName = str(results.get('name'))
 
     '''Topics sent for use with Statista graphs'''
-    request.session['topics'] = topics
 
     '''Scraping Other Websites'''
 
@@ -220,6 +219,45 @@ def productHome(request, productSlug):
     else:
         saasWorthy = SaaSWorthy(saasWorthyInfo[1])
 
+    '''Statista Graph Scraping'''
+
+
+    topicLinkDic = {}
+    #gets list of topic pages, currently for first topic
+    for topic in topics:
+        topicResults = topicSearch(topic)
+        for topicPage in topicResults:
+            #gets first topic page
+            URL = 'https://www.statista.com' + str(topicPage)
+            soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
+            linkList = soup.find_all("a", {"class":"list__itemWrap dossierSummary__link text--linkReset"})
+            #Gets all non-premium statistics of first topic page
+            for link in linkList:
+                if('iconSprite--statisticPremium' not in str(link)):
+                    print(str(link.text) + " : " + str(link["href"]))
+                    topicLinkDic[link.text] = link["href"]
+                    print("------")
+            print(topicInfo(URL))
+
+    print(topicLinkDic)
+    for statURL in topicLinkDic.values():
+        print('http://statista.com' + statURL)
+    allGraphs = []
+    for graphLink in topicLinkDic.values():
+        URL = 'http://statista.com' + graphLink
+        statistaGraph = StatistaGraph(URL)
+        print(statistaGraph.getGraphData())
+        statGraphData = statistaGraph.getGraphData()
+        retData = []
+        retData.append(list(statGraphData.keys()))
+        for key in statGraphData.keys():
+            retData.append(statGraphData[key])
+        allGraphs.append(retData)
+
+    noOfGraphs = len(allGraphs)
+
+    request.session['allGraphs'] = allGraphs
+
     context = {
         'results':results,
         'topics':topics,
@@ -242,6 +280,7 @@ def productHome(request, productSlug):
         'yCombinatorInfo':yCombinatorInfo,
         'apolloIOInfo':apolloIOInfo,
         'saasHubInfo':saasHubInfo,
+        'noOfGraphs':range(noOfGraphs),
     }
     return render(request, 'main/product.html', context)
 
@@ -316,31 +355,10 @@ class ChartData(APIView):
         opn = "Openness (" + str(catVar[4]) + ")"
 
         '''Statista Scraping'''
-
-        topicLinkDic = {}
-        topics = topicSearch(request.session["topics"][0])
-        URL = 'https://www.statista.com' + str(topics[0])
-        soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
-        linkList = soup.find_all("a", {"class":"list__itemWrap dossierSummary__link text--linkReset"})
-        #Gets all non-premium statistics
-        for link in linkList:
-            if('iconSprite--statisticPremium' not in str(link)):
-                print(str(link.text) + " : " + str(link["href"]))
-                topicLinkDic[link.text] = link["href"]
-                print("------")
-        print(topicInfo(URL))
-
-        print(topicLinkDic)
-        URL = 'http://statista.com' + list(topicLinkDic.values())[0]
-        statistaGraph = StatistaGraph(URL)
-        print(statistaGraph.getGraphData())
-        statGraphData = statistaGraph.getGraphData()
-        retData = []
-        retData.append(statGraphData.keys())
-        for key in statGraphData.keys():
-            retData.append(statGraphData[key])
-        testLabels = ["a","b","c","d","e"]
-        testValues = [10,20,30,25,15]
+        '''Use 'akaunting' to test'''
+        allGraphs = request.session['allGraphs']
+        print("---ALL Graphs")
+        print(allGraphs)
         data = {
             'extScore':extScore,
             'neuScore':neuScore,
@@ -353,9 +371,7 @@ class ChartData(APIView):
             'con':con,
             'opn':opn,
             'founderName':userName,
-            'retData':retData,
-            'testLabels':testLabels,
-            'testValues':testValues,
+            'allGraphs':allGraphs
         }
 
         return Response(data)
