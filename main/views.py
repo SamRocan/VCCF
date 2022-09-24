@@ -30,6 +30,9 @@ def product(request):
     return redirect('productHome', productSlug=request.GET["productSearch"])
 
 def productHome(request, productSlug):
+    f = open("static/timeLogs.txt", "w")
+    f.write("Writing Time")
+    startTime = time.time()
 
     API_URL = "https://api.producthunt.com/v2/api/graphql"
 
@@ -131,7 +134,8 @@ def productHome(request, productSlug):
                 topics.append(y['node']['name'])
         results[i] = str(jsonInfo['data']['post'][i])
 
-
+    apiTime = time.time() - startTime
+    f.write("\nAPITime: " +str(apiTime))
     '''Twitter Code'''
 
     socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
@@ -154,7 +158,10 @@ def productHome(request, productSlug):
         #print(userImage)
 
     twitterZip = zip(TwitterHandles, userImages)
-
+    twitterTime = time.time() - startTime
+    test = str(time.time() - startTime - apiTime)
+    f.write("\nTwitter Time: " + test)
+    f.write("\nTotal: " +str(twitterTime))
     companyName = str(results.get('name'))
 
     '''Topics sent for use with Statista graphs'''
@@ -219,6 +226,10 @@ def productHome(request, productSlug):
     else:
         saasWorthy = SaaSWorthy(saasWorthyInfo[1])
 
+    websiteScrapingTime = time.time() - startTime
+    test = str(time.time() - startTime - twitterTime)
+    f.write("\nIndividual Website Scraping Time: " + test)
+    f.write("\nTotal: " + str(websiteScrapingTime))
     '''Statista Graph Scraping'''
 
 
@@ -240,10 +251,16 @@ def productHome(request, productSlug):
             print(topicInfo(URL))
 
     print(topicLinkDic)
+    topicScrapingTime = time.time() - startTime
+    test = str(time.time() - startTime - websiteScrapingTime)
+    f.write("\nTopic Scraping Time: " + test)
+    f.write("\nTotal: " + str(topicScrapingTime))
 
     graphNames = list(topicLinkDic.keys())
     graphNames = enumerate(graphNames)
     allGraphs = []
+    prevTime = time.time() - startTime
+    lastTime = None
     for graphLink in topicLinkDic.values():
         URL = 'http://statista.com' + graphLink
         statistaGraph = StatistaGraph(URL)
@@ -254,11 +271,20 @@ def productHome(request, productSlug):
         for key in statGraphData.keys():
             retData.append(statGraphData[key])
         allGraphs.append(retData)
+        individualWebsiteScrapingTime = time.time() - startTime
+        if(lastTime != None):
+            f.write("\n" + graphLink + " Scraping Time: " + str(individualWebsiteScrapingTime - lastTime))
+        lastTime = individualWebsiteScrapingTime
+        f.write("\nTotal: "+ str(individualWebsiteScrapingTime))
+
+    totalTime = time.time() - startTime
+    f.write("\nTotal Time: " + str(totalTime))
+    f.close()
 
     noOfGraphs = len(allGraphs)
 
     request.session['allGraphs'] = allGraphs
-
+    print("--- %s seconds ---" % (time.time() - startTime))
     context = {
         'results':results,
         'topics':topics,

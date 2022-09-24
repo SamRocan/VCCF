@@ -1,3 +1,5 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -6,15 +8,17 @@ class StatistaGraph:
     def __init__(self, URL):
         self.URL = URL
         print(self.URL)
+        preConTime = time.time()
         self.soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
+        print("conn time: " + str(time.time() - preConTime))
         rows = self.soup.select('#statTableHTML tr')
         heading = self.soup.find("h2", {"class":"sectionHeadline"})
         title = heading.text.strip()
         #4 types expected: bar, line, pie and table
         chartType = self.soup.find("meta", {"id":"gtm_stat_graphType"})
-        print(title)
+        #print(title)
         chartType = str(chartType['data-page'])
-        print(chartType)
+        #print(chartType)
         self.chartType = chartType
         self.chartData = {}
 
@@ -43,9 +47,9 @@ class StatistaGraph:
                     else:
                         self.chartData[key].append(values[index].text.strip())
         self.chartData['type'] = chartType
-        print(self.chartData)
+        #print(self.chartData)
         try:
-            print(len(self.chartData['Characteristic']))
+            #print(len(self.chartData['Characteristic']))
             if(chartType == 'line' or len(self.chartData['Characteristic']) > 100):
                 for x in range(len(self.chartData.keys())-1):
                     key = list(self.chartData.keys())[x]
