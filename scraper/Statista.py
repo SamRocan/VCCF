@@ -1,7 +1,9 @@
+import re
 import time
 
 import requests
 from bs4 import BeautifulSoup
+from selenium import webdriver
 
 
 class StatistaGraph:
@@ -62,62 +64,32 @@ class StatistaGraph:
 
 
 def searchStatista(query):
-    url = 'https://www.statista.com/search/?q='+query+'&Search=&qKat=search'
-    searchSoup = BeautifulSoup(requests.get(url).content, 'html.parser')
-    searchlinkList = searchSoup.find_all("li", {"class":"list__item--searchContentTypeTopic"})
-    return searchlinkList
+    query = str(query).replace(' ','+')
+    url = 'https://www.statista.com/search/?q='+query+'&Search=&qKat=search&newSearch=true&p=1&sortMethod=popularity'
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.add_argument('--no-sandbox')
+    chrome_options.add_argument('--window-size=1920,1080')
+    chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--disable-gpu')
+    driver = webdriver.Chrome(chrome_options=chrome_options)
 
-def soupToLink(resultSetList):
-    links = []
-    for i in resultSetList:
-        loc1 = str(i).find("href")
-        loc2 = str(i).find("title")
-        links .append(str(i)[loc1+6:loc2-2])
-    return links
+    driver.get(url)
+    page_source = driver.page_source.encode("utf-8")
+    searchSoup = BeautifulSoup(page_source, 'html.parser')
+    regex = re.compile('.*searchItem--.*')
+    searchlinkList = searchSoup.find_all("a", {"data-gtm":regex})
+    print(query)
+    print(len(searchlinkList))
+    print('-----------')
+    finalLinkList = {}
+    topicList = []
+    for i in searchlinkList:
+        if "statisticBasis" in str(i):
+            print(i.find("div",{"class":"itemContent__subline"}).text.strip())
+            element = i['href']
+            finalLinkList[i.find("div",{"class":"itemContent__subline"}).text.strip()] = element
+        if "/topics/" in str(i):
+            topicList.append(i)
+    driver.quit()
+    return finalLinkList
 
-def getLinks(linkList):
-    premiumStatisticLinks = []
-    basicStatisticLinks = []
-    topicLinks = []
-
-    for i in range(len(linkList)):
-        if("searchContentTypeStatistic" in str(linkList[i])):
-            if("iconSprite--statisticPremium" in str(linkList[i])):
-                element = linkList[i].find_all('a', href=True)
-                premiumStatisticLinks.append(element)
-            if("iconSprite--statisticBasis" in str(linkList[i])):
-                element = linkList[i].find_all('a', href=True)
-                basicStatisticLinks.append(element)
-
-    basicStatPage = soupToLink(basicStatisticLinks)
-    premiumStatPage = soupToLink(premiumStatisticLinks)
-    topicPage = soupToLink(topicLinks)
-    print("Stats")
-    print(len(basicStatPage))
-    print("Topics")
-    print(topicPage)
-    print("------")
-    return(basicStatPage)
-
-
-def topicSearch(query):
-    links = searchStatista(query)
-    topics = []
-    #Gets all topics
-    for i in links:
-        if 'href="/topics/' in str(i):
-            print(i.find("a")["href"])
-            topics.append(i.find("a")["href"])
-    return topics
-
-def topicInfo(link):
-    topicInfoRes = {}
-    soup = BeautifulSoup(requests.get(link).content, 'html.parser')
-
-    #and key facts on the page
-    keyFactsTitles = soup.findAll("div", {"class":"fancyBox__title"})
-    keyFactsValues = soup.findAll("div", {"class":"fancyBox__content"})
-
-    for title, value in zip(keyFactsTitles, keyFactsValues):
-        topicInfoRes[title.text.strip()] = value.text.strip()
-    return topicInfoRes

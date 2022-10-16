@@ -6,6 +6,8 @@ import requests
 import json
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from selenium import webdriver
+
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
 from scraper.scraper import *
 from scraper.GitHub import GitHub
@@ -232,24 +234,12 @@ def productHome(request, productSlug):
     f.write("\nTotal: " + str(websiteScrapingTime))
     '''Statista Graph Scraping'''
 
-
+    #search statista for topics
+    print(topics)
     topicLinkDic = {}
-    #gets list of topic pages, currently for first topic
     for topic in topics:
-        topicResults = topicSearch(topic)
-        for topicPage in topicResults:
-            #gets first topic page
-            URL = 'https://www.statista.com' + str(topicPage)
-            soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
-            linkList = soup.find_all("a", {"class":"list__itemWrap dossierSummary__link text--linkReset"})
-            #Gets all non-premium statistics of first topic page
-            for link in linkList:
-                if('iconSprite--statisticPremium' not in str(link)):
-                    print(str(link.text) + " : " + str(link["href"]))
-                    topicLinkDic[link.text] = link["href"]
-                    print("------")
-            print(topicInfo(URL))
-
+        topicDic = searchStatista(topic)
+        topicLinkDic.update(topicDic)
     print(topicLinkDic)
     topicScrapingTime = time.time() - startTime
     test = str(time.time() - startTime - websiteScrapingTime)
