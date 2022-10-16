@@ -91,7 +91,6 @@
         canvas.style.backgroundColor = '#dfe4ea'
         canvas.style.display = 'block'
         canvas.style.padding = "50px"
-        console.log(allGraphs[num])
         var graphType = allGraphs[num][allGraphs[num].length-1]
         var isStacked = true;
         var reverseData;
@@ -126,7 +125,10 @@
                 }
             }
         });
-        for (let i = 1; i < allGraphs[0].length-2; i++) {
+        console.log(allGraphs[num])
+        for (let i = 1; i < allGraphs[num].length-2; i++) {
+            console.log("Updating graph....")
+            console.log(allGraphs[num][i + 1])
             var randColor = '#'
             randColor += Math.floor(Math.random()*16777215).toString(16);
             //Math.floor(Math.random() * 256) for number between 0 and 255

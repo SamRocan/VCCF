@@ -8,8 +8,8 @@ from selenium import webdriver
 
 class StatistaGraph:
     def __init__(self, URL):
+
         self.URL = URL
-        print(self.URL)
         preConTime = time.time()
         self.soup = BeautifulSoup(requests.get(URL).content, 'html.parser')
         print("conn time: " + str(time.time() - preConTime))
@@ -34,7 +34,7 @@ class StatistaGraph:
                     self.chartData[i.text] = []
             else:
                 values = i.findAll('td')
-                for index, key in enumerate(self.chartData.keys()) :
+                for index, key in enumerate(self.chartData.keys()):
                     if(index > 0):
                         value = values[index].text.strip().replace(',','')
                         if('%' in  value):
@@ -42,10 +42,8 @@ class StatistaGraph:
                         if('-'==value):
                             value=None
                         else:
-
                             value = float(value)
                         self.chartData[key].append(value)
-
                     else:
                         self.chartData[key].append(values[index].text.strip())
         self.chartData['type'] = chartType

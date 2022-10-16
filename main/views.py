@@ -254,12 +254,13 @@ def productHome(request, productSlug):
     for graphLink in topicLinkDic.values():
         URL = 'http://statista.com' + graphLink
         statistaGraph = StatistaGraph(URL)
-        print(statistaGraph.getGraphData())
+        #print(statistaGraph.getGraphData())
         statGraphData = statistaGraph.getGraphData()
         retData = []
         retData.append(list(statGraphData.keys()))
         for key in statGraphData.keys():
             retData.append(statGraphData[key])
+        #print(retData)
         allGraphs.append(retData)
         individualWebsiteScrapingTime = time.time() - startTime
         if(lastTime != None):
