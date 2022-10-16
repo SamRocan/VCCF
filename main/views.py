@@ -3,7 +3,7 @@ import time
 
 from django.shortcuts import render,redirect
 import requests
-import json
+import json, itertools
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from selenium import webdriver
@@ -239,6 +239,8 @@ def productHome(request, productSlug):
     topicLinkDic = {}
     for topic in topics:
         topicDic = searchStatista(topic)
+        topicDic = dict(itertools.islice(topicDic.items(), 2))
+        print(len(topicDic))
         topicLinkDic.update(topicDic)
     print(topicLinkDic)
     topicScrapingTime = time.time() - startTime
