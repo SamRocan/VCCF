@@ -11,7 +11,7 @@
             <div class="row no-gutters">
                 <div class="order-2 col-md-3 order-md-1" id="left-col">
                     <div class="container-fluid p-0" id="left">
-                        <img src="{{logo}}" class="logo">
+                        <img src="{{company.variables.logo}}" class="logo">
                         <div id="news-collum">
                             <h5>Industry News</h5>
                             <hr>
@@ -27,9 +27,9 @@
                 </div>
                 <div class="order-1 col-md-9 order-md-2">
                     <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
-                    <img src="{{logo}}" class="logo-sm">
-                    <h1 id="main-heading">{{results.name}}</h1>
-                    <p id="main-sub-heading">{{results.tagline}}</p>
+                    <img src="{{company.variables.logo}}" class="logo-sm">
+                    <h1 id="main-heading">{{company.variables.results.name}}</h1>
+                    <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
                     <div class="container-fluid" id="right">
                         <div class="row no-gutters">
                             <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
@@ -91,7 +91,7 @@
         canvas.style.backgroundColor = '#dfe4ea'
         canvas.style.display = 'block'
         canvas.style.padding = "50px"
-        var graphType = allGraphs[num][allGraphs[num].length-1]
+        var graphType = allGraphs[1][num][allGraphs[1][num].length-1]
         var isStacked = true;
         var reverseData;
         var reverseLabels;
@@ -101,14 +101,14 @@
         if(graphType == 'line'){
             isStacked = false
         }
-        if(allGraphs[num][1].length > 100){
+        if(allGraphs[1][num][1].length > 100){
             graphType = 'line'
         }
         var ctx = canvas.getContext('2d');
         window['statChart' + num.toString()] = new Chart(ctx, {
             type: graphType,
             data: {
-                labels:allGraphs[num][1],
+                labels:allGraphs[1][num][1],
                 datasets: [],
             },
             options: {
@@ -125,15 +125,14 @@
                 }
             }
         });
-        console.log(allGraphs[num])
-        for (let i = 1; i < allGraphs[num].length-2; i++) {
+        for (let i = 1; i < allGraphs[1][num].length-2; i++) {
             console.log("Updating graph....")
-            console.log(allGraphs[num][i + 1])
+            console.log(allGraphs[1][num][i + 1])
             var randColor = '#'
             randColor += Math.floor(Math.random()*16777215).toString(16);
             //Math.floor(Math.random() * 256) for number between 0 and 255
             randColors = []
-            for(let i=0; i<allGraphs[0][1].length; i++){
+            for(let i=0; i<allGraphs[1][0][1].length; i++){
                 randColor = '#'
                 rgbaColor = 'rgba('
                 for(let i=0; i<3; i++) {
@@ -143,33 +142,33 @@
                 randColor += Math.floor(Math.random()*16777215).toString(16);
                 randColors.push(rgbaColor)
             }
-            if(allGraphs[num][0][i] === 'type') {
+            if(allGraphs[1][num][0][i] === 'type') {
                 console.log("TYPE ERROR")
             } else if(graphType === 'table'){
                 console.log("Empty graph --> This is a table")
             } else if(graphType === 'pie') {
                 var newDataset = {
-                    label: allGraphs[num][0][i],
-                    data: allGraphs[num][i + 1],
+                    label: allGraphs[1][num][0][i],
+                    data: allGraphs[1][num][i + 1],
                     borderColor: 'rgba(0, 0, 0, 0.5)',
                     backgroundColor: randColors
                 }
                 window['statChart' + num.toString()].data.datasets.push(newDataset);
                 window['statChart' + num.toString()].update();
-            } else if (graphType === 'line' && allGraphs[num][1].length < 100) {
+            } else if (graphType === 'line' && allGraphs[1][num][1].length < 100) {
 
                 var newDataset = {
-                    label: allGraphs[num][0][i],
-                    data: allGraphs[num][i + 1],
+                    label: allGraphs[1][num][0][i],
+                    data: allGraphs[1][num][i + 1],
                     borderColor: randColor,
                     backgroundColor:'rgba(0, 0, 0, 0.0)'
                 }
                 window['statChart' + num.toString()].data.datasets.push(newDataset);
                 window['statChart' + num.toString()].update();
-            } else if (graphType === 'line' && allGraphs[num][1].length > 100) {
+            } else if (graphType === 'line' && allGraphs[1][num][1].length > 100) {
                 var newDataset = {
-                    label: allGraphs[num][0][i],
-                    data: allGraphs[num][i + 1],
+                    label: allGraphs[1][num][0][i],
+                    data: allGraphs[1][num][i + 1],
                     borderColor: 'rgba(63, 127, 191, 1.0)',
                     backgroundColor:'rgba(63, 127, 191, 0.2)'
                 }
@@ -177,8 +176,8 @@
                 window['statChart' + num.toString()].update();
             } else{
                 var newDataset = {
-                    label: allGraphs[num][0][i],
-                    data: allGraphs[num][i+1],
+                    label: allGraphs[1][num][0][i],
+                    data: allGraphs[1][num][i+1],
                     backgroundColor: randColor
                 }
                 window['statChart' + num.toString()].data.datasets.push(newDataset);
