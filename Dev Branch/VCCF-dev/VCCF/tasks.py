@@ -174,10 +174,46 @@ def companyInfo(results):
         print(githubInfo)
     else:
         git = GitHub(githubInfo[1])
+
         try:
-            git = git.getCommits()
+            gitCommits = git.getCommits()
         except:
-            git = None
+            gitCommits = None
+
+        try:
+            gitLastUpdate = git.getLastUpdate()
+        except:
+            gitLastUpdate = None
+
+        try:
+            gitBranches = git.getBranches()
+        except:
+            gitBranches = None
+
+        try:
+            gitLanguages = git.getLanguages()
+        except:
+            gitLanguages = None
+
+        try:
+            gitStats = git.getStats()
+        except:
+            gitStats = None
+
+        try:
+            gitTags = git.getTags()
+        except:
+            gitTags = None
+
+        try:
+            gitReadMe = git.getReadMe()
+        except:
+            gitReadMe = None
+
+        git = [
+            gitCommits, gitLastUpdate, gitBranches, gitLanguages,
+            gitStats, gitTags, gitReadMe
+        ]
 
     if(len(crunchBaseInfo)!= 2):
         print("No Crunchbase Found")
@@ -194,10 +230,39 @@ def companyInfo(results):
         print(yCombinatorInfo)
     else:
         ycombinator = YCombinator(yCombinatorInfo[1])
+
         try:
-            ycombinator = ycombinator.getOverview()
+            ycombinatorOverview = ycombinator.getOverview()
         except:
-            ycombinator = None
+            ycombinatorOverview = None
+
+        try:
+            ycombinatorBadges = ycombinator.getBadges()
+        except:
+            ycombinatorBadges = None
+
+        try:
+            ycombinatorFounders = ycombinator.getFounders()
+        except:
+            ycombinatorFounders = None
+
+        try:
+            ycombinatorJobsHiring = ycombinator.getJobsHiring()
+        except:
+            ycombinatorJobsHiring = None
+
+        try:
+            ycombinatorgetKeyInfo = ycombinator.getKeyInfo()
+        except:
+            ycombinatorgetKeyInfo = None
+
+        try:
+            ycombinatorgetNews = ycombinator.getNews()
+        except:
+            ycombinatorgetNews = None
+
+        ycombinator = [ycombinatorOverview, ycombinatorBadges, ycombinatorFounders,
+                       ycombinatorJobsHiring, ycombinatorgetKeyInfo, ycombinatorgetNews]
 
     if(len(apolloIOInfo)!=2):
         print("No Apollo.IO Found")
@@ -209,7 +274,17 @@ def companyInfo(results):
         print(saasHubInfo)
     else:
         saasHub = SaasHub(saasHubInfo[1])
+        try:
+            saasHubMentions = saasHub.getMentions()
+        except:
+            saasHubMentions = None
 
+        try:
+            saasHubSources = saasHub.getSources()
+        except:
+            saasHubSources = None
+
+        saasHub = [saasHubMentions, saasHubSources]
 
     print("INFO: " + str(saasWorthyInfo))
     if(len(saasWorthyInfo) !=2):
@@ -218,8 +293,58 @@ def companyInfo(results):
         print(saasWorthyInfo)
     else:
         saasWorthy = SaaSWorthy(saasWorthyInfo[1])
-        saasWorthy = saasWorthy.getScore()
-    return [git,crunchBaseInfo,ycombinator, apolloIOInfo, saasHub, saasWorthy]
+        try:
+            saasWorthyScore = saasWorthy.getScore()
+        except:
+            saasWorthyScore = None
+
+        try:
+            saasWorthySubHeading = saasWorthy.getSubHeading()
+        except:
+            saasWorthySubHeading = None
+
+        try:
+            saasWorthyPricingPlans = saasWorthy.getPricingPlans()
+        except:
+            saasWorthyPricingPlans = None
+
+        try:
+            saasWorthyTableInfo = saasWorthy.getTableInfo()
+        except:
+            saasWorthyTableInfo = None
+
+        try:
+            saasWorthyFeatures = saasWorthy.getFeatures()
+        except:
+            saasWorthyFeatures = None
+
+        try:
+            saasWorthyDescription = saasWorthy.getDescription()
+        except:
+            saasWorthyDescription = None
+
+        try:
+            saasWorthySocialMediaCount = saasWorthy.getSocialMediaCount()
+        except:
+            saasWorthySocialMediaCount = None
+
+        saasWorthy = [  saasWorthyScore,saasWorthySubHeading, saasWorthyPricingPlans,
+                        saasWorthyTableInfo, saasWorthyFeatures, saasWorthyDescription,
+                        saasWorthySocialMediaCount]
+    return [git,crunchBaseInfo,linkedInInfo, ycombinator, apolloIOInfo, saasHub, saasWorthy]
+
+def statistaSearcher(topic, count):
+    topicDic = {}
+    try:
+        topicDic = searchStatista(topic)
+    except:
+        print("EXCEPTION CAUGHT: TRYING AGAIN")
+        count+=1
+        if count<5:
+            statistaSearcher(topic, count)
+        else:
+            raise
+    return topicDic
 
     '''Statista Graph Scraping'''
 def graphScraping(topics):
@@ -227,7 +352,8 @@ def graphScraping(topics):
     print(topics)
     topicLinkDic = {}
     for topic in topics:
-        topicDic = searchStatista(topic)
+        topicDic = statistaSearcher(topic, 0)
+        #topicDic = searchStatista(topic)
         topicDic = dict(itertools.islice(topicDic.items(), 2))
         print(len(topicDic))
         topicLinkDic.update(topicDic)

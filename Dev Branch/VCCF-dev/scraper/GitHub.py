@@ -107,4 +107,4 @@ class GitHub:
 
     def getReadMe(self):
         readMe = self.soup.find('div', {'data-target':'readme-toc.content'})
-        return readMe #add .text to only get text and not html
+        return readMe.text #add .text to only get text and not html
