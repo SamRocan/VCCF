@@ -26,7 +26,7 @@ def getAPI(productSlug):
     '''API Code'''
 
 
-    MY_API_TOKEN = "PbEz8mWhaMzYy1J8WwS-X2-YXi92xhRffQS3YDi3xl4"
+    MY_API_TOKEN = "dfEjn2P-eAeNqApqL14eZGOuji8awzEBWmHM1BaA-FM"
     slug = productSlug
 
     #API Connsumed
@@ -343,7 +343,8 @@ def statistaSearcher(topic, count):
         if count<5:
             statistaSearcher(topic, count)
         else:
-            raise
+            print("Too many errors, returning as is")
+            return topicDic
     return topicDic
 
     '''Statista Graph Scraping'''

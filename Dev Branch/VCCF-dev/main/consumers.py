@@ -10,7 +10,7 @@ class WSConsumer(WebsocketConsumer):
         self.accept()
         print("----LATEST----")
         company = Company.objects.latest('api')
-        slug = company.slug
+        slug = str(company.slug)
         apiContent = getAPI(slug)
         print("----API CONTENT----")
         print(apiContent)
@@ -19,7 +19,7 @@ class WSConsumer(WebsocketConsumer):
         print("----VARIABLES---")
         print(variables)
         self.send(json.dumps({'message':40}))
-        twitterZip = twitterImages('gitlab', variables['TwitterHandles'])
+        twitterZip = twitterImages(slug, variables['TwitterHandles'])
         print("----TWITTER INFO---")
         print(twitterZip)
         self.send(json.dumps({'message':60}))
