@@ -88,8 +88,20 @@
     }
     function testGraph(num) {
         var canvas = document.getElementById("statGraph-"+num)
+        var button = document.getElementById("toggleButton-"+num)
         canvas.style.backgroundColor = '#dfe4ea'
-        canvas.style.display = 'block'
+        if(canvas.style.display === 'none'){
+            canvas.style.display = 'block'
+            button.style.display = 'block'
+            button.style.marginTop = '10px'
+            button.style.marginBottom = '10px'
+        } else {
+            canvas.style.display = 'none'
+            button.style.display = 'none'
+            button.style.marginTop = '0px'
+            button.style.marginBottom = '0px'
+
+        }
         canvas.style.padding = "50px"
         var graphType = allGraphs[1][num][allGraphs[1][num].length-1]
         var isStacked = true;
