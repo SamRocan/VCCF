@@ -127,7 +127,7 @@ def extractVariables(jsonIput):
     socialMedia = [Names,TwitterHandles, phUrls, profilePics]
     retDict = {
                 'results':results, 'topics':topics, 'logo':logo,
-                'TwitterHandles':TwitterHandles, 'socialMedia':socialMedia
+                'TwitterHandles':TwitterHandles, 'socialMedia':socialMedia, 
                }
     retJSON = json.dumps(retDict)
     loadedJSON = json.loads(retJSON)
