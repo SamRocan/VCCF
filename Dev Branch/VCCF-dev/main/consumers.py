@@ -9,7 +9,8 @@ class WSConsumer(WebsocketConsumer):
     def connect(self):
         self.accept()
         print("----LATEST----")
-        company = Company.objects.latest('api')
+        print(Company.objects.all())
+        company = Company.objects.latest('updated_at')
         slug = str(company.slug)
         apiContent = getAPI(slug)
         print("----API CONTENT----")
