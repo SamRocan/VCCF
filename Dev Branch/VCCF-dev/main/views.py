@@ -61,10 +61,23 @@ def productHome(request, productSlug):
     twitHandles = company.twitterZip[0]
     twitImages = company.twitterZip[1]
     twitZip = zip(twitHandles,twitImages)
+    print("-------TYPE-----")
+    print(type(company.variables))
+    print(company.variables['socialMedia'])
+    socialInfo = []
+    socialHold = []
+    for i in range(len(company.variables['socialMedia'][0])):
+        print(i)
+        socialHold = [  company.variables['socialMedia'][0][i],
+                        company.variables['socialMedia'][1][i],
+                        company.variables['socialMedia'][2][i],
+                        company.variables['socialMedia'][3][i],]
+        socialInfo.append(socialHold)
+        socialHold = []
     context = {
         'company':company,
         'graphNames':graphNames,
-        'socialMediaZip':twitZip
+        'socialMediaZip':socialInfo #twitZip,
     }
     return render(request, 'main/product.html', context)
 

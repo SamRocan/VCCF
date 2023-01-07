@@ -1,8 +1,8 @@
 <div class="container information-found">
     <h3 class="content-header">Founders</h3>
     <ul>
-    {% for handle, image in socialMediaZip %}
-        {% if handle != None %}
+    {% for maker in socialMediaZip%}
+        {% if maker.1 != None %}
             <div class="row social-row">
                 <div class="col" style="display: inline-block">
                     <div class="container-fluid">
@@ -20,14 +20,14 @@
                     </div>
                 </div>
                 <div class="col twitter-col">
-                    <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+                    <img src="{{maker.3}}" width="100px" height="100px" class="twitter-pp">
                 </div>
                 <div class="col">
-                    <h3>{{name}}</h3>
+                    <h3>{{maker.0}}</h3>
                 </div>
             </div>
-            <canvas id="twitter-box-{{handle}}" style="display: none;"></canvas>
-            <li><a class="search-button" onclick="drawGraph('{{handle}}', '{{forloop.counter}}')">{{handle}}</a></li>
+            <canvas id="twitter-box-{{maker.1}}" style="display: none;"></canvas>
+            <li><a class="search-button" onclick="drawGraph('{{maker.1}}', '{{forloop.counter}}')">{{maker.1}}</a></li>
         {% else %}
             <div class="row social-row">
                 <div class="col" style="display: inline-block">
@@ -46,10 +46,10 @@
                     </div>
                 </div>
                 <div class="col">
-                    <img src="{{image}}" width="100px" height="100px" class="twitter-pp">
+                    <img src="{{maker.3}}" width="100px" height="100px" class="twitter-pp">
                 </div>
                 <div class="col">
-                    <h3>{{name}}</h3>
+                    <h3>{{maker.0}}</h3>
                 </div>
             </div>
             <br>

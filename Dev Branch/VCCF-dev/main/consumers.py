@@ -1,7 +1,6 @@
 import json
 from random import randint
 from channels.generic.websocket import WebsocketConsumer
-from django.contrib.sessions.backends.db import SessionStore
 from VCCF.tasks import getAPI, extractVariables, twitterImages, companyInfo, graphScraping
 from .models import Company
 
