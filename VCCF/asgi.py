@@ -11,6 +11,25 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+from channels.auth import AuthMiddlewareStack
+from channels.routing import ProtocolTypeRouter
+from channels.routing import URLRouter
+from channels.security.websocket import AllowedHostsOriginValidator
+from channels.sessions import SessionMiddlewareStack
+from main.routing import ws_urlpatterns
+
+
+from django.core.asgi import get_asgi_application
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'VCCF.settings')
 
-application = get_asgi_application()
+# Sets up the websocket urls
+application = ProtocolTypeRouter({
+    'http': get_asgi_application(),
+    'websocket':AllowedHostsOriginValidator(
+        SessionMiddlewareStack(
+            URLRouter(ws_urlpatterns)
+        )
+    )
+})
+

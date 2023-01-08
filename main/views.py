@@ -7,6 +7,8 @@ import json, itertools
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from selenium import webdriver
+from django.contrib.sessions.backends.db import SessionStore
+from .models import Company
 
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
 from scraper.scraper import *
@@ -28,280 +30,54 @@ def index(request):
     return render(request, 'main/index.html')
 
 def product(request):
-    print(request.GET["productSearch"])
-    return redirect('productHome', productSlug=request.GET["productSearch"])
+    request.session['productSlug'] = request.GET["productSearch"]
+    newComp = Company(slug= request.session['productSlug'],
+                      api=None,
+                      variables=None,
+                      twitterZip=None,
+                      websiteData=None,
+                      graphData=None)
+    newComp.save()
+    #return redirect('productHome', productSlug=request.GET["productSearch"])
+    return redirect('loading')
+
+def loading(request):
+    slug = request.session['productSlug']
+    context = {
+        'slug':slug
+    }
+    return render(request, 'main/loading.html', context)
 
 def productHome(request, productSlug):
-    f = open("static/timeLogs.txt", "w")
-    f.write("Writing Time")
-    startTime = time.time()
-
-    API_URL = "https://api.producthunt.com/v2/api/graphql"
-
-    '''API Code'''
-
-
-    MY_API_TOKEN = "PbEz8mWhaMzYy1J8WwS-X2-YXi92xhRffQS3YDi3xl4"
-    slug = productSlug
-
-    #API Connsumed
-    query = {"query":
-                 """
-                 query FindBySlug {
-                 post(slug:"""+ "\""+ slug +"\"" + """){
-                        commentsCount
-                        comments(first:5){
-                            edges{
-                                node{
-                                    body
-                                }
-                            }
-                        }
-                        description
-                        makers{
-                            name
-                            username
-                            twitterUsername
-                            profileImage                        
-                        }
-                        media{
-                            url
-                        }
-                        name
-                        productLinks{
-                            url
-                        }
-                        slug
-                        tagline
-                        thumbnail{
-                            url
-                        }
-                        topics(first:5){
-                            edges{
-                                node{
-                                    name
-                                }
-                            }
-                        }
-                        website
-                    }
-                }
-            """}
-
-    headers = {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + MY_API_TOKEN,
-        'Host': 'api.producthunt.com'
-    }
-    #Gets information in form of JSON
-    posts = requests.post(API_URL,
-                          headers=headers,
-                          data=json.dumps(query))
-
-    #Saves Json information to variable
-    jsonInfo = posts.json()
-    if (jsonInfo['data']['post'] == None):
-        print("None found")
-        return render(request, 'main/productNotFound.html')
-    results = {}
-    topics =[]
-    global Names
-    Names = []
-    global TwitterHandles
-    TwitterHandles = []
-    phUrls = []
-    profilePics = []
-
-    #Gets specific information requred from jsonInfo
-    for i in jsonInfo['data']['post']:
-        if(i=='makers'):
-            for y in jsonInfo['data']['post']['makers']:
-                TwitterHandles.append(y['twitterUsername'])
-                Names.append(y['name'])
-                phUrls.append(y['username'])
-                profilePics.append(y['profileImage'])
-        if(i=='media'):
-            for y in jsonInfo['data']['post']['media']:
-                #print(y['url'])
-                pass
-        if(i=='productLinks'):
-            for y in jsonInfo['data']['post']['productLinks']:
-                #print(y['url'])
-                pass
-        if(i=='thumbnail'):
-            logo = str(jsonInfo['data']['post'][i]['url'])
-        if(i=='topics'):
-            for y in jsonInfo['data']['post']['topics']['edges']:
-                topics.append(y['node']['name'])
-        results[i] = str(jsonInfo['data']['post'][i])
-
-    apiTime = time.time() - startTime
-    f.write("\nAPITime: " +str(apiTime))
-    '''Twitter Code'''
-
-    socialMediaZip = zip(Names,TwitterHandles, phUrls, profilePics)
-    request.session["TwitterHandles"] = TwitterHandles
-    product_name = slug.capitalize()
-
-    #Get Twitter Image
-    userImages = []
-    for handle in TwitterHandles:
-        auth = tw.OAuthHandler(settings.CONSUMER_KEY, settings.CONSUMER_SECRET)
-        auth.set_access_token(settings.ACCESS_TOKEN, settings.ACCESS_TOKEN_SECRET)
-        api = tw.API(auth, wait_on_rate_limit=True)
-        try:
-            user = api.get_user(screen_name=handle)
-            url = str(user.profile_image_url)
-            userImage = url.replace("_normal", "")
-        except:
-            userImage = 'https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png'
-        userImages.append(userImage)
-        #print(userImage)
-
-    twitterZip = zip(TwitterHandles, userImages)
-    twitterTime = time.time() - startTime
-    test = str(time.time() - startTime - apiTime)
-    f.write("\nTwitter Time: " + test)
-    f.write("\nTotal: " +str(twitterTime))
-    companyName = str(results.get('name'))
-
-    '''Topics sent for use with Statista graphs'''
-
-    '''Scraping Other Websites'''
-
-    githubInfo = githubResults(companyName)
-    crunchBaseInfo = crunchBaseResults(companyName)
-    saasWorthyInfo = saasWorthyResults(companyName)
-    linkedInInfo = linkedInResults(companyName)
-    yCombinatorInfo = yCombinatorResults(companyName)
-    apolloIOInfo = apolloIOResults(companyName)
-    saasHubInfo = saasHubResults(companyName)
-    if(len(githubInfo) != 2):
-        print("No Github Found")
-        git = None
-        print(githubInfo)
-    else:
-        git = GitHub(githubInfo[1])
-        try:
-            git.getCommits()
-        except:
-            git = None
-
-    if(len(crunchBaseInfo)!= 2):
-        print("No Crunchbase Found")
-        crunchBaseInfo = None
-
-    if(len(linkedInInfo)!=2):
-        print("No LinkedIn Found")
-        linkedInInfo = None
-
-    print(yCombinatorInfo)
-    if(len(yCombinatorInfo) != 2):
-        print("No YCombinator Found")
-        ycombinator = None
-        print(yCombinatorInfo)
-    else:
-        ycombinator = YCombinator(yCombinatorInfo[1])
-        try:
-            ycombinator.getOverview()
-        except:
-            ycombinator = None
-
-    if(len(apolloIOInfo)!=2):
-        print("No Apollo.IO Found")
-        apolloIOInfo = None
-
-    if(len(saasHubInfo) !=2):
-        print("No SaasHubInfo")
-        saasHub = None
-        print(saasHubInfo)
-    else:
-        saasHub = SaasHub(saasHubInfo[1])
-
-
-    print("INFO: " + str(saasWorthyInfo))
-    if(len(saasWorthyInfo) !=2):
-        print("No SassWorthy Found")
-        saasWorthy = None
-        print(saasWorthyInfo)
-    else:
-        saasWorthy = SaaSWorthy(saasWorthyInfo[1])
-
-    websiteScrapingTime = time.time() - startTime
-    test = str(time.time() - startTime - twitterTime)
-    f.write("\nIndividual Website Scraping Time: " + test)
-    f.write("\nTotal: " + str(websiteScrapingTime))
-    '''Statista Graph Scraping'''
-
-    #search statista for topics
-    print(topics)
-    topicLinkDic = {}
-    for topic in topics:
-        topicDic = searchStatista(topic)
-        topicDic = dict(itertools.islice(topicDic.items(), 2))
-        print(len(topicDic))
-        topicLinkDic.update(topicDic)
-    print(topicLinkDic)
-    topicScrapingTime = time.time() - startTime
-    test = str(time.time() - startTime - websiteScrapingTime)
-    f.write("\nTopic Scraping Time: " + test)
-    f.write("\nTotal: " + str(topicScrapingTime))
-
-    graphNames = list(topicLinkDic.keys())
-    graphNames = enumerate(graphNames)
-    allGraphs = []
-    prevTime = time.time() - startTime
-    lastTime = None
-    for graphLink in topicLinkDic.values():
-        URL = 'http://statista.com' + graphLink
-        statistaGraph = StatistaGraph(URL)
-        #print(statistaGraph.getGraphData())
-        statGraphData = statistaGraph.getGraphData()
-        retData = []
-        retData.append(list(statGraphData.keys()))
-        for key in statGraphData.keys():
-            retData.append(statGraphData[key])
-        #print(retData)
-        allGraphs.append(retData)
-        individualWebsiteScrapingTime = time.time() - startTime
-        if(lastTime != None):
-            f.write("\n" + graphLink + " Scraping Time: " + str(individualWebsiteScrapingTime - lastTime))
-        lastTime = individualWebsiteScrapingTime
-        f.write("\nTotal: "+ str(individualWebsiteScrapingTime))
-
-    totalTime = time.time() - startTime
-    f.write("\nTotal Time: " + str(totalTime))
-    f.close()
-
-    noOfGraphs = len(allGraphs)
-
-    request.session['allGraphs'] = allGraphs
-    print("--- %s seconds ---" % (time.time() - startTime))
+    #Need to break tasks down into chunks to allow smooth update
+    #Need to find way to send context / session from consumers to here
+    #time.sleep(5)
+    company = Company.objects.get(slug=productSlug)
+    print('graph data from views:')
+    request.session["TwitterHandles"] = company.twitterZip[0]
+    request.session['allGraphs'] = company.graphData
+    print(request.session['allGraphs'])
+    graphNames  = enumerate(company.graphData[0])
+    twitHandles = company.twitterZip[0]
+    twitImages = company.twitterZip[1]
+    twitZip = zip(twitHandles,twitImages)
+    print("-------TYPE-----")
+    print(type(company.variables))
+    print(company.variables['socialMedia'])
+    socialInfo = []
+    socialHold = []
+    for i in range(len(company.variables['socialMedia'][0])):
+        print(i)
+        socialHold = [  company.variables['socialMedia'][0][i],
+                        company.variables['socialMedia'][1][i],
+                        company.variables['socialMedia'][2][i],
+                        company.variables['socialMedia'][3][i],]
+        socialInfo.append(socialHold)
+        socialHold = []
     context = {
-        'results':results,
-        'topics':topics,
-        'logo':logo,
-        'names':Names,
-        'socialMediaZip':socialMediaZip,
-        'twitterHandles':TwitterHandles,
-        'product':productSlug,
-        'product_name':product_name,
-        'userImages':userImages,
-        'twitterZip':twitterZip,
-        'githubInfo':githubInfo,
-        'git':git,
-        'saasWorthy':saasWorthy,
-        'saasHub':saasHub,
-        'ycombinator':ycombinator,
-        'crunchBaseInfo':crunchBaseInfo,
-        'saasWorthyInfo':saasWorthyInfo,
-        'linkedInInfo':linkedInInfo,
-        'yCombinatorInfo':yCombinatorInfo,
-        'apolloIOInfo':apolloIOInfo,
-        'saasHubInfo':saasHubInfo,
-        'noOfGraphs':range(noOfGraphs),
+        'company':company,
         'graphNames':graphNames,
+        'socialMediaZip':socialInfo #twitZip,
     }
     return render(request, 'main/product.html', context)
 
@@ -317,6 +93,7 @@ class ChartData(APIView):
         conScore = []
         opnScore = []
         TwitterHandles = request.session["TwitterHandles"]
+        print(TwitterHandles)
         for handle in TwitterHandles:
             userName = handle
             module_dir = os.path.dirname('resources/')
@@ -353,7 +130,6 @@ class ChartData(APIView):
 
                 profile = list(match.keys())[0]
                 scores = getScore(score_data, profile)
-
                 scoresVar = scores[0]
                 catVar = scores[1]
                 fiveFactors = ["Extraversion", "Neuroticism", "Agreableness", "Concientiousness", "Openness"]
@@ -378,8 +154,8 @@ class ChartData(APIView):
         '''Statista Scraping'''
         '''Use 'akaunting' to test'''
         allGraphs = request.session['allGraphs']
-        print("---ALL Graphs")
-        print(allGraphs)
+        print("------EXT SCORE-------")
+        print(extScore)
         data = {
             'extScore':extScore,
             'neuScore':neuScore,

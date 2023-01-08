@@ -1,0 +1,31 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_css %}
+{% endblock %}
+{% block content %}
+<h1 id="app">Loading....</h1>
+<div class="progress">
+    <div id='progBar' class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+</div>
+{% endblock %}
+{% block extra_js %}
+
+<script>
+    var socket = new WebSocket('ws://localhost:8000/ws/load_path/')
+    socket.onmessage = function(event){
+        loadLength = 0
+        if(loadLength<100){
+            var data = JSON.parse(event.data);
+            console.log(data);
+            loadLength = data.message
+            document.querySelector('#progBar').style.width = (data.message).toString() + '%'
+        }
+        if(loadLength===100){
+            document.querySelector('#app').innerText = 'Finished!';
+            //Delayed to let the loading bar finish
+            setTimeout(() => {  window.location.href = "{% url 'productHome' slug %}"; }, 1000);
+        }
+
+    }
+</script>
+{% endblock %}

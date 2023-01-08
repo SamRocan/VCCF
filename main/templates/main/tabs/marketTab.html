@@ -1,4 +1,5 @@
 <div class="container information-found">
+    <h3 class="content-header">Market Research</h3>
     <!--{% for num in  noOfGraphs %}
         <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
         <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
@@ -6,7 +7,7 @@
     {% endfor %}-->
     {% for num, title in graphNames %}
         <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
+        <button id="toggleButton-{{num}}" onclick="changeGraph('{{num}}')" style="display: none;">Toggle Graph</button>
         <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
-        <button onclick="changeGraph('{{num}}')">Click Me</button>
     {% endfor %}
 </div>
