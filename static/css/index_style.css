@@ -4,7 +4,7 @@
     margin-right: auto;
     text-align: center;
     border-radius: 5px;
-    background-color: rgba(79, 136, 210, 0.4);
+    background-color: rgba(0, 0, 0, 0.0);
     padding: 5px 30px 30px 30px;
     margin-top: 30px;
 }
@@ -14,4 +14,7 @@
 }
 .btn-light{
     margin-top: 20px;
+}
+body{
+    background-color: rgba(255, 97, 84, 0.9);
 }
