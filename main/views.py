@@ -58,12 +58,6 @@ def productHome(request, productSlug):
     request.session['allGraphs'] = company.graphData
     print(request.session['allGraphs'])
     graphNames  = enumerate(company.graphData[0])
-    twitHandles = company.twitterZip[0]
-    twitImages = company.twitterZip[1]
-    twitZip = zip(twitHandles,twitImages)
-    print("-------TYPE-----")
-    print(type(company.variables))
-    print(company.variables['socialMedia'])
     socialInfo = []
     socialHold = []
     for i in range(len(company.variables['socialMedia'][0])):
