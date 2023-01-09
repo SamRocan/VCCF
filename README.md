@@ -5,7 +5,6 @@
     <li>Add search for slug</li>
     <li>Optimize search to add infinite scrolling</li>
     <li>Be able to save and download analysis</li>
-    <li>Clean up Product Information Tab</li>
 </ol>
 <h3>Useful Commannd</h3>
 <ul>
