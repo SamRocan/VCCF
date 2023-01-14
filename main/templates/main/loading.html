@@ -39,6 +39,8 @@
         if(loadLength===100){
             console.log("Reached")
             //Delayed to let the loading bar finish
+            document.querySelector('#app').innerText = (data.title).toString();
+            document.querySelector('#progBar').style.width = (data.message).toString() + '%'
             setTimeout(() => {  window.location.href = "{% url 'productHome' slug %}"; }, 1000);
         }
 
