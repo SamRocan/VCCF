@@ -1,11 +1,18 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/loading_style.css' %}">
 {% endblock %}
 {% block content %}
-<h1 id="app">Loading....</h1>
-<div class="progress">
-    <div id='progBar' class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+<div class="modal">
+    <div class="modal-content">
+        <div class="outer">
+            <h1 id="app">Loading....</h1>
+            <div class="progress">
+                <div id='progBar' class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 {% block extra_js %}
