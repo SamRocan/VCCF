@@ -2,6 +2,10 @@ h3{
     text-align: center;
     color: black;
 }
+p{
+    text-align: center;
+    color: black;
+}
 .modal {
     display: block;
     position: fixed;
