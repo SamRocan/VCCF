@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+
+{% block content %} 
+{% include 'main/navbar.html' %}
+<h1>{{user}}</h1>
+<ul>
+{% for favourite in favourites %}
+<li><a href="{% url 'productHome' favourite.company.slug %}">{{favourite.company}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

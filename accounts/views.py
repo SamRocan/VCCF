@@ -5,6 +5,7 @@ from django.shortcuts import  render, redirect
 from .forms import NewUserForm
 from django.contrib.auth import login
 from django.contrib import messages
+from main.models import Favourite
 
 def register(request):
 	if request.method == "POST":
@@ -16,4 +17,11 @@ def register(request):
 			return redirect("main:index")
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
-	return render (request=request, template_name="registration/register.html", context={"register_form":form})
+	return render (request, template_name="registration/register.html", context={"register_form":form})
+
+def profile(request):
+    favourites = Favourite.objects.filter(user=request.user)
+    context = {
+        'favourites':favourites
+    }
+    return render(request, "accounts/profile.html", context)
