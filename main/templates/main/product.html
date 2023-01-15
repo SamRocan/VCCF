@@ -30,6 +30,13 @@
                     <img src="{{company.variables.logo}}" class="logo-sm">
                     <h1 id="main-heading">{{company.variables.results.name}}</h1>
                     <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
+                    {% if user in favouriteList %}
+                    <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Remove</a>
+                    <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Favourite</a>
+                    {% else %}
+                    <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Remove</a>
+                    <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Favourite</a>                    
+                    {% endif %}
                     <div class="container-fluid" id="right">
                         <div class="row no-gutters">
                             <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
@@ -57,6 +64,31 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 <script>
+    function favourite(company, isFavourite){
+        $.ajax({
+            type: "GET",
+            url: '/jsonFavourite/',
+            data: {
+                "company":company,
+                "isFavourite":isFavourite,
+            },
+            dataType: "json",
+            success: function (data) {
+                if(isFavourite===1){
+                    document.getElementById('un-fav-button').style.display = 'block'
+                    document.getElementById('fav-button').style.display = 'none'
+                }
+                else{
+                    document.getElementById('fav-button').style.display = 'block'
+                    document.getElementById('un-fav-button').style.display = 'none'
+                }
+            },
+            failure: function () {
+            }
+        });
+    }
+</script>
+<script>
     var endpoint = '/graphs/'
     let results = []
     $.ajax({
@@ -74,7 +106,6 @@
 
         },
         error: function(error_data) {
-
             console.log(error_data);
         }
 
@@ -196,7 +227,7 @@
                 window['statChart' + num.toString()].update();
             }
         }
-    }
+    }  
     function drawGraph(handle, pos) {
         var position = pos-1
         const graphArea = document.getElementById('twitter-box-' + handle);

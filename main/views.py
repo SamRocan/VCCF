@@ -1,14 +1,15 @@
 import os
 import time
 
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 import requests
 import json, itertools
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from django.http import JsonResponse
 from selenium import webdriver
 from django.contrib.sessions.backends.db import SessionStore
-from .models import Company
+from .models import Company, Favourite
 
 from .LIWC import getExcel, getTweets, tokenize, dic_to_dict, makeTrie, bestMatch, getScore
 from scraper.scraper import *
@@ -68,12 +69,41 @@ def productHome(request, productSlug):
                         company.variables['socialMedia'][3][i],]
         socialInfo.append(socialHold)
         socialHold = []
+    allFavourites = Favourite.objects.filter(company=company)
+    favouriteList = []
+    for favourited in allFavourites:
+        favouriteList.append(favourited.user)
+    print(favouriteList)
     context = {
         'company':company,
         'graphNames':graphNames,
-        'socialMediaZip':socialInfo #twitZip,
+        'socialMediaZip':socialInfo,
+        'favouriteList':favouriteList
     }
     return render(request, 'main/product.html', context)
+
+def json_favourite(request):
+    companySlug = request.GET.get('company', None)
+    isFavourite = int(request.GET.get('isFavourite', None))
+    print(isFavourite)
+    print(companySlug)
+    company = get_object_or_404(Company, slug=companySlug)
+    current_user = request.user
+    print(company)
+    print(current_user)
+    if (isFavourite==1):
+        fav = Favourite.objects.get(company=company, user=current_user)
+        fav.delete()
+        print("favourite deleted")
+    else:
+        fav = Favourite.objects.create(company=company, user=current_user)
+        fav.save()
+        print("favourite created")
+    data ={
+
+    }
+    return JsonResponse(data)
+
 
 class ChartData(APIView):
 

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.fields import JSONField
+from django.contrib.auth.models import User
 # django.db.models.JSONField
 # Create your models here.
 
@@ -34,4 +35,11 @@ class TwitterInfo(models.Model):
 
     def __str__(self):
         return self.username
+
+class Favourite(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.user) + " - " + str(self.company)
 
