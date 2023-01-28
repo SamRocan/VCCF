@@ -6,8 +6,8 @@
         <button onclick="changeGraph('{{num}}')">Click Me</button>
     {% endfor %}-->
     {% for num, title in graphNames %}
-        <canvas id="statGraph-{{num}}" style="display: none;"></canvas>
-        <button id="toggleButton-{{num}}" onclick="changeGraph('{{num}}')" style="display: none;">Toggle Graph</button>
+        <canvas id="statGraph-{{num}}" class='stat-canvas' style="display: none;"></canvas>
+        <button class="tog-but" id="toggleButton-{{num}}" onclick="changeGraph('{{num}}')" style="display: none;">Toggle Graph</button>
         <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
     {% endfor %}
 </div>

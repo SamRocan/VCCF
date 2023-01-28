@@ -10,8 +10,28 @@
     justify-content: center;
     align-items: center;
 }
+.alert {
+    display: none;
+}
+
+.twitter-canvas {
+    height: 50vh;
+    width: 100%;
+}
+.stat-canvas {
+    /*width: 100% !important;*/
+    min-height: 70vh !important;
+    display: block; 
+    margin: auto;
+}
 .navbar {
     z-index: 99;
+}
+.tog-but{
+    margin:0 auto 25px auto;
+    display:block;
+    width: 50%;
+    text-align: center;
 }
 #fav-button, #un-fav-button{
     margin-top: 20px;
@@ -21,6 +41,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 
 /* CSS for Modal Box */
@@ -257,6 +278,12 @@ ul li{
 }
 
 @media only screen and (max-width: 768px){
+    .modal-content {
+        max-height: calc(100vh - 150px);
+        margin: 15% 2% 2% 2%;
+        width: 98%;
+        max-width: calc(96vw);
+    }
     #left-col{
         padding-right: 0px;
     }
@@ -272,9 +299,29 @@ ul li{
     #right{
         margin-bottom: 20px;
     }
+    .alert {
+        display: block;
+        top:60px;
+        position: fixed;
+        -webkit-animation:moveOpen 6s;
+        -webkit-animation-fill-mode: forwards;
+    }
+    /* Safari and Chrome */
+    @-webkit-keyframes moveOpen 
+    {
+    from {-webkit-transform: translate(0,-100px);}
+    10% {-webkit-transform: translate(0,20px);}
+    12% {-webkit-transform: translate(0,22px);}
+    16% {-webkit-transform: translate(0,20px);}
+    80% {-webkit-transform: translate(0,20px);}
+    85% {-webkit-transform: translate(0,25px);}
+    to {-webkit-transform: translate(0,-160px);}
+    }
 }
 @media only screen and (max-width: 575px){
     .modal-content {
-        margin: 15% 10% 10% 10%;
+        margin: 15% 2% 2% 2%;
+        width: 98%;
+        max-width: calc(96vw);
     }
 }

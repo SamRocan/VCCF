@@ -6,9 +6,10 @@
 {% block content %}
 {% include 'main/navbar.html' %}
 <div id="modal-body">
-    <div class="modal">
+    <div class="alert alert-primary" role="alert" >
+        This page looks better in landscape, please use when viewing graphs
+    </div>
         <!-- modal content -->
-        <div class="modal-content">
             <div class="container-fluid" id="outer">
                 <div class="row no-gutters">
                     <div class="order-2 col-md-3 order-md-1" id="left-col">
@@ -28,7 +29,6 @@
                         </div>
                     </div>
                     <div class="order-1 col-md-9 order-md-2">
-                        <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
                         <img src="{{company.variables.logo}}" class="logo-sm">
                         <h1 id="main-heading">{{company.variables.results.name}}</h1>
                         <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
@@ -60,8 +60,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 {% endblock content %}
 {% block extra_js %}
@@ -136,13 +134,16 @@
             button.style.marginBottom = '0px'
 
         }
-        canvas.style.padding = "50px"
         var graphType = allGraphs[1][num][allGraphs[1][num].length-1]
         var isStacked = true;
         var reverseData;
         var reverseLabels;
+        console.log(graphType)
+        if(graphType == 'bar'){
+            graphType = 'horizontalBar'
+        }
         if(graphType == 'column'){
-            graphType = 'bar'
+            graphType = 'horizontalBar'
         }
         if(graphType == 'line'){
             isStacked = false
@@ -158,6 +159,7 @@
                 datasets: [],
             },
             options: {
+                maintainAspectRatio:true,
                 scales: {
                     xAxes: [{
                         stacked: isStacked, // this should be set to make the bars stacked
