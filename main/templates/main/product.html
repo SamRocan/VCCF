@@ -6,8 +6,11 @@
 {% block content %}
 {% include 'main/navbar.html' %}
 <div id="modal-body">
-    <div class="alert alert-primary" role="alert" >
+    <div class="alert alert-primary" id="landscape-alert" role="alert" >
         This page looks better in landscape, please use when viewing graphs
+    </div>
+    <div class="alert alert-primary" id="fav-alert" role="alert" >
+        Please login or sign up to favourite companies
     </div>
         <!-- modal content -->
             <div class="container-fluid" id="outer">
@@ -34,10 +37,10 @@
                         <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
                         {% if user in favouriteList %}
                         <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Remove</a>
-                        <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Favourite</a>
-                        {% else %}
-                        <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Remove</a>
+                        {% elif user.is_authenticated %}
                         <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Favourite</a>                    
+                        {% else %}
+                        <a class="btn btn-warning" id="un-fav-button" onclick="triggerSubAlert()" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Favourite</a>                    
                         {% endif %}
                         <div class="container-fluid" id="right">
                             <div class="row no-gutters">
@@ -87,6 +90,11 @@
             failure: function () {
             }
         });
+    }
+    function triggerSubAlert(){
+        console.log("You're not logged in")
+        setTimeout(() => {document.getElementById("fav-alert").classList.remove('generic-alert')}, 5000);
+        document.getElementById("fav-alert").classList.add('generic-alert')
     }
 </script>
 <script>

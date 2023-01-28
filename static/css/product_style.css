@@ -10,9 +10,6 @@
     justify-content: center;
     align-items: center;
 }
-.alert {
-    display: none;
-}
 
 .twitter-canvas {
     height: 50vh;
@@ -56,26 +53,6 @@
     height: 100%;
     overflow: auto;
 }
-
-.modal-content {
-    position: fixed;
-    background-color: #fff;
-    margin: 10% 10% 10% 10%;
-    width: 80%;
-    border-radius: 10px;
-    max-height: calc(100vh - 210px);
-    max-width: calc(80vw);
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-
-.close {
-    padding-top: 10px;
-    float: right;
-    cursor: pointer;
-}
-
 
 .show {
     animation: show 0.3s forwards ease-in;
@@ -275,6 +252,41 @@ ul li{
 
 .twitter-col {
     margin-bottom: 20px;
+    
+}
+.alert{
+    display: none;
+}
+
+#landscape-alert {
+    z-index: 99;
+    top:-60px;
+    text-align: center;
+    position: fixed;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+
+#fav-alert {
+    z-index: 99;
+    top:-60px;
+    position: fixed;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.generic-alert{
+    display: block;
+    -webkit-animation:moveOpen 4s !important;
+    -webkit-animation-fill-mode: forwards !important;
+}
+
+@-webkit-keyframes moveOpen 
+{
+from {-webkit-transform: translate(0,-200px);}
+20% {-webkit-transform: translate(0,100px);}
+80% {-webkit-transform: translate(0,100px);}
+to {-webkit-transform: translate(0,-200px);}
 }
 
 @media only screen and (max-width: 768px){
@@ -299,23 +311,10 @@ ul li{
     #right{
         margin-bottom: 20px;
     }
-    .alert {
+    #landscape-alert {
         display: block;
-        top:60px;
-        position: fixed;
-        -webkit-animation:moveOpen 6s;
+        -webkit-animation:moveOpen 4s;
         -webkit-animation-fill-mode: forwards;
-    }
-    /* Safari and Chrome */
-    @-webkit-keyframes moveOpen 
-    {
-    from {-webkit-transform: translate(0,-100px);}
-    10% {-webkit-transform: translate(0,20px);}
-    12% {-webkit-transform: translate(0,22px);}
-    16% {-webkit-transform: translate(0,20px);}
-    80% {-webkit-transform: translate(0,20px);}
-    85% {-webkit-transform: translate(0,25px);}
-    to {-webkit-transform: translate(0,-160px);}
     }
 }
 @media only screen and (max-width: 575px){
