@@ -4,54 +4,57 @@
 <link rel="stylesheet" href="{% static 'css/product_style.css' %}">
 {% endblock %}
 {% block content %}
-<div class="modal">
-    <!-- modal content -->
-    <div class="modal-content">
-        <div class="container-fluid" id="outer">
-            <div class="row no-gutters">
-                <div class="order-2 col-md-3 order-md-1" id="left-col">
-                    <div class="container-fluid p-0" id="left">
-                        <img src="{{company.variables.logo}}" class="logo">
-                        <div id="news-collum">
-                            <h5>Industry News</h5>
-                            <hr>
-                            <ul>
-                                {% for link,article in context.newsZip %}
-                                <li>
-                                    <a href="{{link}}" class="news_link">{{article}}</a>
-                                </li>
-                                {% endfor %}
-                            </ul>
+{% include 'main/navbar.html' %}
+<div id="modal-body">
+    <div class="modal">
+        <!-- modal content -->
+        <div class="modal-content">
+            <div class="container-fluid" id="outer">
+                <div class="row no-gutters">
+                    <div class="order-2 col-md-3 order-md-1" id="left-col">
+                        <div class="container-fluid p-0" id="left">
+                            <img src="{{company.variables.logo}}" class="logo">
+                            <div id="news-collum">  
+                                <h5>Industry News</h5>
+                                <hr>
+                                <ul>
+                                    {% for link,article in context.newsZip %}
+                                    <li>
+                                        <a href="{{link}}" class="news_link">{{article}}</a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="order-1 col-md-9 order-md-2">
-                    <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
-                    <img src="{{company.variables.logo}}" class="logo-sm">
-                    <h1 id="main-heading">{{company.variables.results.name}}</h1>
-                    <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
-                    {% if user in favouriteList %}
-                    <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Remove</a>
-                    <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Favourite</a>
-                    {% else %}
-                    <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Remove</a>
-                    <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Favourite</a>                    
-                    {% endif %}
-                    <div class="container-fluid" id="right">
-                        <div class="row no-gutters">
-                            <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
-                            <div class="col-lg-4 p-0"><button id="b2">Founder Information</button></div>
-                            <div class="col-lg-4 p-0"><button id="b3">Market Information</button></div>
-                        </div>
-                        <div class="row-lg no-gutters" style="margin: 10px">
-                            <div id="1">
-                                {% include "main/tabs/productTab.html" %}
+                    <div class="order-1 col-md-9 order-md-2">
+                        <a href="{% url 'index' %}" style="color: black;"><span class="close">&times;</span></a>
+                        <img src="{{company.variables.logo}}" class="logo-sm">
+                        <h1 id="main-heading">{{company.variables.results.name}}</h1>
+                        <p id="main-sub-heading">{{company.variables.results.tagline}}</p>
+                        {% if user in favouriteList %}
+                        <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Remove</a>
+                        <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Favourite</a>
+                        {% else %}
+                        <a class="btn btn-danger" id="fav-button" onclick="favourite('{{company.slug}}', 1)" style="width:80%; display: block; margin: auto; margin-bottom: 20px; display: none;">Remove</a>
+                        <a class="btn btn-warning" id="un-fav-button" onclick="favourite('{{company.slug}}', 0)" style="width:80%; display: block; margin: auto; margin-bottom: 20px;">Favourite</a>                    
+                        {% endif %}
+                        <div class="container-fluid" id="right">
+                            <div class="row no-gutters">
+                                <div class="col-lg-4 p-0"><button id="b1">Product Information</button></div>
+                                <div class="col-lg-4 p-0"><button id="b2">Founder Information</button></div>
+                                <div class="col-lg-4 p-0"><button id="b3">Market Information</button></div>
                             </div>
-                            <div id="2" style="display:none;">
-                                {% include "main/tabs/founderTab.html" %}
-                            </div>
-                            <div id="3" style="display:none;">
-                                {% include "main/tabs/marketTab.html" %}
+                            <div class="row-lg no-gutters" style="margin: 10px">
+                                <div id="1">
+                                    {% include "main/tabs/productTab.html" %}
+                                </div>
+                                <div id="2" style="display:none;">
+                                    {% include "main/tabs/founderTab.html" %}
+                                </div>
+                                <div id="3" style="display:none;">
+                                    {% include "main/tabs/marketTab.html" %}
+                                </div>
                             </div>
                         </div>
                     </div>

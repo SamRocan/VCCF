@@ -1,5 +1,5 @@
 /* CSS Just for the button */
-body {
+#modal-body {
     margin: 0;
     padding: 0;
     font-family: "Merriweather Sans", sans-serif;
@@ -10,8 +10,10 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-.btn{
+.navbar {
+    z-index: 99;
+}
+#fav-button, #un-fav-button{
     margin-top: 20px;
     margin-left: 30px;
     margin-right: 30px;
@@ -62,7 +64,7 @@ h1{
     margin: auto;
 }
 
-button{
+#b1, #b2, #b3{
     width: 100%;
 }
 #left-col{
@@ -269,5 +271,10 @@ ul li{
     }
     #right{
         margin-bottom: 20px;
+    }
+}
+@media only screen and (max-width: 575px){
+    .modal-content {
+        margin: 15% 10% 10% 10%;
     }
 }

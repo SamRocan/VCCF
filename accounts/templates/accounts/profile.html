@@ -5,7 +5,7 @@
 <h1>{{user}}</h1>
 <ul>
 {% for favourite in favourites %}
-<li><a href="{% url 'productHome' favourite.company.slug %}">{{favourite.company}}</a></li>
+<li><img src="{{favourite.company.api.data.post.thumbnail.url}}" width="32" height="32"><a href="{% url 'productHome' favourite.company.slug %}">{{favourite.company}}</a>    <a href="#" class="btn btn-warning btn-sm">Download</a></li>
 {% endfor %}
 </ul>
 {% endblock %}
