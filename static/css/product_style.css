@@ -7,8 +7,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .twitter-canvas {
@@ -103,6 +101,7 @@ h1{
     border-radius: 5px;
     padding-top: 10px;
     background-color: #becce0;
+    margin-top: 13px;
 }
 #news-collum h5{
     font-weight: bold;
@@ -117,14 +116,15 @@ hr{
     width: 90%;
 }
 ul{
-    text-align: left;
     list-style: none;
-    padding-right: 15px;
+    padding: 0;
+    list-style-type: none;
     line-height: 110%;
 }
 
-ul li{
-    padding: 10px 0px;
+ul{
+ padding-bottom: 10px;
+ padding-top: 10px;
 }
 
 #right{
@@ -296,9 +296,7 @@ to {-webkit-transform: translate(0,-200px);}
         width: 98%;
         max-width: calc(96vw);
     }
-    #left-col{
-        padding-right: 0px;
-    }
+
     .logo-sm{
         display: block;
     }

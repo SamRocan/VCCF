@@ -20,11 +20,15 @@
                             <img src="{{company.variables.logo}}" class="logo">
                             <div id="news-collum">  
                                 <h5>Industry News</h5>
-                                <hr>
+                                <hr style="margin: auto;">
                                 <ul>
                                     {% for x in company.newsArticles %}
                                     <li>
-                                        <a href="{{x.url}}" class="news_link">{{x.title}}</a>
+                                        <a href="{{x.url}}" class="news_link"><p style="text-align: center">{{x.title}}</p></a>
+                                    </li>
+                                    {% empty %}
+                                    <li>
+                                        <a href="#" class="news_link"><p style="text-align: center">No Articles Found </p></a>
                                     </li>
                                     {% endfor %}
                                 </ul>

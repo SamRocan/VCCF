@@ -16,13 +16,13 @@
     margin-top: 20px;
 }
 body{
-    background-color: rgba(255, 97, 84, 0.9);
+    background-color: rgba(255, 97, 84, 0.9);    
+}
+.main{
+    box-sizing: border-box;
 }
 
-*{
-    box-sizing: border-box;
-  }
-  .search-box{
+.search-box{
     width: fit-content;
     height: fit-content;
     position: relative;
@@ -71,3 +71,20 @@ body{
         content: '\f288';
         font: var(--fa-font-brands);
     }
+@media only screen and (max-width: 575px){
+    .bar{
+        margin:0 auto;
+        width:375px;
+        border-radius:30px 30px 30px 30px;
+        border:1px solid #dcdcdc;
+    }
+    .searchbar{
+        height:45px;
+        border-radius: 30px 30px;
+        border:none;
+        width:300px;
+        font-size:16px;
+        outline: none;
+        padding-left: 30px;    
+    }
+}
