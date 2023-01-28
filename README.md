@@ -2,10 +2,12 @@
 
 <h3>To Do</h3>
 <ol>
+    <li>Make homepage filled out</li>
+    <li>Stylize profile</li>
+    <li>clean up 'information found tabs'</li>
+    <h4>Extra</h4>
     <li>Add search for slug</li>
     <li>Optimize search to add infinite scrolling</li>
-    <li>Make homepage filled out</li>
-    <li>Stylize profile/li>
 </ol>
 <h3>Useful Commannd</h3>
 <ul>
