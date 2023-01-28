@@ -13,6 +13,7 @@ class Company(models.Model):
     twitterZip = JSONField(default=dict, null=True)
     websiteData = JSONField(default=dict, null=True)
     graphData = JSONField(default=dict, null=True)
+    newsArticles = JSONField(default=dict, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
     def __str__(self):

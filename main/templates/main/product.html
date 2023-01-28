@@ -22,9 +22,9 @@
                                 <h5>Industry News</h5>
                                 <hr>
                                 <ul>
-                                    {% for link,article in context.newsZip %}
+                                    {% for x in company.newsArticles %}
                                     <li>
-                                        <a href="{{link}}" class="news_link">{{article}}</a>
+                                        <a href="{{x.url}}" class="news_link">{{x.title}}</a>
                                     </li>
                                     {% endfor %}
                                 </ul>
