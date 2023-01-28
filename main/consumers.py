@@ -1,7 +1,7 @@
 import json
 from random import randint
 from channels.generic.websocket import WebsocketConsumer
-from VCCF.tasks import getAPI, extractVariables, twitterImages, companyInfo, graphScraping
+from VCCF.tasks import getAPI, extractVariables, twitterImages, companyInfo, graphScraping,getNews
 from .models import Company
 
 class WSConsumer(WebsocketConsumer):
@@ -26,6 +26,12 @@ class WSConsumer(WebsocketConsumer):
         print("----WEBSITE DATA---")
         websiteData = companyInfo(variables['results'])
         print(websiteData)
+        print("----NEWS DATA---")
+        news = getNews(variables['results'])
+        for article in news:
+            print(article['title'])
+            print(article['url'])
+            print('------------')
         self.send(json.dumps({'title':'Loading Graph Data','message':80}))
         graphData = graphScraping(variables['topics'])
         print("----GRAPH DATA---")
@@ -37,7 +43,8 @@ class WSConsumer(WebsocketConsumer):
                           variables=variables,
                           twitterZip=twitterZip,
                           websiteData=websiteData,
-                          graphData=graphData)
+                          graphData=graphData,
+                          newsArticles=news)
         newComp.save()
         print("Company Created")
 

@@ -202,7 +202,7 @@ ul li{
     width: 90px;
     height: 90px;
 }
-.news_link li a {
+.news_link{
     color: black;
     font-weight: bold;
     text-decoration: none; /* no underline */

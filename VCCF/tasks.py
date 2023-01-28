@@ -84,9 +84,18 @@ def getAPI(productSlug):
                           headers=headers,
                           data=json.dumps(query))
 
-    #Saves Json information to variable
-    jsonInfo = posts.json()
-    return jsonInfo
+    return posts.json()
+
+def getNews(results):
+    companyName = str(results.get('name'))
+    url = ('https://newsapi.org/v2/everything?'
+        'q='+companyName+'&'
+        'from=2022-12-28&'
+        'sortBy=popularity&'
+        'apiKey=6bc5b55e21464ab595e8f4eb41b8f3b0')
+
+    response = requests.get(url)
+    return response.json()['articles']
 
 def extractVariables(jsonIput):
     if (jsonIput['data']['post'] == None):

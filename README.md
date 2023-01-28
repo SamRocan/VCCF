@@ -5,8 +5,6 @@
     <li>Add search for slug</li>
     <li>Optimize search to add infinite scrolling</li>
     <li>Make homepage filled out</li>
-    <li>finish formating on 'product' tab</li>
-    <li>Add news API</li>
     <li>Stylize profile/li>
 </ol>
 <h3>Useful Commannd</h3>
