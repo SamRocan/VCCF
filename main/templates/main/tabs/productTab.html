@@ -19,14 +19,14 @@
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
+                        {% autoescape off %}
+                        <p style="text-align: center">{{company.websiteData.0.6}}</p>
+                        {% endautoescape %}
                         <p>{{company.websiteData.0.1}}</p>
                         <p>{{company.websiteData.0.2}}</p>
                         <p>{{company.websiteData.0.3}}</p>
                         <p>{{company.websiteData.0.4}}</p>
                         <p>{{company.websiteData.0.5}}</p>
-                        {% autoescape off %}
-                        <p style="text-align: center">{{company.websiteData.0.6}}</p>
-                        {% endautoescape %}
                     </div>
                 </div>
             </div>
@@ -50,7 +50,10 @@
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
+                        {% if company.websiteData.2 == None %}
+                        {% else %}
                         {{company.websiteData.2}}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -61,8 +64,24 @@
                     </button>
                 </h2>
                 <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
-                    <div class="accordion-body">
-                        {{company.websiteData.3}}
+                    <div class="accordion-body" style="text-align: left;">
+                        {% if company.websiteData.3.1 == 'None' %}
+                        {% else %}
+                        <p style="text-align: center; background-color: rgb(255, 102, 7); border-radius: 5px; color: white;">{{company.websiteData.3.1}}</p>
+                        <!--{{company.websiteData.3}}-->
+                        <div style="text-align: center;">
+                            <h5>Key People</h5>
+                            <hr style="margin: auto;">
+                            {% for person in company.websiteData.3.2 %}
+                            <p><strong>{{person.1}}</strong>: {{person.0}}</p>
+                            {% endfor %}
+                            <h5>Key Facts</h5>
+                            <hr style="margin: auto;">
+                            <p><strong>Founded</strong>:{{company.websiteData.3.4.0}}</p>
+                            <p><strong>Employee's</strong>:{{company.websiteData.3.4.1}}</p>
+                            <p><strong>Location</strong>:{{company.websiteData.3.4.1}}</p>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -98,7 +117,10 @@
                 </h2>
                 <div id="flush-collapse7" class="accordion-collapse collapse" aria-labelledby="flush-heading7" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body"><a href="{{saasHub.1}}">{{saasHub.0}}</a>
+                        {% if company.websiteData.6 == None %}
+                        {% else %}
                         {{company.websiteData.6}}
+                        {% endif %}
                     </div>
                 </div>
             </div>

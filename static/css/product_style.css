@@ -254,6 +254,10 @@ ul{
     margin-bottom: 20px;
     
 }
+.ycomb-logo{
+    border-radius: 5px;
+}
+
 .alert{
     display: none;
 }

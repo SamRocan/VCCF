@@ -22,7 +22,7 @@
                                 <h5>Industry News</h5>
                                 <hr style="margin: auto;">
                                 <ul>
-                                    {% for x in company.newsArticles %}
+                                    {% for x in company.newsArticles|slice:"5" %}
                                     <li>
                                         <a href="{{x.url}}" class="news_link"><p style="text-align: center">{{x.title}}</p></a>
                                     </li>
