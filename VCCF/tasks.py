@@ -1,3 +1,4 @@
+import datetime
 import itertools
 import json
 
@@ -90,11 +91,12 @@ def getNews(results):
     companyName = str(results.get('name'))
     url = ('https://newsapi.org/v2/everything?'
         'q='+companyName+'&'
-        'from=2022-12-28&'
+        'from='+(datetime.datetime.today()-datetime.timedelta(28)).strftime('%Y-%m-%d')+'&'
         'sortBy=popularity&'
         'apiKey=6bc5b55e21464ab595e8f4eb41b8f3b0')
 
     response = requests.get(url)
+    print(response.json())
     return response.json()['articles']
 
 def extractVariables(jsonIput):
