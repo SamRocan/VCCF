@@ -1,11 +1,17 @@
 {% extends "main/base.html" %}
-
-{% block content %} 
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile_style.css' %}">
+{% endblock %}
+{% block content %}
 {% include 'main/navbar.html' %}
-<h1>{{user}}</h1>
-<ul>
+<h1>My Favourites</h1>
+
 {% for favourite in favourites %}
-<li><img src="{{favourite.company.api.data.post.thumbnail.url}}" width="32" height="32"><a href="{% url 'productHome' favourite.company.slug %}">{{favourite.company}}</a>    <a href="#" class="btn btn-warning btn-sm">Download</a></li>
+<a href="{% url 'productHome' favourite.company.slug %}" class="box-link"><div class="favourite-box">
+    <img src="{{favourite.company.api.data.post.thumbnail.url}}" width="64" height="64">
+    <h3>{{favourite.company|title}}</h3>
+    <p>{{favourite.company.variables.results.tagline}}</p>
+</div></a>
 {% endfor %}
-</ul>
 {% endblock %}

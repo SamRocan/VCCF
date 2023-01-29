@@ -1,0 +1,38 @@
+body {
+    background-color: rgb(228, 238, 255);
+}
+h1 {
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+.box-link, .box-link:hover{
+    color: black;
+    text-decoration: none;
+}
+.favourite-box{
+    display: block;
+    margin: auto;
+    width: 70%;
+    text-align: center;
+    padding: 10px;
+    background-color:rgba(255, 255, 255, 0.9) ;
+    margin-bottom: 26px;
+    border-radius: 5px;
+    border: 2px solid black;
+    position: relative;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.favourite-box:hover{
+    box-shadow: rgba(50, 50, 93, 0.0) 0px 2px 5px -1px, rgba(0, 0, 0, 0.0) 0px 1px 3px -1px;
+
+}
+
+div img {
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    border-radius: 50%;
+    border: 2px solid black;
+}
