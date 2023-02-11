@@ -16,10 +16,23 @@
     margin-top: 20px;
 }
 body{
-    background-color: rgba(255, 97, 84, 0.9);    
+    background-color: rgba(255, 255, 255, 1);    
 }
 .main{
     box-sizing: border-box;
+    position: relative;;
+}
+#main-heading{
+    font-size: 6vw;
+    text-align: center;
+    color: #059ca3;
+    font-weight: 900;
+}
+#main-subheading{
+    font-size: 3vw;
+    text-align: center;
+    color: #059ca3;
+    font-weight: 600;
 }
 .landing-image{
     border-radius: 5px;
@@ -31,7 +44,9 @@ body{
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    margin-top:50px;
+    margin-top:10px;
+    background-color: #e7512d;
+    border-radius: 30px;
   }
   .bar{
     margin:0 auto;
@@ -78,11 +93,13 @@ body{
     .bar{
         margin:0 auto;
         width:375px;
+        height: 40px;
         border-radius:30px 30px 30px 30px;
         border:1px solid #dcdcdc;
+        margin-bottom: 10px;
     }
     .searchbar{
-        height:45px;
+        height:38px;
         border-radius: 30px 30px;
         border:none;
         width:300px;
@@ -90,4 +107,5 @@ body{
         outline: none;
         padding-left: 30px;    
     }
+
 }

@@ -5,10 +5,10 @@
 {% endblock %}
 {% block content %}
     {% include 'main/navbar.html' %}
+    <h1 id="main-heading">VCCF</h1>
+    <h3 id="main-subheading">find out more about blah blah blah here</h3>
     <div id="main">
-        <h1 style="text-align: center; color: white; padding-top: 50px;">VCCF</h1>
-        <h4 style="text-align: center; color: white;">Here is some text describing the company</h4>
-        <div class="search-box">
+        <div class="search-box" >
             <form action="product">
                 <div class="bar">
                     <input class="searchbar" name="productSearch" type="text" title="Search">
@@ -17,40 +17,45 @@
             </form>
         </div>
     </div>
-    <div class="container-fluid" style="padding: 30px; color: white; padding-top: 100px;">
+    <img src="{% static 'images/front-page-head-graphic.jpg' %}" style="width: 100%; z-index:-1;">
+    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6">
                 <img src="{% static 'images/product-info.png' %}" width="100%" class="landing-image">
             </div>
             <div class="col-md-6">
-                <p>Descripion 1</p>
+                <h1 id="main-heading">Descripion</h1>
+                <h3 id="subheading">find out more about blah blah blah here</h3>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="padding: 30px; color: white;">
+    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6 order-md-1 order-2">
-                <p>Descripion 1</p>
+                <h1 id="main-heading">Descripion</h1>
+                <h3 id="subheading">find out more about blah blah blah here</h3>
             </div>
             <div class="col-md-6 order-md-2 order-1">
                 <img src="{% static 'images/founders.png' %}" width="100%" class="landing-image">
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="padding: 30px; color: white;">
+    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6">
                 <img src="{% static 'images/market-data.png' %}" width="100%" class="landing-image">
             </div>
             <div class="col-md-6">
-                <p>Descripion 1</p>
+                <h1 id="main-heading">Descripion</h1>
+                <h3 id="subheading">find out more about blah blah blah here</h3>
             </div>
         </div>
     </div>
-    <div class="container-fluid" style="padding: 30px; color: white;">
+    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6 order-md-1 order-2">
-                <p>Descripion 1</p>
+                <h1 id="main-heading">Descripion</h1>
+                <h3 id="subheading">find out more about blah blah blah here</h3>
             </div>
             <div class="col-md-6 order-md-1 order-1">
                 <img src="{% static 'images/favourites.png' %}" width="100%" class="landing-image">
