@@ -17,7 +17,10 @@
             </form>
         </div>
     </div>
-    <img src="{% static 'images/front-page-head-graphic.jpg' %}" style="width: 100%; z-index:-1;">
+    <div id="main-image-container"  style="background-image:url('{% static 'images/front-page-head-graphic.jpg' %}')">
+        <!--style="width: 100%; z-index:-1;"
+        <img src="{% static 'images/front-page-head-graphic.jpg' %}" id="main-image">-->
+    </div>
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6">

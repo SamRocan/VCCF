@@ -2,7 +2,7 @@
 
 <h3>To Do</h3>
 <ol>
-    <li>Make homepage filled out</li>
+    <li>Complete login/logout/sign up page</li>
     <li>clean up 'information found tabs'</li>
     <h4>Extra</h4>
     <li>Add search for slug</li>

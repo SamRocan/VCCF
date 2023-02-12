@@ -34,6 +34,20 @@ body{
     color: #059ca3;
     font-weight: 600;
 }
+#main-image-container {
+    margin-top: 3%;
+    width: 100%;
+    height: 40vw;
+    z-index: 1;
+    opacity: 1;
+    background-size: cover;
+    position: relative;
+    background-position: center center; /* First value is from left and second is from top. You can use use number as well*/
+    background-repeat:no-repeat;
+}
+#main-image{
+    width: 100%;
+}
 .landing-image{
     border-radius: 5px;
     box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.5);
@@ -108,4 +122,17 @@ body{
         padding-left: 30px;    
     }
 
+}
+@media only screen and (max-width: 750px){
+    #main-image-container {
+    width: 100%;
+    max-height: 100% !important;
+    height: 35vh;
+    z-index: 1;
+    opacity: 1;
+    background-size: cover;
+    position: relative;
+    background-position: center center; /* First value is from left and second is from top. You can use use number as well*/
+    background-repeat:no-repeat;
+}
 }
