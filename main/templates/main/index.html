@@ -4,39 +4,74 @@
     <link rel="stylesheet" href="{% static 'css/index_style.css' %}">
 {% endblock %}
 {% block content %}
-    {% include 'main/navbar.html' %}
-    <h1 id="main-heading">VCCF</h1>
-    <h3 id="main-subheading">find out more about blah blah blah here</h3>
-    <div id="main">
-        <div class="search-box" >
-            <form action="product">
-                <div class="bar">
-                    <input class="searchbar" name="productSearch" type="text" title="Search">
-                    <button class="btn" type="submit"><i class="ph"></i></button>
-                </div>
-            </form>
+        {% include 'main/navbar.html' %}
+        <img src="{% static 'images/ph-logo.png' %}"width="10%" style="  display: block; margin: auto;">
+        <h1 id="main-heading">Bring your ideas to life for £1/month </h1>
+        <h3 id="main-subheading">find out more about blah blah blah here</h3>
+        <div id="main">
+            <div class="search-box" >
+                <form action="product">
+                    <div class="bar">
+                        <input class="searchbar" name="productSearch" type="text" title="Search">
+                        <button class="btn" type="submit"><i class="ph"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <img src="{% static 'images/fp-graphic.png' %}"width="90%" style="display: block; margin: auto; padding-top: 50px;">
+    
+
+    <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 10px; margin-bottom: 5px;height: 5px; background-color: rgb(255, 128, 0); border: none; opacity: 1 !important;">
+    <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 0px; margin-bottom: 50px;height: 5px; background-color: #059ca3; border: none; opacity: 1 !important;">
+    
+    <div class="row gy-5">
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/akaunting.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/bardeen.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/gitlab.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/mindsdb.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/openvc.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-4">
+            <img src="{% static 'images/landing-page-logos/typedream.png' %}" class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <img src="{% static 'images/landing-page-logos/polywork.png' %}"class="comp-logo">
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <img src="{% static 'images/landing-page-logos/zendesk.png' %}" class="comp-logo">
         </div>
     </div>
-    <div id="main-image-container"  style="background-image:url('{% static 'images/front-page-head-graphic.jpg' %}')">
-        <!--style="width: 100%; z-index:-1;"
-        <img src="{% static 'images/front-page-head-graphic.jpg' %}" id="main-image">-->
-    </div>
+
+    <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 50px; margin-bottom: 5px;height: 5px; background-color: rgb(255, 128, 0); border: none; opacity: 1 !important;">
+    <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 0px; margin-bottom: 10px;height: 5px; background-color: #059ca3; border: none; opacity: 1 !important;">
+
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6">
                 <img src="{% static 'images/product-info.png' %}" width="100%" class="landing-image">
             </div>
             <div class="col-md-6">
-                <h1 id="main-heading">Descripion</h1>
-                <h3 id="subheading">find out more about blah blah blah here</h3>
+                <img src="{% static 'images/svg/blob1.svg' %}" class="blob-right">
+                <h1 class="heading-right">Descripion</h1>
+                <h3 class="subheading-right">find out more about blah blah blah here</h3>
             </div>
         </div>
     </div>
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6 order-md-1 order-2">
-                <h1 id="main-heading">Descripion</h1>
-                <h3 id="subheading">find out more about blah blah blah here</h3>
+                <img src="{% static 'images/svg/blob.svg' %}" class="blob-left">
+                <h1 class="heading-left">Descripion</h1>
+                <h3 class="subheading-left">find out more about blah blah blah here</h3>
             </div>
             <div class="col-md-6 order-md-2 order-1">
                 <img src="{% static 'images/founders.png' %}" width="100%" class="landing-image">
@@ -49,21 +84,23 @@
                 <img src="{% static 'images/market-data.png' %}" width="100%" class="landing-image">
             </div>
             <div class="col-md-6">
-                <h1 id="main-heading">Descripion</h1>
-                <h3 id="subheading">find out more about blah blah blah here</h3>
+                <img src="{% static 'images/svg/blob2.svg' %}" class="blob-right">
+                <h1 class="heading-right">Descripion</h1>
+                <h3 class="subheading-right">find out more about blah blah blah here</h3>
             </div>
         </div>
     </div>
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6 order-md-1 order-2">
-                <h1 id="main-heading">Descripion</h1>
-                <h3 id="subheading">find out more about blah blah blah here</h3>
+                <img src="{% static 'images/svg/blob6.svg' %}" class="blob-left">
+                <h1 class="heading-left">Descripion</h1>
+                <h3 class="subheading-left">find out more about blah blah blah here</h3>
             </div>
             <div class="col-md-6 order-md-1 order-1">
                 <img src="{% static 'images/favourites.png' %}" width="100%" class="landing-image">
             </div>
         </div>
-    </div>
+    </div>-->
 
 {% endblock %}

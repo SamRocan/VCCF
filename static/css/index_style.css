@@ -15,26 +15,35 @@
 .btn-light{
     margin-top: 20px;
 }
-body{
-    background-color: rgba(255, 255, 255, 1);    
+html {
+    height: 100%;
 }
-.main{
-    box-sizing: border-box;
-    position: relative;;
+body {
+    height: 100%;
+    margin: 0;
+    background-repeat: no-repeat;
+    /*background-image: radial-gradient(circle at 0% 0%,#5FD5B6 0%,rgba(95,213,182,0) 30%),linear-gradient(to bottom,rgba(121,223,255,.7) -10%,rgba(121,223,255,0) 70%),radial-gradient(circle at 95% 0%,#D0F224 0%,rgba(95,213,182,0) 20%);*/
+    background-image: radial-gradient(circle at 0% 0%,rgb(255, 128, 0) 0%,rgba(95,213,182,0) 30%),linear-gradient(to bottom,rgba(250, 193, 135, 0.7) -10%,rgba(121,223,255,0) 70%),radial-gradient(circle at 100% 0%,rgb(255, 128, 0) 0%,rgba(95,213,182,0) 30%);
+
 }
+
+
 #main-heading{
     font-size: 6vw;
     text-align: center;
-    color: #059ca3;
-    font-weight: 900;
+    color: black;
+    font-weight: 700;
+    margin-left: 20%;
+    margin-right: 20%;
+
 }
 #main-subheading{
-    font-size: 3vw;
+    font-size:2vw;
     text-align: center;
-    color: #059ca3;
-    font-weight: 600;
+    color: black;
+    font-weight: 300;
 }
-#main-image-container {
+.main-image-container {
     margin-top: 3%;
     width: 100%;
     height: 40vw;
@@ -62,47 +71,54 @@ body{
     background-color: #e7512d;
     border-radius: 30px;
   }
-  .bar{
-    margin:0 auto;
-    width:575px;
-    border-radius:30px 30px 30px 30px;
-    border:1px solid #dcdcdc;
+.bar{
+margin:0 auto;
+width:575px;
+border-radius:30px 30px 30px 30px;
+border:1px solid #dcdcdc;
+}
+.bar:hover{
+box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.5);
+}
+.bar:focus-within{
+box-shadow: 1px 1px 8px 1px #dcdcdc;
+outline:none;
+}
+.searchbar{
+height:45px;
+border-radius: 30px 30px;
+border:none;
+width:500px;
+font-size:16px;
+outline: none;
+padding-left: 30px;
+
+}
+.btn{
+    outline: 0 !important;
+    box-shadow: none !important;
+    border:none !important;
+}
+.btn:focus,.btn:active,.btn:hover {
+    outline: 0 !important;
+    box-shadow: none !important;
+    border:none !important;
     }
-    .bar:hover{
-    box-shadow: 1px 1px 8px 1px rgba(0,0,0,0.5);
-    }
-    .bar:focus-within{
-    box-shadow: 1px 1px 8px 1px #dcdcdc;
-    outline:none;
-    }
-    .searchbar{
-    height:45px;
-    border-radius: 30px 30px;
-    border:none;
-    width:500px;
-    font-size:16px;
-    outline: none;
-    padding-left: 30px;
-    
-    }
-    .btn{
-        outline: 0 !important;
-        box-shadow: none !important;
-        border:none !important;
-    }
-    .btn:focus,.btn:active,.btn:hover {
-        outline: 0 !important;
-        box-shadow: none !important;
-        border:none !important;
-        }
-    .ph{
-        font-size: 1.2em;
-        color:white;
-    }
-    .ph::before{
-        content: '\f288';
-        font: var(--fa-font-brands);
-    }
+.ph{
+    font-size: 1.2em;
+    color:white;
+}
+.ph::before{
+    content: '\f288';
+    font: var(--fa-font-brands);
+}
+.comp-logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5%;
+    width: 120px;
+}
 @media only screen and (max-width: 575px){
     .bar{
         margin:0 auto;
@@ -123,6 +139,20 @@ body{
     }
 
 }
+.blob-left{
+    left: 0;
+    position: absolute;
+    width: 30%;
+    opacity: 80%;
+    z-index: -99;
+}
+.blob-right {
+    right: 0;
+    position: absolute;
+    width: 30%;
+    opacity: 80%;
+    z-index: -99;
+}
 @media only screen and (max-width: 750px){
     #main-image-container {
     width: 100%;
@@ -134,5 +164,12 @@ body{
     position: relative;
     background-position: center center; /* First value is from left and second is from top. You can use use number as well*/
     background-repeat:no-repeat;
+}
+.comp-logo{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 5%;
+    width: 90px;
 }
 }
