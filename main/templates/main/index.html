@@ -54,13 +54,25 @@
     <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 50px; margin-bottom: 5px;height: 5px; background-color: rgb(255, 128, 0); border: none; opacity: 1 !important;">
     <hr style="width: 95%; margin-left: auto; margin-right:auto; margin-top: 0px; margin-bottom: 10px;height: 5px; background-color: #059ca3; border: none; opacity: 1 !important;">
 
-    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
+    <div class="container-fluid" style="padding: 30px; color: #059ca3">
         <div class="row" style="text-align: center;">
+            <div class="col-md-6">
+                <img src="{% static 'images/svg/blob1.svg' %}" class="blob-left">
+                <h1 class="heading-left">Descripion</h1>
+                <h3 class="subheading-left">find out more about blah blah blah here</h3>
+            </div>
             <div class="col-md-6">
                 <img src="{% static 'images/product-info.png' %}" width="100%" class="landing-image">
             </div>
-            <div class="col-md-6">
-                <img src="{% static 'images/svg/blob1.svg' %}" class="blob-right">
+        </div>
+    </div>
+    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
+        <div class="row" style="text-align: center;">
+            <div class="col-md-6 order-md-1 order-2">
+                <img src="{% static 'images/founders.png' %}" width="100%" class="landing-image">
+            </div>
+            <div class="col-md-6 order-md-2 order-1">
+                <img src="{% static 'images/svg/blob10.svg' %}" class="blob-right">
                 <h1 class="heading-right">Descripion</h1>
                 <h3 class="subheading-right">find out more about blah blah blah here</h3>
             </div>
@@ -68,39 +80,27 @@
     </div>
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
-            <div class="col-md-6 order-md-1 order-2">
-                <img src="{% static 'images/svg/blob.svg' %}" class="blob-left">
+            <div class="col-md-6">
+                <img src="{% static 'images/svg/blob2.svg' %}" class="blob-left">
                 <h1 class="heading-left">Descripion</h1>
                 <h3 class="subheading-left">find out more about blah blah blah here</h3>
             </div>
-            <div class="col-md-6 order-md-2 order-1">
-                <img src="{% static 'images/founders.png' %}" width="100%" class="landing-image">
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid" style="padding: 30px; color: #059ca3;">
-        <div class="row" style="text-align: center;">
             <div class="col-md-6">
                 <img src="{% static 'images/market-data.png' %}" width="100%" class="landing-image">
             </div>
-            <div class="col-md-6">
-                <img src="{% static 'images/svg/blob2.svg' %}" class="blob-right">
-                <h1 class="heading-right">Descripion</h1>
-                <h3 class="subheading-right">find out more about blah blah blah here</h3>
-            </div>
         </div>
     </div>
     <div class="container-fluid" style="padding: 30px; color: #059ca3;">
         <div class="row" style="text-align: center;">
             <div class="col-md-6 order-md-1 order-2">
-                <img src="{% static 'images/svg/blob6.svg' %}" class="blob-left">
-                <h1 class="heading-left">Descripion</h1>
-                <h3 class="subheading-left">find out more about blah blah blah here</h3>
-            </div>
-            <div class="col-md-6 order-md-1 order-1">
                 <img src="{% static 'images/favourites.png' %}" width="100%" class="landing-image">
             </div>
+            <div class="col-md-6 order-md-2 order-1">
+                <img src="{% static 'images/svg/blob9.svg' %}" class="blob-right">
+                <h1 class="heading-right">Descripion</h1>
+                <h3 class="subheading-right">find out more about blah blah blah here</h3>
+            </div>
         </div>
-    </div>-->
+    </div>
 
 {% endblock %}
