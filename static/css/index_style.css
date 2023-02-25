@@ -38,7 +38,6 @@ body {
     font-weight: 700;
     margin-left: 20%;
     margin-right: 20%;
-
 }
 #main-subheading{
     font-size:2vw;
@@ -143,6 +142,7 @@ padding-left: 30px;
 
 }
 .blob-left{
+    margin-top: 5%;
     left: 0;
     position: absolute;
     width: 30%;
@@ -150,6 +150,7 @@ padding-left: 30px;
     z-index: -99;
 }
 .blob-right {
+    margin-top: 5%;
     right: 0;
     position: absolute;
     width: 30%;

@@ -1,11 +1,13 @@
 body {
     background-color: rgb(228, 238, 255);
 }
-h1 {
+h1{
+    font-size: 6vw;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-
+    color: black;
+    font-weight: 700;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 .box-link, .box-link:hover{
     color: black;
