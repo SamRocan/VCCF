@@ -19,6 +19,7 @@
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
+                        {% if company.websiteData.0 != None %}
                         <div class="row" style="background-color: #cfdff5; padding-top: 10px; border-radius: 5px;" >
                             <div class="col">
                                 <p>Commits:{{company.websiteData.0.0}}</p>
@@ -37,6 +38,8 @@
                         {% autoescape off %}
                         <p style="text-align: center">{{company.websiteData.0.6}}</p>
                         {% endautoescape %}
+                        {% else %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -148,21 +151,22 @@
                             </div>
                         <hr style="margin: auto;">
                         <div class="container-fluid">
+                            {% load humanize %}
                             <div class="row">
                                 <div class="col">
-                                    <i class="fa-brands fa-linkedin"></i><br>{{company.websiteData.6.6.0}}
+                                    <i class="fa-brands fa-linkedin"></i><br>{{company.websiteData.6.6.0|intcomma}}
                                 </div>
                                 <div class="col">
-                                    <i class="fa-brands fa-twitter"></i><br>{{company.websiteData.6.6.1}}
+                                    <i class="fa-brands fa-twitter"></i><br>{{company.websiteData.6.6.1|intcomma}}
                                 </div>
                                 <div class="col">
-                                    <i class="fa-brands fa-square-facebook"></i><br>{{company.websiteData.6.6.2}}
+                                    <i class="fa-brands fa-square-facebook"></i><br>{{company.websiteData.6.6.2|intcomma}}
                                 </div>
                                 <div class="col">
-                                    <i class="fa-brands fa-square-instagram"></i><br>{{company.websiteData.6.6.3}}
+                                    <i class="fa-brands fa-square-instagram"></i><br>{{company.websiteData.6.6.3|intcomma}}
                                 </div>
                                 <div class="col">
-                                <i class="fa-brands fa-youtube"></i><br>{{company.websiteData.6.6.4}}
+                                <i class="fa-brands fa-youtube"></i><br>{{company.websiteData.6.6.4|intcomma}}
                                 </div>
                             </div>
                         </div>
