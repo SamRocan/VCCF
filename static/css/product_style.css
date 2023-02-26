@@ -19,6 +19,9 @@
     display: block; 
     margin: auto;
 }
+#github-graph {
+    max-height:200px !important;
+}
 .navbar {
     z-index: 99;
 }

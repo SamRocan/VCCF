@@ -19,14 +19,24 @@
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
+                        <div class="row" style="background-color: #cfdff5; padding-top: 10px; border-radius: 5px;" >
+                            <div class="col">
+                                <p>Commits:{{company.websiteData.0.0}}</p>
+                            </div>
+                            <div class="col">
+                                <p>Last Update: {{company.websiteData.0.1}}</p>
+                            </div>
+                            <div class="col">
+                                <p>Branches: {{company.websiteData.0.2}}</p>
+                            </div>
+                            <div class="col">
+                                <p id="alternating">{{company.websiteData.0.5.0}}</p>
+                            </div>
+                        </div>
+                        <canvas id="github-graph" class="twitter-canvas"></canvas>
                         {% autoescape off %}
                         <p style="text-align: center">{{company.websiteData.0.6}}</p>
                         {% endautoescape %}
-                        <p>{{company.websiteData.0.1}}</p>
-                        <p>{{company.websiteData.0.2}}</p>
-                        <p>{{company.websiteData.0.3}}</p>
-                        <p>{{company.websiteData.0.4}}</p>
-                        <p>{{company.websiteData.0.5}}</p>
                     </div>
                 </div>
             </div>
@@ -65,7 +75,7 @@
                 </h2>
                 <div id="flush-collapse4" class="accordion-collapse collapse" aria-labelledby="flush-heading4" data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body" style="text-align: left;">
-                        {% if company.websiteData.3.1 == 'None' %}
+                        {% if company.websiteData.3.1 == None %}
                         {% else %}
                         <p style="text-align: center; background-color: rgb(255, 102, 7); border-radius: 5px; color: white;">{{company.websiteData.3.1}}</p>
                         <!--{{company.websiteData.3}}-->
@@ -119,7 +129,65 @@
                     <div class="accordion-body"><a href="{{saasHub.1}}">{{saasHub.0}}</a>
                         {% if company.websiteData.6 == None %}
                         {% else %}
-                        {{company.websiteData.6}}
+                        <p>Rating: {{ company.websiteData.6.0 }} - {{ company.websiteData.6.1 }}</p>
+                        <hr style="margin: auto;">
+                        <div class="container-fluid"></div>
+                            <div class="row">
+                            {% for key, values in company.websiteData.6.2.items %}
+                                    <div class="col">
+                                        <h3>{{key}}</h3>
+                                        <ul>
+                                        {% for arr in values %}
+                                            {% for value in arr %}
+                                                <li><p>{{value}}</p></li>
+                                            {% endfor %}   
+                                        {% endfor %}                                                 
+                                        </ul>
+                                    </div>
+                            {% endfor %}
+                            </div>
+                        <hr style="margin: auto;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col">
+                                    <i class="fa-brands fa-linkedin"></i><br>{{company.websiteData.6.6.0}}
+                                </div>
+                                <div class="col">
+                                    <i class="fa-brands fa-twitter"></i><br>{{company.websiteData.6.6.1}}
+                                </div>
+                                <div class="col">
+                                    <i class="fa-brands fa-square-facebook"></i><br>{{company.websiteData.6.6.2}}
+                                </div>
+                                <div class="col">
+                                    <i class="fa-brands fa-square-instagram"></i><br>{{company.websiteData.6.6.3}}
+                                </div>
+                                <div class="col">
+                                <i class="fa-brands fa-youtube"></i><br>{{company.websiteData.6.6.4}}
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin: auto;">
+                        <div class="container-fluid">
+                            <div class="row">
+                                {% for key in company.websiteData.6.3.keys %}
+                                <div class="col" style="margin-top: 2%;">
+                                    <p style="font-weight: bold;">{{ key }}</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <hr style="margin: auto;">
+                            <div class="row">
+                                {% for key, value in company.websiteData.6.3.items %} 
+                                <div class="col">
+                                    <ul>
+                                        {% for x in value %}
+                                        <li>{{x}}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
                         {% endif %}
                     </div>
                 </div>
