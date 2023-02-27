@@ -8,6 +8,7 @@
     {% for num, title in graphNames %}
         <canvas id="statGraph-{{num}}" class='stat-canvas' style="display: none;"></canvas>
         <button class="tog-but" id="toggleButton-{{num}}" onclick="changeGraph('{{num}}')" style="display: none;">Toggle Graph</button>
+        <a class="search-button-loading" onclick="drawGraph('{{maker.1}}', '{{forloop.counter}}')"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><a>
         <a class="search-button" onclick="testGraph('{{num}}')">{{title}}</a>
     {% endfor %}
 </div>

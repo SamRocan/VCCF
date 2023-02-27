@@ -112,6 +112,16 @@
         url: endpoint,
         data: {'test':"Test Data"},
         success: function(data) {
+            console.log("Received")
+            var collection = document.getElementsByClassName("search-button");
+            for(var but of collection){
+                but.style.display = "block"
+            }
+            var spinners = document.getElementsByClassName("search-button-loading");
+            for(var spin of spinners){
+                spin.style.display = "none"
+            }
+            console.log(collection.length)
             results = [ data.extScore,
                 data.neuScore,
                 data.agrScore,

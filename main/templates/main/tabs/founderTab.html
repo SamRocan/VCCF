@@ -27,6 +27,7 @@
                 </div>
             </div>
             <canvas id="twitter-box-{{maker.1}}" class='twitter-canvas'style="display: none; margin-bottom:10px"></canvas>
+            <li><a class="search-button-loading" onclick="drawGraph('{{maker.1}}', '{{forloop.counter}}')"><div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div><a></li>
             <li><a class="search-button" onclick="drawGraph('{{maker.1}}', '{{forloop.counter}}')">Personality Traits</a></li>
         {% else %}
             <div class="row social-row">

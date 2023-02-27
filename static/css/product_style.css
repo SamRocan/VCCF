@@ -236,7 +236,7 @@ ul{
     -webkit-box-align: center;
     align-items: center;
 }
-.search-button {
+.search-button, .search-button-loading{
     background-color: rgba(0, 161, 111, 0.8);
     margin:0 auto 25px auto;
     display:block;
@@ -247,6 +247,12 @@ ul{
     color: white;
     text-decoration: none;
 
+}
+.search-button{
+    display: none;
+}
+.search-button-loading:hover{
+    color: white;
 }
 .search-button:hover{
     color: white;
