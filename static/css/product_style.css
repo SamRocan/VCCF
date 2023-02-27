@@ -219,6 +219,8 @@ ul{
 .logo-pp {
     border-radius: 50%; margin: auto;
     display: block;
+    border: 3px solid #080a0d;
+
 }
 #main-heading{
     text-align: center;
