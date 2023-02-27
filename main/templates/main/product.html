@@ -349,16 +349,12 @@
     });
     function change_text(num){        
         var arr = {{ company.websiteData.0.5|safe }}
-        console.log($('#alternating').length)
         let current_text = $('#alternating').text();
-        console.log(current_text)
-        console.log(arr[num])
         $("#alternating").fadeOut("slow", function() {
             $('#alternating').text(arr[num+1]);
         });
         $("#alternating").delay(750).fadeIn("slow");
         setTimeout(function (){
-            console.log(num)
             if(num == arr.length-1){
                 num = -1
             }
@@ -366,7 +362,6 @@
                 num++
             }
             setTimeout(function(){
-                console.log('wait')
             }, 2000)
             change_text(num);
         }, 5000)
