@@ -7,7 +7,7 @@
             &nbsp;
             <a class="btn btn-danger" href="{% url 'logout' %}">Logout</a>
             {% else %}
-            <a class="btn btn-warning" style="margin-right: 5px;" href="{% url 'login' %}">Log In</a>
+            <a class="btn btn-warning" style="margin-right: 5px;" href="{% url 'user_login' %}">Log In</a>
             <br>
             <a class="btn btn-success" href="{% url 'register' %}">Register</a>
             {% endif %}

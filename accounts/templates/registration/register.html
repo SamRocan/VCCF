@@ -1,16 +1,43 @@
 {% extends "main/base.html" %}
-
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/account_form_style.css' %}">
+{% endblock %}
 {% block content %} 
-{% include 'main/navbar.html' %}
 <!--Register--> 
-<div class="container py-5">
-	<h1>Register</h1>
-	<form method="POST">
-		{% csrf_token %}
-		{{ register_form}}                    
-		<button class="btn btn-primary" type="submit">Register</button>
-	</form>
-	<p class="text-center">If you already have an account, <a href="{% url 'login' %}}">login</a> instead.</p>
+{% include 'main/navbar.html' %}
+<h1 id="main-heading">Register</h1>
+<div class="container-fluid" id="center">
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <small>Username</small>
+            {{ register_form.username}}
+            {{ register_form.username.errors.as_ul }}
+            <small>Email</small>
+            {{ register_form.email}} 
+            {{ register_form.email.errors.as_ul }}
+            <small>Password</small>
+            {{ register_form.password1}}
+            {{ register_form.password1.errors.as_ul }}
+            <small>Confirm Password</small>
+            {{ register_form.password2}}   
+            {{ register_form.password2.errors.as_ul }}  
+            {{error}}
+        </div>
+        {% if error_list|length != 0 %}
+            <div class="alert alert-danger" role="alert">
+                <ul style="list-style: none;">
+                {% for error in error_list %}
+                    <li>{{error}}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <button type="submit" class="btn submit-button">Register</button>
+        <p class="text-center">If you already have an account, <a href="{% url 'user_login' %}">login</a> instead.</p>
+    </form>
 </div>
+
 
 {% endblock %}
