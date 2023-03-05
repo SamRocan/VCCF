@@ -24,7 +24,7 @@
         console.log("connected")
         var data = JSON.parse(event.data);
         var loadLength = data.message
-        if(loadLength === 60 ||loadLength === 80){
+        if(loadLength === 60 || loadLength === 80){
             document.querySelector('#extra-loading-info').style.display = 'block'
         }
         else{

@@ -23,6 +23,11 @@
             </div>
         {% endif %}
         <button type="submit" class="btn submit-button">Log In</button>
+        <br>
+        <p class="text-center" style="margin-bottom: 0 !important;">Need an account? <a href="{% url 'register' %}">Register</a> now.</p>
+        <p class="text-center"><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+
+
     </form>
 </div>
 {% endblock %}

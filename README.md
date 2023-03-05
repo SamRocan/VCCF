@@ -2,7 +2,6 @@
 
 <h3>To Do</h3>
 <ol>
-    <li>Complete login/logout/sign up page</li>
     <h4>Extra</h4>
     <li>Add search for slug</li>
     <li>Optimize search to add infinite scrolling</li>
